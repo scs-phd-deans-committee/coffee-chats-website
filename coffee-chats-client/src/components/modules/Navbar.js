@@ -1,55 +1,36 @@
+// npm install classnames --save
+// npm install @animated-burgers/burger-arrow
+
 import React, { useState } from "react";
 // import { get, post } from "../utilities";
 import { Link } from "react-router-dom";
-import Headroom from "react-headroom";
-import Burger from '@animated-burgers/burger-arrow' 
-import '@animated-burgers/burger-arrow/dist/styles.css' 
+import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap'
+import logo_image from '../../coffee.png';
 
-import { Links, BurgerMenu } from '../modules/Menu';
-import logo_image from '../../public/icons/coffee.png';
-
-function Navbar(props){
-  const [burgerOpen, setBurgerOpen] = useState(false);
-
+function CCNavbar(props){
   const isLoggedIn = (!!props.user);
-
-  function handleBurgerClick(e) {
-    e.preventDefault();
-    console.log("clicked burger");
-    setBurgerOpen(!burgerOpen);
-  }
-
-  function handleLinkClick(e) {
-    console.log("clicked link");
-    setBurgerOpen(!burgerOpen);
-  }
-
   return (
     <>
-      <Headroom className="navbar">
-        <div className="flexcontainer">
-          <div className="logo">
-            <Link to="/">
-              <img src={logo_image}/> 
-              // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-            </Link>
-            <Link to="/">
-              <span>CMU Coffee Chats</span>  
-            </Link>
-          </div>
-          <div className="navLinks">
-            <Links isLoggedIn={isLoggedIn} handleClick={handleLinkClick}/>
-          </div>
-          <Burger isOpen={ burgerOpen } direction="up" onClick={handleBurgerClick}/>
-        </div>
-        { burgerOpen ? 
-            <BurgerMenu isLoggedIn={isLoggedIn} handleClick={handleLinkClick}/>
-          :
-          <></>
-        }
-      </Headroom>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+        crossorigin="anonymous"
+      />
+      <Navbar bg="light" expand="lg">
+      <Navbar.Brand href="/home">CMU Coffee Chats</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <Link to="/home">Home</Link>&nbsp;&nbsp;&nbsp;&nbsp;
+          <Link to="/profile">Profile</Link>&nbsp;&nbsp;&nbsp;&nbsp;
+          <Link to="/feedback">Feedback Form</Link>&nbsp;&nbsp;&nbsp;&nbsp;
+          <Link to="/matchlist">Your Matches</Link>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
     </>
   );
 }
 
-export default Navbar;
+export default CCNavbar;

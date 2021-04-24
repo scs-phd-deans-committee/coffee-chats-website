@@ -14,6 +14,8 @@ import "firebase/auth";
 
 import { auth, firestore } from "./firebaseClient";
 
+import CCNavbar from './components/modules/Navbar';
+
 import Login from './components/Login';
 import Feedback from './components/Feedback';
 import MatchDetail from './components/MatchDetail';
@@ -46,6 +48,9 @@ function App(props) {
     <>
     <div className="App">
     <Router>
+      <CCNavbar 
+          user={user}
+      />
       <Switch>
         <Route path="/profile">
           <Profile user={user} setUser={setUser} />
