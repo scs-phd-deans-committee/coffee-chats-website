@@ -3,7 +3,7 @@ import React from 'react';
 import { firebase } from '@firebase/app';
 import "firebase/auth";
 
-import { auth, firestore } from "../firebaseClient";
+import { auth, firestore } from "../../firebaseClient";
 
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
@@ -16,7 +16,9 @@ import {
   useHistory
 } from "react-router-dom";
 
-function Preferences(props) {
+// import Navbar from './modules/Navbar';
+
+function Home(props) {
   const history = useHistory();
   const logoutButton = 
     <button onClick={() => {
@@ -28,9 +30,14 @@ function Preferences(props) {
 
   if (props.user) {
     return (
-      <div className="preferencesContainer">
-        <div className="preferences">
-          <h1>Preferences Form</h1>
+      <div className="homeContainer">
+        <div className="home">
+          <div className="textContainer">
+            <div className="name">Welcome: {props.user.name}</div>
+          </div>
+          <button onClick={() => {
+            history.push("/profile");
+          }}>Go to my profile</button>
 
           {logoutButton}
         </div>
@@ -43,4 +50,4 @@ function Preferences(props) {
   }
 }
 
-export default Preferences;
+export default Home;

@@ -8,7 +8,21 @@ import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap'
 import logo_image from '../../coffee.png';
 
 function CCNavbar(props){
-  const isLoggedIn = (!!props.user);
+  var logoStyle = {
+    width: '50px',
+    height: '50px',
+  };
+
+  var linkStyle = {
+    color: 'black',
+    fontSize: '20px'
+  };
+
+  var brandStyle = {
+    fontSize: '30px',
+    fontWeight: 'bold',
+  };
+
   return (
     <>
       <link
@@ -18,17 +32,24 @@ function CCNavbar(props){
         crossorigin="anonymous"
       />
       <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/home">CMU Coffee Chats</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Link to="/home">Home</Link>&nbsp;&nbsp;&nbsp;&nbsp;
-          <Link to="/profile">Profile</Link>&nbsp;&nbsp;&nbsp;&nbsp;
-          <Link to="/feedback">Feedback Form</Link>&nbsp;&nbsp;&nbsp;&nbsp;
-          <Link to="/matchlist">Your Matches</Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+        <img src={logo_image} style={logoStyle}/>&nbsp;&nbsp;&nbsp;
+        <Navbar.Brand href="/home" style={brandStyle}>CMU Coffee Chats</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          { (!!props.user) ?
+            <Nav className="ml-auto">
+              <NavDropdown.Item><Link to="/home" style={linkStyle}>Home</Link></NavDropdown.Item>
+              <NavDropdown.Item><Link to="/profile" style={linkStyle}>Your Profile</Link></NavDropdown.Item>
+              <NavDropdown.Item><Link to="/matchlist" style={linkStyle}>Your Matches</Link></NavDropdown.Item>
+              <NavDropdown.Item><Link to="/feedback" style={linkStyle}>Feedback Form</Link></NavDropdown.Item>
+              <NavDropdown.Item><Link to="/preferences" style={linkStyle}><b>Participate!</b></Link></NavDropdown.Item>
+            </Nav> :
+            <Nav className="ml-auto">
+              <NavDropdown.Item><Link to="/home" style={linkStyle}>Home</Link></NavDropdown.Item>
+            </Nav>
+          }
+        </Navbar.Collapse>
+      </Navbar>
     </>
   );
 }

@@ -15,14 +15,14 @@ import "firebase/auth";
 import { auth, firestore } from "./firebaseClient";
 
 import CCNavbar from './components/modules/Navbar';
+import Login from './components/modules/Login';
 
-import Login from './components/Login';
-import Feedback from './components/Feedback';
-import MatchDetail from './components/MatchDetail';
-import MatchHistory from './components/MatchHistory';
-import Preferences from './components/Preferences';
-import Profile from './components/Profile';
-import Home from './components/Home';
+import Feedback from './components/pages/Feedback';
+import MatchDetail from './components/pages/MatchDetail';
+import MatchHistory from './components/pages/MatchHistory';
+import Preferences from './components/pages/Preferences';
+import Profile from './components/pages/Profile';
+import Home from './components/pages/Home';
 // import Logout from './components/Logout';
 
 function App(props) {

@@ -3,7 +3,7 @@ import React from 'react';
 import { firebase } from '@firebase/app';
 import "firebase/auth";
 
-import { auth, firestore } from "../firebaseClient";
+import { auth, firestore } from "../../firebaseClient";
 
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
@@ -16,9 +16,8 @@ import {
   useHistory
 } from "react-router-dom";
 
-function MatchDetail(props) {
+function Preferences(props) {
   const history = useHistory();
-
   const logoutButton = 
     <button onClick={() => {
       props.setUser(null);
@@ -29,9 +28,9 @@ function MatchDetail(props) {
 
   if (props.user) {
     return (
-      <div className="matchdetailContainer">
-        <div className="matchdetail">
-          <h1>Match Details</h1>
+      <div className="preferencesContainer">
+        <div className="preferences">
+          <h1>Preferences Form</h1>
 
           {logoutButton}
         </div>
@@ -44,4 +43,4 @@ function MatchDetail(props) {
   }
 }
 
-export default MatchDetail;
+export default Preferences;
