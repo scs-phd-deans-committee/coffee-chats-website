@@ -6,22 +6,44 @@ import "firebase/auth";
 import { auth, firestore } from "../firebaseClient";
 
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+
 // import { GoogleLogin } from 'react-google-login';
 // import { GoogleLogout } from 'react-google-login';
 // refresh token
 // import { refreshTokenSetup } from '../utils/refreshToken';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory
+} from "react-router-dom";
 
 
 function Login(props) {
+  const history = useHistory();
 
-  firestore.collection("users").doc("koqx3c761USdEmuq4X1A").get()
-    .then((profileSnapshot) => {
-      let newProfile = profileSnapshot.data();
-      if (!props.user) {
-        props.setUser({'name': 'Abhi'});
-      }
-      console.log(newProfile);
-    })
+  function handleLogin() {
+    firestore.collection("users").doc("koqx3c761USdEmuq4X1A").get()
+      .then((profileSnapshot) => {
+        let profile = profileSnapshot.data();
+        if (!props.user) {
+          props.setUser({
+            name: profile.name,
+            pronoun: profile.pronoun,
+            department: profile.department,
+            year: profile.year,
+            motto: profile.motto
+          });
+          alert('Logged in');
+        }
+        history.push("/profile");
+        // history.push({
+        //   pathname: "/profile",
+        //   state: props.user
+        // });
+      })
+  }
 
 
 
@@ -93,7 +115,11 @@ function Login(props) {
 
   return (
     // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
-    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
+    // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
+    <div>
+    <button onClick={handleLogin}>Login</button>
+    </div>
+
   )
 
   // Need to look into cookies and stuff.
