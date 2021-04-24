@@ -16,6 +16,7 @@ import {
   Switch,
   Route,
   Link,
+  Redirect,
   useHistory
 } from "react-router-dom";
 
@@ -113,14 +114,19 @@ function Login(props) {
   // }
   const uiConfig = {}
 
-  return (
-    // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
-    // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
-    <div>
-    <button onClick={handleLogin}>Login</button>
-    </div>
-
-  )
+  if (!props.user) {
+    return (
+      // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
+      // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
+      <div>
+      <button onClick={handleLogin}>Login</button>
+      </div>
+    )
+  } else {
+    return (
+      <Redirect to="/home" />
+    )
+  }
 
   // Need to look into cookies and stuff.
 
