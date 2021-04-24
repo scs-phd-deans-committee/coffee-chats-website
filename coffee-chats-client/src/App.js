@@ -15,7 +15,12 @@ import "firebase/auth";
 import { auth, firestore } from "./firebaseClient";
 
 import Login from './components/Login';
+import Feedback from './components/Feedback';
+import MatchDetail from './components/MatchDetail';
+import MatchHistory from './components/MatchHistory';
+import Preferences from './components/Preferences';
 import Profile from './components/Profile';
+import Home from './components/Home';
 // import Logout from './components/Logout';
 
 function App(props) {
@@ -45,8 +50,24 @@ function App(props) {
         <Route path="/profile">
           <Profile user={user} setUser={setUser} />
         </Route>
+        <Route path="/home">
+          <Home user={user} setUser={setUser} />
+        </Route>
+        <Route path="/feedback">
+          <Feedback user={user} setUser={setUser}/>
+        </Route>
+        <Route path="/matchlist">
+          <MatchHistory user={user} setUser={setUser}/>
+        </Route>
+        <Route path="/match">
+          <MatchDetail user={user} setUser={setUser}/>
+        </Route>
+        <Route path="/preferences">
+          <Preferences user={user} setUser={setUser}/>
+        </Route>
+
         <Route path="/">
-          <Login setUser={setUser} user={user} />
+          <Login user={user} setUser={setUser} />
         </Route>
       </Switch>
     </Router>

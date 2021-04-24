@@ -37,7 +37,7 @@ function Login(props) {
           });
           alert('Logged in');
         }
-        history.push("/profile");
+        history.push("/home");
         // history.push({
         //   pathname: "/profile",
         //   state: props.user

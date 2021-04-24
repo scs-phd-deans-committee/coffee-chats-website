@@ -5,8 +5,8 @@ import Headroom from "react-headroom";
 import Burger from '@animated-burgers/burger-arrow' 
 import '@animated-burgers/burger-arrow/dist/styles.css' 
 
-import { Links, BurgerMenu } from "../modules/Menu.js";
-import logo_image from "../../public/icons/coffee.png";
+import { Links, BurgerMenu } from '../modules/Menu';
+import logo_image from '../../public/icons/coffee.png';
 
 function Navbar(props){
   const [burgerOpen, setBurgerOpen] = useState(false);

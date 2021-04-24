@@ -16,7 +16,9 @@ import {
   useHistory
 } from "react-router-dom";
 
-function Profile(props) {
+// import Navbar from './modules/Navbar';
+
+function Home(props) {
   const history = useHistory();
   const logoutButton = 
     <button onClick={() => {
@@ -28,11 +30,14 @@ function Profile(props) {
 
   if (props.user) {
     return (
-      <div className="profileContainer">
-        <div className="profile">
-          <div className="name">Name: {props.user.name} ({props.user.pronoun})</div>
-          <div className="department">Department: {props.user.department}, year {props.user.year}</div>
-          <div className="motto"><i>{props.user.motto}</i></div>
+      <div className="homeContainer">
+        <div className="home">
+          <div className="textContainer">
+            <div className="name">Welcome: {props.user.name}</div>
+          </div>
+          <button onClick={() => {
+            history.push("/profile");
+          }}>Go to my profile</button>
 
           {logoutButton}
         </div>
@@ -45,4 +50,4 @@ function Profile(props) {
   }
 }
 
-export default Profile;
+export default Home;

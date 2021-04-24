@@ -9,9 +9,11 @@
     "express": "^4.17.1",
     "firebase": "^7.24.0",
     "react": "^16.13.1",
+    "react-animated-burgers": "^1.2.8",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",
     "react-google-login": "^5.1.20",
+    "react-headroom": "^3.1.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3"

@@ -16,7 +16,7 @@ import {
   useHistory
 } from "react-router-dom";
 
-function Profile(props) {
+function Preferences(props) {
   const history = useHistory();
   const logoutButton = 
     <button onClick={() => {
@@ -28,11 +28,9 @@ function Profile(props) {
 
   if (props.user) {
     return (
-      <div className="profileContainer">
-        <div className="profile">
-          <div className="name">Name: {props.user.name} ({props.user.pronoun})</div>
-          <div className="department">Department: {props.user.department}, year {props.user.year}</div>
-          <div className="motto"><i>{props.user.motto}</i></div>
+      <div className="preferencesContainer">
+        <div className="preferences">
+          <h1>Preferences Form</h1>
 
           {logoutButton}
         </div>
@@ -45,4 +43,4 @@ function Profile(props) {
   }
 }
 
-export default Profile;
+export default Preferences;
