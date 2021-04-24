@@ -1,35 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+// import { Link } from "react-router-dom";
+
+import { firebase } from '@firebase/app';
+import "firebase/auth";
+
+import { auth, firestore } from "./firebaseClient";
+
 import Login from './components/Login';
-import Logout from './components/Logout';
+// import Logout from './components/Logout';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      users: []
-    }
-  }
-  
-
-  componentDidMount() {
-    fetch('/users')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
-  }
-
-  render() {
-    return (
+function App(props) {
+  const [ user, setUser ] = useState(null);
+    // fetch('/users')
+    //   .then(res => res.json())
+    //   .then(users => this.setState({ users }));
+  return (
+    <>
     <div className="App">
-      <h2>Coffee Chats ☕</h2>
-      <Login />
-      <h2>Existing Users:</h2>
-        {this.state.users.map(user =>
-          <div key={user.id}>{user.username}</div>
-        )}
+    <Login setUser={setUser} user={user} />
+    <h2>Coffee Chats ☕</h2>
+    {user ? <h1>Hello {user.name}!</h1> : <h1>Not logged in.</h1>}
     </div>
-    )
-  }
+    </>
+  )
 }
 
 export default App;
