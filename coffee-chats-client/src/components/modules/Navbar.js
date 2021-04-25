@@ -32,6 +32,8 @@ function CCNavbar(props){
   var toggleStyle = {
     color: 'black',
     backgroundColor: "transparent",
+    padding: "8px",
+    border: "1px transparent",
     fontSize: '20px',
   };
 
