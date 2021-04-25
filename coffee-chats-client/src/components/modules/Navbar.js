@@ -2,7 +2,7 @@
 // npm install @animated-burgers/burger-arrow
 
 import React from "react";
-import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavItem,  Dropdown } from 'react-bootstrap';
 import Login from '../modules/Login';
 import logo_image from '../../coffee.png';
 import {
@@ -17,14 +17,28 @@ function CCNavbar(props){
     height: '50px',
   };
 
-  var linkStyle = {
+  var paddingStyle = {
+    padding: "0 10px 0 10px"
+  };
+
+  var navbarStyle = {
     color: 'black',
     fontSize: '20px',
-    rightMargin: '10px',
+  };
+
+  var toggleStyle = {
+    color: 'black',
+    backgroundColor: "transparent",
+    fontSize: '20px',
+  };
+
+  var menuStyle = {
+    textDecoration: 'none',
+    fontSize: '20px',
   };
 
   var brandStyle = {
-    fontSize: '30px',
+    fontSize: '20px',
     fontWeight: 'bold',
   };
 
@@ -33,32 +47,41 @@ function CCNavbar(props){
   return (
     <>
       <Navbar bg="light" expand="lg">
-        <img src={logo_image} style={logoStyle}/>&nbsp;&nbsp;&nbsp;
+        <img src={logo_image} style={logoStyle}/>
         <Navbar.Brand href="/" style={brandStyle}>coffee-chats</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          { (!!props.user) ?
-            <Nav className="ml-auto">
-              <Nav.Link><Link to="/" style={linkStyle}>Home</Link></Nav.Link>
-              <Nav.Link><Link to="/preferences" style={linkStyle}><b>Participate!</b></Link></Nav.Link>
-              <NavDropdown title="Your Account" id="basic-nav-dropdown" style={linkStyle}>
-                <NavDropdown.Item><Link to="/profile" style={linkStyle}>Your Profile</Link></NavDropdown.Item>
-                <NavDropdown.Item><Link to="/matchlist" style={linkStyle}>Your Matches</Link></NavDropdown.Item>                
-                <NavDropdown.Divider />
-                <NavDropdown.Item><Link to="/feedback" style={linkStyle}>Feedback Form</Link></NavDropdown.Item>
-                <NavDropdown.Item><button onClick={() => {
-                                    props.setUser(null);
-                                    localStorage.removeItem("user");
-                                    history.push("/");
-                                  }}>Logout</button></NavDropdown.Item>
-              </NavDropdown>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            </Nav> :
-            <Nav className="ml-auto">
-              <NavDropdown.Item><Link to="/" style={linkStyle}>Home</Link></NavDropdown.Item>
-              <NavDropdown.Item><Link to="/profile" style={linkStyle}>Sign Up / Login</Link></NavDropdown.Item>
+            <Nav variant="pills" className="ml-auto" style={navbarStyle}>
+              <Nav.Item style={paddingStyle}>
+                <Navbar.Text ><Link to="/">Home</Link></Navbar.Text>
+              </Nav.Item>
+              { (!!props.user) ?
+              <>
+                <Nav.Item style={paddingStyle}>
+                  <Navbar.Text><Link to="/preferences"><b>Participate!</b></Link></Navbar.Text>
+                </Nav.Item>
+                <Dropdown as={Nav.Item}>
+                  <Dropdown.Toggle as={Nav.Text} style={toggleStyle}>Account</Dropdown.Toggle>
+                  <Dropdown.Menu align="right" style={menuStyle}>
+                    <Dropdown.Item><Link to="/profile">Profile</Link></Dropdown.Item>
+                    <Dropdown.Item><Link to="/matchlist">Matches</Link></Dropdown.Item>                
+                    <Dropdown.Divider />
+                    <Dropdown.Item><Link to="/feedback">Feedback Form</Link></Dropdown.Item>
+                    <Dropdown.Item><button onClick={() => {
+                                        props.setUser(null);
+                                        localStorage.removeItem("user");
+                                        history.push("/");
+                                      }}>Logout</button>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </>
+              :
+              <Nav.Item>
+                <Navbar.Text><Link to="/profile" style={paddingStyle}>Sign Up / Login</Link></Navbar.Text>
+              </Nav.Item>
+              }
             </Nav>
-          }
         </Navbar.Collapse>
       </Navbar>
     </>

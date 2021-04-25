@@ -30,10 +30,10 @@ function Profile(props) {
   } else {
     return (
       <>
-      <br/><br/>
-      <Container>
-      <Login user={props.user} setUser={props.setUser}/>
-      </Container>
+        <br/><br/>
+        <Container>
+          <Login user={props.user} setUser={props.setUser}/>
+        </Container>
       </>
     )
   }
