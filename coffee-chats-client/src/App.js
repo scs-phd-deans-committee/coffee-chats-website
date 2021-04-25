@@ -57,7 +57,7 @@ function App(props) {
           <Profile user={user} setUser={setUser} />
         </Route>
         <Route path="/feedback" component={() => { 
-             window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSe3446QlXkwdo41AfkdzcL1LcSrBpQNUsJTaXDrW-ncxWPtYA/viewform?usp=sf_link'; 
+             window.location.replace('https://docs.google.com/forms/d/e/1FAIpQLSe3446QlXkwdo41AfkdzcL1LcSrBpQNUsJTaXDrW-ncxWPtYA/viewform?usp=sf_link'); 
              return null;
         }}/>
         <Route path="/matchlist">
