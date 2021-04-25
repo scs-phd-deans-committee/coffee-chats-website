@@ -11,64 +11,6 @@ import { Button, Modal, ModalDialog, ModalHeader, ModalTitle, ModalBody, ModalFo
 import { Link } from "react-router-dom";
 
 function Home(props) {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  function handleLogin() {
-    handleShow();
-    firestore.collection("users").doc("koqx3c761USdEmuq4X1A").get()
-      .then((profileSnapshot) => {
-        let profile = profileSnapshot.data();
-        if (!props.user) {
-          props.setUser({
-            name: profile.name,
-            pronoun: profile.pronoun,
-            department: profile.department,
-            year: profile.year,
-            motto: profile.motto
-          });
-        }
-        // history.push({
-        //   pathname: "/profile",
-        //   state: props.user
-        // });
-      })
-  }
-  
-  const uiConfig = {
-    // Popup signin flow rather than redirect flow.
-    signInFlow: 'popup',
-    // We will display Google and Email/Password as auth providers.
-    signInOptions: [
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID
-    ],
-    callbacks: {
-      // Avoid redirects after sign-in.
-      signInSuccessWithAuthResult: (authResult) => {
-        console.log("signin success!");
-        let currentUser = auth.currentUser;
-        let token = currentUser.getIdToken(true);
-        // token.then((idToken) => {
-        //   props.setUser(....);
-        // });
-        // if (!currentUser.emailVerified) {
-        //   console.log("not verified");
-        //   currentUser.sendEmailVerification();
-        // }
-        // token.then((idToken) => {
-        //   let displayName = currentUser.displayName;
-        //   let email = currentUser.email;
-        //   let loginResponse = {"token": idToken, "displayName": displayName, "email": email}
-        //   console.log("logging in");
-        //   props.handleLogin(loginResponse);
-        // });
-        return false;
-      }
-    }
-  }
 
   return (
     <Container>
@@ -76,28 +18,7 @@ function Home(props) {
       <Row>
       { (!!props.user) ?  
       <h3>Welcome, {props.user.name}!</h3> :
-      <>
-        <h3>To participate, sign up or login using the button in the top right corner!</h3>
-        <Modal show={show} onHide={handleClose} >
-          <Modal.Header closeButton>
-            <Modal.Title>Login</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleShow}>
-              Login
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        <div>
-          <button onClick={handleLogin}>Login</button>
-        </div>
-      </>
+      <h3>To participate, please <Link to="/profile"><b>sign up / log in!</b></Link></h3>
       }
       <br/><br/><br/>
       <div className="text-left">

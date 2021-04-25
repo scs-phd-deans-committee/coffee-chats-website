@@ -1,4 +1,6 @@
 import React from 'react';
+import { Container, Row, Column } from 'react-bootstrap';
+import Login from '../modules/Login';
 
 import {
   Redirect,
@@ -10,17 +12,29 @@ function Profile(props) {
   
   if (props.user) {
     return (
-      <div className="profileContainer">
-        <div className="profile">
-          <div className="name">Name: {props.user.name} ({props.user.pronoun})</div>
-          <div className="department">Department: {props.user.department}, year {props.user.year}</div>
-          <div className="motto"><i>{props.user.motto}</i></div>
-        </div>
-      </div>
+      <>
+      <br/><br/>
+      <Container>
+        <Row>
+          <Column>
+            <div className="text-center">
+              <div>Name: {props.user.name} ({props.user.pronoun})</div>
+              <div>Department: {props.user.department}, year {props.user.year}</div>
+              <div><i>"{props.user.motto}"</i></div>
+            </div>
+          </Column>
+        </Row>
+      </Container>
+      </>
     )
   } else {
     return (
-      <Redirect to="/" />
+      <>
+      <br/><br/>
+      <Container>
+      <Login user={props.user} setUser={props.setUser}/>
+      </Container>
+      </>
     )
   }
 }

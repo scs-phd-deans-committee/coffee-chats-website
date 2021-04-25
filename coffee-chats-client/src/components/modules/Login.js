@@ -15,14 +15,7 @@ import {
 
 
 function Login(props) {
-  const [show, setShow] = useState(false);
-  const history = useHistory();
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   function handleLogin() {
-    handleShow();
     firestore.collection("users").doc("koqx3c761USdEmuq4X1A").get()
       .then((profileSnapshot) => {
         let profile = profileSnapshot.data();
@@ -41,8 +34,40 @@ function Login(props) {
         // });
       })
   }
-
-
+  
+  const uiConfig = {
+    // Popup signin flow rather than redirect flow.
+    signInFlow: 'popup',
+    // We will display Google and Email/Password as auth providers.
+    signInOptions: [
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    ],
+    callbacks: {
+      // Avoid redirects after sign-in.
+      signInSuccessWithAuthResult: (authResult) => {
+        console.log("signin success!");
+        let currentUser = auth.currentUser;
+        console.log(currentUser)
+        let token = currentUser.getIdToken(true);
+        // token.then((idToken) => {
+        //   props.setUser(....);
+        // });
+        // if (!currentUser.emailVerified) {
+        //   console.log("not verified");
+        //   currentUser.sendEmailVerification();
+        // }
+        // token.then((idToken) => {
+        //   let displayName = currentUser.displayName;
+        //   let email = currentUser.email;
+        //   let loginResponse = {"token": idToken, "displayName": displayName, "email": email}
+        //   console.log("logging in");
+        //   props.handleLogin(loginResponse);
+        // });
+        return false;
+      }
+    }
+  }
 
   // function getOrCreateUser(userQuery) {
   //   // the "sub" field means "subject", which is a unique identifier for each user
@@ -75,69 +100,13 @@ function Login(props) {
   //   return user;
   // }
 
-  // const uiConfig = {
-  //   // Popup signin flow rather than redirect flow.
-  //   signInFlow: 'popup',
-  //   // We will display Google and Email/Password as auth providers.
-  //   signInOptions: [
-  //     firebase.auth.EmailAuthProvider.PROVIDER_ID,
-  //     firebase.auth.GoogleAuthProvider.PROVIDER_ID
-  //   ],
-  //   callbacks: {
-  //     // Avoid redirects after sign-in.
-  //     signInSuccessWithAuthResult: (authResult) => {
-  //       console.log("signin success!");
-  //       let currentUser = auth.currentUser;
-  //       let token = currentUser.getIdToken(true);
-  //       getOrCreateUser(
-  //       // token.then((idToken) => {
-  //       //   props.setUser(....);
-  //       // });
-  //       // if (!currentUser.emailVerified) {
-  //       //   console.log("not verified");
-  //       //   currentUser.sendEmailVerification();
-  //       // }
-  //       // token.then((idToken) => {
-  //       //   let displayName = currentUser.displayName;
-  //       //   let email = currentUser.email;
-  //       //   let loginResponse = {"token": idToken, "displayName": displayName, "email": email}
-  //       //   console.log("logging in");
-  //       //   props.handleLogin(loginResponse);
-  //       // });
-  //       return false;
-  //     }
-  //   }
-  // }
-  const uiConfig = {}
-
   return (
     <>
-      <Modal show={show}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleShow}>
-            Login
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      { props.user ?
-        <></> 
-        :
-        <>
-          <div>
-            <button onClick={handleLogin}>Login</button>
-          </div>
-        </>
-      }
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
+      <div>
+        <button onClick={handleLogin}>Login to debug</button>
+      </div>
     </>
-    // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
-    // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
   )
 }
 

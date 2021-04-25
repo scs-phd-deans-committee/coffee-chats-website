@@ -56,7 +56,7 @@ function CCNavbar(props){
             </Nav> :
             <Nav className="ml-auto">
               <NavDropdown.Item><Link to="/" style={linkStyle}>Home</Link></NavDropdown.Item>
-              <NavDropdown.Item><Login user={props.user} setUser={props.setUser} /></NavDropdown.Item>
+              <NavDropdown.Item><Link to="/profile" style={linkStyle}>Sign Up / Login</Link></NavDropdown.Item>
             </Nav>
           }
         </Navbar.Collapse>
