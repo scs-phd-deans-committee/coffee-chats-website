@@ -19,7 +19,6 @@ import { auth, firestore } from "./firebaseClient";
 import CCNavbar from './components/modules/Navbar';
 import Login from './components/modules/Login';
 
-import Feedback from './components/pages/Feedback';
 import MatchDetail from './components/pages/MatchDetail';
 import MatchHistory from './components/pages/MatchHistory';
 import Preferences from './components/pages/Preferences';
