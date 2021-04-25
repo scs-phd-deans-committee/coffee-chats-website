@@ -47,66 +47,51 @@ function Login(props) {
       // Avoid redirects after sign-in.
       signInSuccessWithAuthResult: (authResult) => {
         console.log("signin success!");
-        let currentUser = auth.currentUser;
-        console.log(currentUser)
-        let token = currentUser.getIdToken(true);
-        // token.then((idToken) => {
-        //   props.setUser(....);
-        // });
-        // if (!currentUser.emailVerified) {
-        //   console.log("not verified");
-        //   currentUser.sendEmailVerification();
-        // }
-        // token.then((idToken) => {
-        //   let displayName = currentUser.displayName;
-        //   let email = currentUser.email;
-        //   let loginResponse = {"token": idToken, "displayName": displayName, "email": email}
-        //   console.log("logging in");
-        //   props.handleLogin(loginResponse);
-        // });
+        let userPromise = getOrCreateUser(auth.currentUser);
+        userPromise.then(user => props.setUser(user));
         return false;
       }
     }
   }
 
-  // function getOrCreateUser(userQuery) {
-  //   // the "sub" field means "subject", which is a unique identifier for each user
-  //   console.log(userQuery);
-  //   let userRef = admin.firestore.collection("users").doc(userQuery.uid);
-  //   let user = userRef.get()
-  //     .then(userSnapshot => {
-  //       if (userSnapshot.exists) {
-  //         console.log("User exists");
-  //         return userSnapshot.data();
-  //       }
-  //       else {
-  //         console.log("Creating user");
-  //         let newUser = admin.firestore.collection("profiles").where("email", "==", userQuery.email).get()
-  //           .then((profileSnapshot) => {
-  //             let data = {
-  //               uid: userQuery.uid,
-  //               email: userQuery.email,
-  //               displayName: userQuery.displayName,
-  //               profileId: profileSnapshot.docs[0].id
-  //             };
-  //             let newUser = userRef.set(data).then(() => {
-  //               return data;
-  //             });
-  //             return newUser;
-  //           });
-  //         return newUser;
-  //       }
-  //     });
-  //   return user;
-  // }
+  // TODO: move this to server side so that we can verify that email addresses are
+  // using valid domains
+  function getOrCreateUser(userQuery) {
+    // the "sub" field means "subject", which is a unique identifier for each user
+    console.log(userQuery);
+    let userRef = firestore.collection("users").doc(userQuery.uid);
+    let user = userRef.get()
+      .then(userSnapshot => {
+        if (userSnapshot.exists) {
+          console.log("User exists");
+          return userSnapshot.data();
+        }
+        else {
+          console.log("Creating user");
+          let data = {
+            uid: userQuery.uid,
+            email: userQuery.email,
+            name: userQuery.displayName,
+            pronoun: null,
+            department: null,
+            year: null,
+            motto: null,
+          };
+          let newUser = userRef.set(data).then(() => {
+            return data;
+          });
+          return newUser;
+          // let newUser = firestore.collection("users").doc(userQuery.uid).set("email", "==", userQuery.email).get()
+          //   .then((profileSnapshot) => {
+          //   });
+          // return newUser;
+        }
+      });
+    return user;
+  }
 
   return (
-    <>
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
-      <div>
-        <button onClick={handleLogin}>Login to debug</button>
-      </div>
-    </>
+    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
   )
 }
 

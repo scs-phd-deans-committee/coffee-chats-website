@@ -18,9 +18,14 @@ function Profile(props) {
         <Row>
           <Col>
             <div className="text-center">
-              <div>Name: {props.user.name} ({props.user.pronoun})</div>
-              <div>Department: {props.user.department}, year {props.user.year}</div>
-              <div><i>"{props.user.motto}"</i></div>
+              <div>Name: {props.user.name} {props.user.pronoun ? <span>({props.user.pronoun})</span> : <></>}</div>
+              { (props.user.department & props.user.year & props.user.motto) ?
+                <>
+                  <div>Department: {props.user.department}, year {props.user.year}</div>
+                  <div><i>"{props.user.motto}"</i></div>
+                </> :
+                <></>
+              }
               <button onClick={() => {
                    props.setUser(null);
                    localStorage.removeItem("user");
@@ -29,6 +34,13 @@ function Profile(props) {
                 Logout
               </button>
             </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            {/* TODO: put in ProfileEditor here, e.g.
+            * <ProfileEditor user={props.user} setUser={props.setUser}/>
+            */}
           </Col>
         </Row>
       </Container>
