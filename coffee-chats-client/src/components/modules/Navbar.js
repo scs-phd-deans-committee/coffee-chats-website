@@ -69,18 +69,12 @@ function CCNavbar(props){
                     <Dropdown.Item><Link to="/matchlist" onClick={() => setExpanded(false)}>Matches</Link></Dropdown.Item>                
                     <Dropdown.Divider />
                     <Dropdown.Item><Link to="/feedback" onClick={() => setExpanded(false)}>Feedback Form</Link></Dropdown.Item>
-                    <Dropdown.Item><button onClick={() => {
-                                        props.setUser(null);
-                                        localStorage.removeItem("user");
-                                        history.push("/");
-                                      }}>Logout</button>
-                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </>
               :
               <Nav.Item>
-                <Navbar.Text><Link to="/profile" style={paddingStyle}>Sign Up / Login</Link></Navbar.Text>
+                <Navbar.Text><Link to="/profile" style={paddingStyle} onClick={() => setExpanded(false)}>Sign Up / Login</Link></Navbar.Text>
               </Nav.Item>
               }
             </Nav>

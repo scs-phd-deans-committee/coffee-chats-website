@@ -21,6 +21,13 @@ function Profile(props) {
               <div>Name: {props.user.name} ({props.user.pronoun})</div>
               <div>Department: {props.user.department}, year {props.user.year}</div>
               <div><i>"{props.user.motto}"</i></div>
+              <button onClick={() => {
+                   props.setUser(null);
+                   localStorage.removeItem("user");
+                   history.push("/");
+                 }}>
+                Logout
+              </button>
             </div>
           </Col>
         </Row>
