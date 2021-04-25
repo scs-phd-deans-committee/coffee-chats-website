@@ -44,6 +44,7 @@ function CCNavbar(props){
               <NavDropdown title="Your Account" id="basic-nav-dropdown" style={linkStyle}>
                 <NavDropdown.Item><Link to="/profile" style={linkStyle}>Your Profile</Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to="/matchlist" style={linkStyle}>Your Matches</Link></NavDropdown.Item>                
+                <NavDropdown.Divider />
                 <NavDropdown.Item><Link to="/feedback" style={linkStyle}>Feedback Form</Link></NavDropdown.Item>
                 <NavDropdown.Item><button onClick={() => {
                                     props.setUser(null);
