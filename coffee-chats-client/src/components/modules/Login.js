@@ -1,16 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { firebase } from '@firebase/app';
 import "firebase/auth";
 
 import { auth, firestore } from "../../firebaseClient";
+import { Button, Modal, ModalDialog, ModalHeader, ModalTitle, ModalBody, ModalFooter } from 'react-bootstrap';
 
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
-// import { GoogleLogin } from 'react-google-login';
-// import { GoogleLogout } from 'react-google-login';
-// refresh token
-// import { refreshTokenSetup } from '../utils/refreshToken';
 import {
   Redirect,
   useHistory
@@ -18,9 +15,14 @@ import {
 
 
 function Login(props) {
+  const [show, setShow] = useState(false);
   const history = useHistory();
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   function handleLogin() {
+    handleShow();
     firestore.collection("users").doc("koqx3c761USdEmuq4X1A").get()
       .then((profileSnapshot) => {
         let profile = profileSnapshot.data();
@@ -32,9 +34,7 @@ function Login(props) {
             year: profile.year,
             motto: profile.motto
           });
-          alert('Logged in');
         }
-        history.push("/");
         // history.push({
         //   pathname: "/profile",
         //   state: props.user
@@ -110,72 +110,35 @@ function Login(props) {
   // }
   const uiConfig = {}
 
-  if (!props.user) {
-    return (
-      // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
-      // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
-      <div>
-      <button onClick={handleLogin}>Login</button>
-      </div>
-    )
-  } else {
-    return (
-      <Redirect to="/" />
-    )
-  }
-
-  // Need to look into cookies and stuff.
-
-  // onLoginSuccess = (res) => {
-  //   console.log('Login Success: currentUser:', res.profileObj);
-  //   let name = res.profileObj.name;
-  //   this.setState({'name': name, 'isLoggedIn': true, 'imgUrl': res.profileObj.imageUrl})
-  // }
-
-  // onLoginFailure = (res) => {
-  //   console.log('Login failed: res:', res);
-  // };
-
-  // onLogoutSuccess = () => {
-  //   console.log('Logout made successfully');
-  //   alert('Logout successful, peace!');
-  //   this.setState({'name': LOGGEDOUT, 'isLoggedIn': false, 'imgUrl': null})
-  // };
-
-  // render() {
-  //   let comp;
-  //   if (!this.state.isLoggedIn) {
-  //     comp = <div>
-  //         <h1>Not logged in.</h1>
-  //         <br />
-  //         <GoogleLogin
-  //           clientId={clientId}
-  //           buttonText="Login"
-  //           onSuccess={this.onLoginSuccess}
-  //           onFailure={this.onLoginFailure}
-  //           cookiePolicy={'single_host_origin'}
-  //           style={{ marginTop: '100px' }}
-  //           isSignedIn={true}
-  //         />
-  //       </div>
-  //   } else {
-  //     comp = <div>
-  //         <h1> Current User: {this.state.name} </h1>
-  //         <img src={this.state.imgUrl} />
-  //         <br /> <br />
-  //         <GoogleLogout
-  //         clientId={clientId}
-  //         buttonText="Logout"
-  //         onLogoutSuccess={this.onLogoutSuccess}
-  //         />
-  //       </div>
-  //   }
-  //   return (
-  //     <div>
-  //       {comp}
-  //     </div>
-  //   );
-  // }
+  return (
+    <>
+      <Modal show={show}>
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleShow}>
+            Login
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      { props.user ?
+        <></> 
+        :
+        <>
+          <div>
+            <button onClick={handleLogin}>Login</button>
+          </div>
+        </>
+      }
+    </>
+    // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
+    // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
+  )
 }
 
 export default Login;
