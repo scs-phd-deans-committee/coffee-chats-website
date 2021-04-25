@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Column } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Login from '../modules/Login';
 
 import {
@@ -16,13 +16,13 @@ function Profile(props) {
       <br/><br/>
       <Container>
         <Row>
-          <Column>
+          <Col>
             <div className="text-center">
               <div>Name: {props.user.name} ({props.user.pronoun})</div>
               <div>Department: {props.user.department}, year {props.user.year}</div>
               <div><i>"{props.user.motto}"</i></div>
             </div>
-          </Column>
+          </Col>
         </Row>
       </Container>
       </>
