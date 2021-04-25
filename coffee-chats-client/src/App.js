@@ -19,7 +19,6 @@ import { auth, firestore } from "./firebaseClient";
 import CCNavbar from './components/modules/Navbar';
 import Login from './components/modules/Login';
 
-import Feedback from './components/pages/Feedback';
 import MatchDetail from './components/pages/MatchDetail';
 import MatchHistory from './components/pages/MatchHistory';
 import Preferences from './components/pages/Preferences';
@@ -57,9 +56,10 @@ function App(props) {
         <Route path="/profile">
           <Profile user={user} setUser={setUser} />
         </Route>
-        <Route path="/feedback">
-          <Feedback user={user} setUser={setUser}/>
-        </Route>
+        <Route path="/feedback" component={() => { 
+             window.location.replace('https://docs.google.com/forms/d/e/1FAIpQLSe3446QlXkwdo41AfkdzcL1LcSrBpQNUsJTaXDrW-ncxWPtYA/viewform?usp=sf_link'); 
+             return null;
+        }}/>
         <Route path="/matchlist">
           <MatchHistory user={user} setUser={setUser}/>
         </Route>

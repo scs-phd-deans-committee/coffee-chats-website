@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Column } from 'react-bootstrap';
 
 import { auth, firestore } from "../../firebaseClient";
 import { firebase } from '@firebase/app';

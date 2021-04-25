@@ -7,21 +7,12 @@ import {
 
 function Preferences(props) {
   const history = useHistory();
-  const logoutButton = 
-    <button onClick={() => {
-      props.setUser(null);
-      localStorage.removeItem("user");
-      history.push("/");
-    }}>Logout!</button>
-
 
   if (props.user) {
     return (
       <div className="preferencesContainer">
         <div className="preferences">
           <h1>Preferences Form</h1>
-
-          {logoutButton}
         </div>
       </div>
     )

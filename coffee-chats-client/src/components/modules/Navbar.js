@@ -34,7 +34,7 @@ function CCNavbar(props){
     <>
       <Navbar bg="light" expand="lg">
         <img src={logo_image} style={logoStyle}/>&nbsp;&nbsp;&nbsp;
-        <Navbar.Brand href="/" style={brandStyle}>CMU Grad Student Coffee Chats</Navbar.Brand>
+        <Navbar.Brand href="/" style={brandStyle}>coffee-chats</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           { (!!props.user) ?
@@ -44,6 +44,7 @@ function CCNavbar(props){
               <NavDropdown title="Your Account" id="basic-nav-dropdown" style={linkStyle}>
                 <NavDropdown.Item><Link to="/profile" style={linkStyle}>Your Profile</Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to="/matchlist" style={linkStyle}>Your Matches</Link></NavDropdown.Item>                
+                <NavDropdown.Divider />
                 <NavDropdown.Item><Link to="/feedback" style={linkStyle}>Feedback Form</Link></NavDropdown.Item>
                 <NavDropdown.Item><button onClick={() => {
                                     props.setUser(null);

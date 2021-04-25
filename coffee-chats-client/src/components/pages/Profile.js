@@ -7,14 +7,7 @@ import {
 
 function Profile(props) {
   const history = useHistory();
-  const logoutButton = 
-    <button onClick={() => {
-      props.setUser(null);
-      localStorage.removeItem("user");
-      history.push("/");
-    }}>Logout!</button>
-
-
+  
   if (props.user) {
     return (
       <div className="profileContainer">
@@ -22,8 +15,6 @@ function Profile(props) {
           <div className="name">Name: {props.user.name} ({props.user.pronoun})</div>
           <div className="department">Department: {props.user.department}, year {props.user.year}</div>
           <div className="motto"><i>{props.user.motto}</i></div>
-
-          {logoutButton}
         </div>
       </div>
     )
