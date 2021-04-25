@@ -38,7 +38,7 @@ function Login(props) {
           });
           alert('Logged in');
         }
-        history.push("/home");
+        history.push("/");
         // history.push({
         //   pathname: "/profile",
         //   state: props.user
@@ -124,7 +124,7 @@ function Login(props) {
     )
   } else {
     return (
-      <Redirect to="/home" />
+      <Redirect to="/" />
     )
   }
 

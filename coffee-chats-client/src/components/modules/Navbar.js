@@ -3,9 +3,17 @@
 
 import React, { useState } from "react";
 // import { get, post } from "../utilities";
-import { Link } from "react-router-dom";
-import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
+import Login from '../modules/Login';
 import logo_image from '../../coffee.png';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useHistory
+} from "react-router-dom";
 
 function CCNavbar(props){
   var logoStyle = {
@@ -15,7 +23,8 @@ function CCNavbar(props){
 
   var linkStyle = {
     color: 'black',
-    fontSize: '20px'
+    fontSize: '20px',
+    rightMargin: '10px',
   };
 
   var brandStyle = {
@@ -23,29 +32,34 @@ function CCNavbar(props){
     fontWeight: 'bold',
   };
 
+  const history = useHistory();
+
   return (
     <>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-        crossorigin="anonymous"
-      />
       <Navbar bg="light" expand="lg">
         <img src={logo_image} style={logoStyle}/>&nbsp;&nbsp;&nbsp;
-        <Navbar.Brand href="/home" style={brandStyle}>CMU Coffee Chats</Navbar.Brand>
+        <Navbar.Brand href="/" style={brandStyle}>CMU Grad Student Coffee Chats</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           { (!!props.user) ?
             <Nav className="ml-auto">
-              <NavDropdown.Item><Link to="/home" style={linkStyle}>Home</Link></NavDropdown.Item>
-              <NavDropdown.Item><Link to="/profile" style={linkStyle}>Your Profile</Link></NavDropdown.Item>
-              <NavDropdown.Item><Link to="/matchlist" style={linkStyle}>Your Matches</Link></NavDropdown.Item>
-              <NavDropdown.Item><Link to="/feedback" style={linkStyle}>Feedback Form</Link></NavDropdown.Item>
-              <NavDropdown.Item><Link to="/preferences" style={linkStyle}><b>Participate!</b></Link></NavDropdown.Item>
+              <Nav.Link><Link to="/" style={linkStyle}>Home</Link></Nav.Link>
+              <Nav.Link><Link to="/preferences" style={linkStyle}><b>Participate!</b></Link></Nav.Link>
+              <NavDropdown title="Your Account" id="basic-nav-dropdown" style={linkStyle}>
+                <NavDropdown.Item><Link to="/profile" style={linkStyle}>Your Profile</Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="/matchlist" style={linkStyle}>Your Matches</Link></NavDropdown.Item>                
+                <NavDropdown.Item><Link to="/feedback" style={linkStyle}>Feedback Form</Link></NavDropdown.Item>
+                <NavDropdown.Item><button onClick={() => {
+                                    props.setUser(null);
+                                    localStorage.removeItem("user");
+                                    history.push("/");
+                                  }}>Logout</button></NavDropdown.Item>
+              </NavDropdown>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
             </Nav> :
             <Nav className="ml-auto">
-              <NavDropdown.Item><Link to="/home" style={linkStyle}>Home</Link></NavDropdown.Item>
+              <NavDropdown.Item><Link to="/" style={linkStyle}>Home</Link></NavDropdown.Item>
+              <NavDropdown.Item><Login user={props.user} setUser={props.setUser} /></NavDropdown.Item>
             </Nav>
           }
         </Navbar.Collapse>

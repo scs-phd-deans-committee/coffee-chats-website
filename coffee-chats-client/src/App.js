@@ -12,6 +12,8 @@ import {
 import { firebase } from '@firebase/app';
 import "firebase/auth";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { auth, firestore } from "./firebaseClient";
 
 import CCNavbar from './components/modules/Navbar';
@@ -49,14 +51,11 @@ function App(props) {
     <div className="App">
     <Router>
       <CCNavbar 
-          user={user}
+          user={user} setUser={setUser}
       />
       <Switch>
         <Route path="/profile">
           <Profile user={user} setUser={setUser} />
-        </Route>
-        <Route path="/home">
-          <Home user={user} setUser={setUser} />
         </Route>
         <Route path="/feedback">
           <Feedback user={user} setUser={setUser}/>
@@ -70,9 +69,8 @@ function App(props) {
         <Route path="/preferences">
           <Preferences user={user} setUser={setUser}/>
         </Route>
-
         <Route path="/">
-          <Login user={user} setUser={setUser} />
+          <Home user={user} setUser={setUser} />
         </Route>
       </Switch>
     </Router>
