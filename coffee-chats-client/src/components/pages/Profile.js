@@ -9,7 +9,7 @@ import {
 
 function Profile(props) {
   const history = useHistory();
-  
+
   if (props.user) {
     return (
       <>
@@ -19,7 +19,7 @@ function Profile(props) {
           <Col>
             <div className="text-center">
               <div>Name: {props.user.name} {props.user.pronoun ? <span>({props.user.pronoun})</span> : <></>}</div>
-              { (props.user.department & props.user.year & props.user.motto) ?
+              { (props.user.department && props.user.year && props.user.motto) ?
                 <>
                   <div>Department: {props.user.department}, year {props.user.year}</div>
                   <div><i>"{props.user.motto}"</i></div>
