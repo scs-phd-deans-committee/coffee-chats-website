@@ -18,7 +18,7 @@ function Preferences(props) {
     )
   } else {
     return (
-      <Redirect to="/" />
+      <Redirect to="/profile" />
     )
   }
 }

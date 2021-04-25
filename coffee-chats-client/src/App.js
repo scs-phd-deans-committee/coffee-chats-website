@@ -3,6 +3,7 @@ import './App.css';
 // import { Link } from "react-router-dom";
 import {
   BrowserRouter as Router,
+  Redirect,
   Switch,
   Route,
   Link,
@@ -57,8 +58,11 @@ function App(props) {
           <Profile user={user} setUser={setUser} />
         </Route>
         <Route path="/feedback" component={() => { 
-             window.location.replace('https://docs.google.com/forms/d/e/1FAIpQLSe3446QlXkwdo41AfkdzcL1LcSrBpQNUsJTaXDrW-ncxWPtYA/viewform?usp=sf_link'); 
-             return null;
+             window.open("https://docs.google.com/forms/d/e/1FAIpQLSe3446QlXkwdo41AfkdzcL1LcSrBpQNUsJTaXDrW-ncxWPtYA/viewform?usp=sf_link", "_blank") ||
+                window.location.replace('https://docs.google.com/forms/d/e/1FAIpQLSe3446QlXkwdo41AfkdzcL1LcSrBpQNUsJTaXDrW-ncxWPtYA/viewform?usp=sf_link'); 
+             return (
+               <Redirect to="/"/>
+             );
         }}/>
         <Route path="/matchlist">
           <MatchHistory user={user} setUser={setUser}/>
