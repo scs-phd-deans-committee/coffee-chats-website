@@ -1,7 +1,7 @@
 // npm install classnames --save
 // npm install @animated-burgers/burger-arrow
 
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav, NavItem,  Dropdown } from 'react-bootstrap';
 import Login from '../modules/Login';
 import logo_image from '../../coffee.png';
@@ -12,9 +12,12 @@ import {
 } from "react-router-dom";
 
 function CCNavbar(props){
+  const [expanded, setExpanded] = useState(false);
+
   var logoStyle = {
     width: '50px',
     height: '50px',
+    padding: "5px",
   };
 
   var paddingStyle = {
@@ -38,7 +41,7 @@ function CCNavbar(props){
   };
 
   var brandStyle = {
-    fontSize: '20px',
+    fontSize: '25px',
     fontWeight: 'bold',
   };
 
@@ -46,27 +49,26 @@ function CCNavbar(props){
 
   return (
     <>
-      <Navbar bg="light" expand="lg">
-        <img src={logo_image} style={logoStyle}/>
-        <Navbar.Brand href="/" style={brandStyle}>coffee-chats</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar bg="light" expanded={expanded} expand="lg">
+        <Navbar.Brand href="/" style={brandStyle}><img src={logo_image} style={logoStyle}/>coffee-chats</Navbar.Brand>
+        <Navbar.Toggle onClick={() => setExpanded(expanded ? false : "expanded")} aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav variant="pills" className="ml-auto" style={navbarStyle}>
               <Nav.Item style={paddingStyle}>
-                <Navbar.Text ><Link to="/">Home</Link></Navbar.Text>
+                <Navbar.Text ><Link to="/" onClick={() => setExpanded(false)}>Home</Link></Navbar.Text>
               </Nav.Item>
               { (!!props.user) ?
               <>
                 <Nav.Item style={paddingStyle}>
-                  <Navbar.Text><Link to="/preferences"><b>Participate!</b></Link></Navbar.Text>
+                  <Navbar.Text><Link to="/preferences" onClick={() => setExpanded(false)}><b>Participate!</b></Link></Navbar.Text>
                 </Nav.Item>
                 <Dropdown as={Nav.Item}>
                   <Dropdown.Toggle as={Nav.Text} style={toggleStyle}>Account</Dropdown.Toggle>
                   <Dropdown.Menu align="right" style={menuStyle}>
-                    <Dropdown.Item><Link to="/profile">Profile</Link></Dropdown.Item>
-                    <Dropdown.Item><Link to="/matchlist">Matches</Link></Dropdown.Item>                
+                    <Dropdown.Item><Link to="/profile" onClick={() => setExpanded(false)}>Profile</Link></Dropdown.Item>
+                    <Dropdown.Item><Link to="/matchlist" onClick={() => setExpanded(false)}>Matches</Link></Dropdown.Item>                
                     <Dropdown.Divider />
-                    <Dropdown.Item><Link to="/feedback">Feedback Form</Link></Dropdown.Item>
+                    <Dropdown.Item><Link to="/feedback" onClick={() => setExpanded(false)}>Feedback Form</Link></Dropdown.Item>
                     <Dropdown.Item><button onClick={() => {
                                         props.setUser(null);
                                         localStorage.removeItem("user");
