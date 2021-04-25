@@ -57,9 +57,10 @@ function App(props) {
         <Route path="/profile">
           <Profile user={user} setUser={setUser} />
         </Route>
-        <Route path="/feedback">
-          <Feedback user={user} setUser={setUser}/>
-        </Route>
+        <Route path="/feedback" component={() => { 
+             window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSe3446QlXkwdo41AfkdzcL1LcSrBpQNUsJTaXDrW-ncxWPtYA/viewform?usp=sf_link'; 
+             return null;
+        }}/>
         <Route path="/matchlist">
           <MatchHistory user={user} setUser={setUser}/>
         </Route>

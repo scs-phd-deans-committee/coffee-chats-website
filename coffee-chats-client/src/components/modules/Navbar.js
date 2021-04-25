@@ -34,7 +34,7 @@ function CCNavbar(props){
     <>
       <Navbar bg="light" expand="lg">
         <img src={logo_image} style={logoStyle}/>&nbsp;&nbsp;&nbsp;
-        <Navbar.Brand href="/" style={brandStyle}>CMU Grad Student Coffee Chats</Navbar.Brand>
+        <Navbar.Brand href="/" style={brandStyle}>coffee-chats</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           { (!!props.user) ?
