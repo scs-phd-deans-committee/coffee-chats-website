@@ -12,10 +12,6 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 // refresh token
 // import { refreshTokenSetup } from '../utils/refreshToken';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
   Redirect,
   useHistory
 } from "react-router-dom";

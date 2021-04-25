@@ -1,17 +1,7 @@
 import React from 'react';
 
-import { firebase } from '@firebase/app';
-import "firebase/auth";
-
-import { auth, firestore } from "../../firebaseClient";
-
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
   Redirect,
   useHistory
 } from "react-router-dom";

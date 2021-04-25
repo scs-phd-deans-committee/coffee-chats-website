@@ -1,15 +1,11 @@
 // npm install classnames --save
 // npm install @animated-burgers/burger-arrow
 
-import React, { useState } from "react";
-// import { get, post } from "../utilities";
+import React from "react";
 import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import Login from '../modules/Login';
 import logo_image from '../../coffee.png';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link,
   Redirect,
   useHistory

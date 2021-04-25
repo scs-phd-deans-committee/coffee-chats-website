@@ -1,17 +1,10 @@
 import React from 'react';
 
-import { firebase } from '@firebase/app';
-import "firebase/auth";
-
-import { auth, firestore } from "../../firebaseClient";
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-
 import { Container, Row } from 'react-bootstrap';
 
 import { Link } from "react-router-dom";
 
 function Home(props) {
-
 
   return (
     <Container>
