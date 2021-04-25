@@ -90,57 +90,46 @@ function Login(props) {
     signInFlow: 'popup',
     // We will display Google and Email/Password as auth providers.
     signInOptions: [
+    {
+      provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      scopes: [
+        'https://www.googleapis.com/auth/contacts.readonly'
+      ],
+      customParameters: {
+        // Forces account selection even when one account
+        // is available.
+        prompt: 'select_account'
+      }
+    },
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID
     ],
     callbacks: {
       // Avoid redirects after sign-in.
       signInSuccessWithAuthResult: (authResult) => {
         console.log("signin success!");
-        post('/login', {uid: auth.currentUser.uid, email: auth.currentUser.email})
-          .then((res) => console.log(res));
-
-        let userPromise = getOrCreateUser(auth.currentUser);
-        userPromise.then(user => props.setUser(user));
+        let currentUser = auth.currentUser;
+        let token = currentUser.getIdToken(true);                                                                                                                                                                                                             
+        if (!currentUser.emailVerified) {
+          console.log("not verified");
+          currentUser.sendEmailVerification();
+        }   
+        token.then((idToken) => {
+          let displayName = currentUser.displayName;
+          let email = currentUser.email;
+          post('/login', {token: idToken, uid: currentUser.uid, email: currentUser.email, displayName: currentUser.displayName})
+            .then(res => {
+              console.log(res);
+              if (Object.keys(res).length > 0) {
+                props.setUser(res);
+              }
+              else {
+                props.setUser("Invalid");
+              }
+            });
+        }); 
         return false;
       }
     }
-  }
-
-  // TODO: move this to server side so that we can verify that email addresses are
-  // using valid domains
-  function getOrCreateUser(userQuery) {
-    // the "sub" field means "subject", which is a unique identifier for each user
-    console.log(userQuery);
-    let userRef = firestore.collection("users").doc(userQuery.uid);
-    let user = userRef.get()
-      .then(userSnapshot => {
-        if (userSnapshot.exists) {
-          console.log("User exists");
-          return userSnapshot.data();
-        }
-        else {
-          console.log("Creating user");
-          let data = {
-            uid: userQuery.uid,
-            email: userQuery.email,
-            name: userQuery.displayName,
-            pronoun: null,
-            department: null,
-            year: null,
-            motto: null,
-          };
-          let newUser = userRef.set(data).then(() => {
-            return data;
-          });
-          return newUser;
-          // let newUser = firestore.collection("users").doc(userQuery.uid).set("email", "==", userQuery.email).get()
-          //   .then((profileSnapshot) => {
-          //   });
-          // return newUser;
-        }
-      });
-    return user;
   }
 
   return (

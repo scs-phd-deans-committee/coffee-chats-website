@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Formik, Form, useField, Field, useFormikContext } from "formik";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
-import "./styles.css";
+// import "./styles.css";
 import "./styles-custom.css";
 
 import {
