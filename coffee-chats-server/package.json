@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PORT=3001 node ./bin/www"
+    "start": "export GOOGLE_APPLICATION_CREDENTIALS=\"service-account-file.json\";PORT=3001 node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
