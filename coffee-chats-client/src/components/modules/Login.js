@@ -15,25 +15,7 @@ import {
 
 
 function Login(props) {
-  function handleLogin() {
-    firestore.collection("users").doc("koqx3c761USdEmuq4X1A").get()
-      .then((profileSnapshot) => {
-        let profile = profileSnapshot.data();
-        if (!props.user) {
-          props.setUser({
-            name: profile.name,
-            pronoun: profile.pronoun,
-            department: profile.department,
-            year: profile.year,
-            motto: profile.motto
-          });
-        }
-        // history.push({
-        //   pathname: "/profile",
-        //   state: props.user
-        // });
-      })
-  }
+  
   function formatParams(params) {
     // iterate of all the keys of params as an array,
     // map it to a new array of URL string encoded key,value pairs
@@ -118,7 +100,7 @@ function Login(props) {
           let email = currentUser.email;
           post('/login', {token: idToken, uid: currentUser.uid, email: currentUser.email, displayName: currentUser.displayName})
             .then(res => {
-              console.log(res);
+              console.log(res, currentUser.uid);
               if (Object.keys(res).length > 0) {
                 props.setUser(res);
               }
