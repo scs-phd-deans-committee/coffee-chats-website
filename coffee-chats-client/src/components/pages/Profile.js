@@ -29,14 +29,14 @@ import {
 //                         isSearchable={true} isClearable={true} inputRef={ref}/>;
 // }
 
-function ControlledSelect({props, control, name, options}){
+function ControlledSelect({control, name, options, isMulti}){
   return <Controller
             control={control}
             name={name}
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <Select isMulti={props.isMulti} options={ options }
+            render={({ field: { onChange, onBlur, value, ref} }) => (
+              <Select isMulti={isMulti} options={ options }
                   isSearchable={true} isClearable={true} inputRef={ref}
-                  onChange={onChange}
+                  onChange={(value) => {onChange(value.value);}}
               />
             )}
          />;
@@ -49,9 +49,6 @@ function Profile(props) {
 
   const updateUser = (data) => {
     console.log('form submitted!')
-    console.log(data)
-    console.log(data.department.value)
-    data.department = data.department.value;
     console.log(data)
     props.setUser({...data, uid: props.user.uid});
     let profileRef = firestore.collection("users").doc(props.user.uid);
@@ -74,7 +71,7 @@ function Profile(props) {
                 Pronoun: <input {...register("pronoun")} defaultValue={props.user.pronoun}/> 
                 <br />
                 Department: 
-                <ControlledSelect props={props} control={control} name="department" options={departmentOptions}/>
+                <ControlledSelect control={control} name="department" options={departmentOptions} isMulti={false}/>
                 <br />
                 Year: <input type='number' {...register("year")} defaultValue={props.user.year}/>
                 <br />
