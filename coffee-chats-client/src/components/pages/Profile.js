@@ -4,8 +4,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Login from '../modules/Login';
 import { auth, firestore } from "../../firebaseClient";
 
-import Select from 'react-select';
 import { departmentOptions } from '../pages/Preferences';
+import ControlledSelect from '../modules/ControlledSelect';
 import '../../public/stylesheets/Forms.css';
 
 import {
@@ -30,44 +30,6 @@ import {
 //                         isSearchable={true} isClearable={true} inputRef={ref}/>;
 // }
 
-function ControlledSelect({control, name, options, isMulti, isClearable, defaultValue}){
-  const customStyles =  {
-    clearIndicator: (base) => ({
-      ...base,
-      width: "100px"
-    }),
-    indicatorsContainer: (base) => ({
-      ...base,
-      width: "100px"
-    }),
-    singleValue: (base) => ({
-      ...base,
-      paddingLeft: "5px"
-    }),
-    valueContainer: (base) => ({
-      ...base,
-      paddingLeft: "0px"
-    }),
-  }
-
-  return (
-      <Controller
-         control={control}
-         name={name}
-         render={({ field: { onChange, onBlur, value, ref} }) => (
-           <div>
-             <Select isMulti={isMulti} isClearable={isClearable} options={ options }
-               isSearchable={true} inputRef={ref}
-               onChange={(value) => {onChange(value.value);}}
-               defaultValue={{'label': defaultValue, 'value': defaultValue}}
-               styles={customStyles}
-             />
-           </div>
-         )}
-      />
-  )
-}
-
 function ProfileEditor(props) {
   const { register, handleSubmit, control } = useForm();
 
@@ -84,6 +46,7 @@ function ProfileEditor(props) {
     <>
       <form onSubmit={handleSubmit(updateUser)}>
         <div className="title">Profile Editor</div>
+	    <hr/>
         Name <input {...register("name")} defaultValue={props.user.name} />
         <br />
         Pronoun <input {...register("pronoun")} defaultValue={props.user.pronoun}/>
