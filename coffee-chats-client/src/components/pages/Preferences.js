@@ -170,17 +170,6 @@ function getValueSelect(raw_data, isMulti){
     }
 }
 
-function getValueMultipleChoice(raw_data, choice_type){
-    // if (choice_type === "") {
-    //     return raw_data.map((an_option) => (an_option.value));
-    // } else {
-    //     return raw_data.value;
-    // }
-    console.log(raw_data);
-    console.log(choice_type);
-    return raw_data;
-}
-
 function FancySelect(props) {
     return (
         TwoColumn(
@@ -198,8 +187,6 @@ function FancySelect(props) {
              />
         )
     );
-    // <Select isMulti={props.isMulti} options={props.options} onChange={props.onChange} 
-    //             isSearchable={true} isClearable={true}/>
 }
 
 function FreeText(props) {
@@ -216,31 +203,6 @@ function FreeText(props) {
             )}
          />
     )
-    // <Form.Control name={props.name} type="text" value={props.value} onChange={props.onChange}/>
-}
-
-function MultipleChoice(props) {
-    return (
-        TwoColumn(
-            <Form.Label>{props.label}</Form.Label>,
-            <Controller
-                control={props.control}
-                name={props.name}
-                render={({ field: { onChange, onBlur, value, ref} }) => (
-                    <InputGroup className="mb-3">
-                        {props.options.map((anOption) => (
-                            <Form.Check inline label={anOption.label} name={anOption.value} type={props.type} id={anOption.value} 
-                                        onChange={(value) => {onChange(getValueMultipleChoice(value, props.type))}}/>
-                            ))
-                        }
-                    </InputGroup>
-                )}
-            />         
-        )
-    )
-    // props.options.map((anOption) => (
-    //             <Form.Check inline label={anOption.label} name={anOption.value} type={props.type} id={anOption.value} />
-    //         ))
 }
 
 function Preferences(props) {
@@ -251,8 +213,6 @@ function Preferences(props) {
         console.log('form submitted!')
         console.log(data)
     }
-
-      
     
     return (
         <div>
