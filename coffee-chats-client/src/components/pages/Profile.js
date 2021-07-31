@@ -4,8 +4,9 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Login from '../modules/Login';
 import { auth, firestore } from "../../firebaseClient";
 
-import Select from 'react-select';
 import { departmentOptions } from '../pages/Preferences';
+import ControlledSelect from '../modules/ControlledSelect';
+import '../../public/stylesheets/Forms.css';
 
 import {
   Redirect,
@@ -29,28 +30,10 @@ import {
 //                         isSearchable={true} isClearable={true} inputRef={ref}/>;
 // }
 
-function ControlledSelect({control, name, options, isMulti, defaultValue}){
-  return <Controller
-            control={control}
-            name={name}
-            render={({ field: { onChange, onBlur, value, ref} }) => (
-              <Select isMulti={isMulti} options={ options }
-                  isSearchable={true} isClearable={true} inputRef={ref}
-                  onChange={(value) => {onChange(value.value);}}
-                  defaultValue={{'label': defaultValue, 'value': defaultValue}}
-              />
-            )}
-         />;
- }
-
-
-function Profile(props) {
-  const history = useHistory();
+function ProfileEditor(props) {
   const { register, handleSubmit, control } = useForm();
 
   const updateUser = (data) => {
-    console.log('form submitted!')
-    console.log(data)
     props.setUser({...data, uid: props.user.uid});
     let profileRef = firestore.collection("users").doc(props.user.uid);
     let profile = profileRef.update({...data, year: parseInt(props.user.year)})
@@ -58,59 +41,69 @@ function Profile(props) {
         alert('Profile saved.');
       });
   }
+ 
+  return (
+    <>
+      <form onSubmit={handleSubmit(updateUser)}>
+        <div className="title">Profile Editor</div>
+	    <hr/>
+        Name <input {...register("name")} defaultValue={props.user.name} />
+        <br />
+        Pronoun <input {...register("pronoun")} defaultValue={props.user.pronoun}/>
+        <br />
+        Department 
+        <ControlledSelect control={control} name="department" options={departmentOptions} isMulti={false} isClearable={false} defaultValue={props.user.department}/>
+        <br />
+        Year <input type='number' {...register("year")} defaultValue={props.user.year}/>
+        <br />
+        Motto <input {...register("motto")} defaultValue={props.user.motto}/>
+        <br />
+        <input className="submit-button" type="submit" value="Update profile"/>
+      </form>
+    </>
+  )
+}
+
+function ProfileDisplay(props) {
+  return (
+    <div className="profile-display text-center">
+      <div><span className="name">{props.user.name}</span>{props.user.pronoun ? <span className="pronouns"> ({props.user.pronoun})</span> : <></>}</div>
+      { (props.user.department && props.user.year && props.user.motto) ?
+        <>
+          <div>{props.user.department}, year {props.user.year}</div>
+          <div><i>"{props.user.motto}"</i></div>
+        </> :
+        <></>
+      }
+      <br/>
+      <button onClick={() => {
+           props.setUser(null);
+           localStorage.removeItem("user");
+           props.history.push("/");
+         }}>
+        Logout
+      </button>
+    </div>
+  )
+}
+
+function Profile(props) {
+  const history = useHistory();
 
   if (props.user) {
     if (props.user !== "Invalid") {
-      console.log(props.user)
-      return (
-        <>
-        <Container>
-          <Row>
-            <Col>
-              <form onSubmit={handleSubmit(updateUser)}>
-                Name: <input {...register("name")} defaultValue={props.user.name} /> 
-                <br />
-                Pronoun: <input {...register("pronoun")} defaultValue={props.user.pronoun}/> 
-                <br />
-                Department: 
-                <ControlledSelect control={control} name="department" options={departmentOptions} isMulti={false} defaultValue={props.user.department}/>
-                <br />
-                Year: <input type='number' {...register("year")} defaultValue={props.user.year}/>
-                <br />
-                Motto: <input {...register("motto")} defaultValue={props.user.motto}/>
-                <br />
-                <input type="submit" />
-              </form>
-
-              <div className="text-center">
-                                <div>Name: {props.user.name} {props.user.pronoun ? <span>({props.user.pronoun})</span> : <></>}</div>
-                { (props.user.department && props.user.year && props.user.motto) ?
-                  <>
-                    <div>Department: {props.user.department}, year {props.user.year}</div>
-                    <div><i>"{props.user.motto}"</i></div>
-                  </> :
-                  <></>
-                }
-                <button onClick={() => {
-                     props.setUser(null);
-                     localStorage.removeItem("user");
-                     history.push("/");
-                   }}>
-                  Logout
-                </button>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {/* TODO: put in ProfileEditor here, e.g.
-              * <ProfileEditor user={props.user} setUser={props.setUser}/>
-              */}
-            </Col>
-          </Row>
-        </Container>
-        </>
-      )
+        return (
+          <>
+            <Container>
+              <Row className="align-content-center flex-column">
+                  <ProfileDisplay user={props.user} setUser={props.setUser} history={history}/>
+              </Row>
+              <Row className="align-content-center flex-column">
+                <ProfileEditor user={props.user} setUser={props.setUser} history={history}/>
+              </Row>
+            </Container>
+          </>
+        )
     }
     else {
       return (
@@ -119,7 +112,7 @@ function Profile(props) {
           <Row>
             <Col>
               <div className="text-center">
-                <div>You tried to sign out with an invalid account. Please logout and try again using an @andrew.cmu.edu or @pitt.edu account.</div>
+                <div>You tried to sign in with an invalid account. Please logout and try again using an @andrew.cmu.edu or @pitt.edu account.</div>
                 <button onClick={() => {
                      props.setUser(null);
                      localStorage.removeItem("user");
@@ -136,7 +129,8 @@ function Profile(props) {
         </>
       )
     }
-  } else {
+  }
+  else {
     return (
       <>
         <br/><br/>

@@ -1,0 +1,95 @@
+.title {
+  font-weight: 600;
+  font-size: 1.5rem; 
+}
+
+.subtitle {
+  font-weight: 600;
+  font-size: 1rem; 
+}
+
+hr {
+  border-color: #049c8c;
+  margin-top: 5px;
+}
+form {
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 600px;
+  max-width: calc(100% - 40px);
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 20px;
+}
+
+form input {
+  padding-left: 5px;
+}
+
+form * {
+  text-align: left;
+  width: 100%;
+}
+
+.profile-display {
+  width: 600px;
+  max-width: 100%;
+  border: 1px solid gray;
+  padding: 10px;
+  max-width: calc(100% - 40px);
+  margin-top: 20px;
+  border-radius: 4px;
+}
+.profile-display .name {
+  font-weight: 600;
+}
+
+.submit-button {
+  width: max-content
+}
+
+.twoCol-right {
+  width: 40%;
+  height: 100%;
+  /* flex-wrap: wrap; */
+  display:inline-block; 
+  max-height: 100%;
+}
+.twoCol-left {
+  width: 40%;
+  /* height: 100%; */
+  /* flex-wrap: wrap; */
+  /* justify-content: flex-start; */
+  display:inline-block;
+  margin-right: 10px;
+}
+.twoCol-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.twoCol-right-flex {
+  margin: auto;
+  /* background: tomato; */
+  width: 50%;
+}
+.twoCol-left-flex {
+  height: inherit;
+  overflow: wrap;
+  width: 50%;
+}
+.twoCol-container-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.fancy-select {
+  margin-bottom: 10px;
+}
+.free-text {
+  margin-bottom: 10px;
+}
