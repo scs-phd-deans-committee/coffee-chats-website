@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Form, InputGroup, ToggleButtonGroup, ToggleButton, Button } from 'react-bootstrap';
+import { useForm, Controller, useController } from "react-hook-form";
 import Select from 'react-select';
 
 import "./styles.css";
@@ -158,206 +159,147 @@ function TwoColumn(firstCol, secondCol) {
             </div>
         </div>
         // <div className="twoCol_container">
-        //     <div className="twoCol_left">
-        //         {firstCol}
-        //     </div>
-        //     <div className="twoCol_right">
-        //         {secondCol}
-        //     </div>
-        // </div>
     )
+}
+
+function getValueSelect(raw_data, isMulti){
+    if (isMulti) {
+        return raw_data.map((an_option) => (an_option.value));
+    } else {
+        return raw_data.value;
+    }
+}
+
+function getValueMultipleChoice(raw_data, choice_type){
+    // if (choice_type === "") {
+    //     return raw_data.map((an_option) => (an_option.value));
+    // } else {
+    //     return raw_data.value;
+    // }
+    console.log(raw_data);
+    console.log(choice_type);
+    return raw_data;
 }
 
 function FancySelect(props) {
     return (
         TwoColumn(
             <Form.Label>{props.label}</Form.Label>,
-            <Select isMulti={props.isMulti} options={props.options} onChange={props.onChange} 
-                        isSearchable={true} isClearable={true}/>
+            <Controller
+                control={props.control}
+                name={props.name}
+                render={({ field: { onChange, onBlur, value, ref} }) => (
+                  <Select isMulti={props.isMulti} options={ props.options }
+                      isSearchable={true} isClearable={true} inputRef={ref}
+                      onChange={(value) => {onChange(getValueSelect(value, props.isMulti))}}
+                      defaultValue={{'label': props.defaultValue, 'value': props.defaultValue}}
+                  />
+                )}
+             />
         )
-    )
-
-    // return (
-    //     <div>
-    //         {/* <InputGroup>
-    //             <InputGroup.Prepend>
-    //                 <InputGroup.Text>{props.label}</InputGroup.Text>
-    //             </InputGroup.Prepend>
-    //             <div style={{width: '10%'}}>
-    //             <div>
-    //                 <Select classNamePrefix="myCustomPrefix" isMulti={props.isMulti} options={props.options} onChange={props.onChange} 
-    //                     isSearchable={true} isClearable={true}/>
-    //             </div>
-    //         </InputGroup> */}
-    //         {/* <Row>
-    //             <Col>
-    //                 <InputGroup.Text>{props.label}</InputGroup.Text>
-    //             </Col>
-    //             <Col>
-    //                 <Select isMulti={props.isMulti} options={props.options} onChange={props.onChange}
-    //                     isSearchable={true} isClearable={true}/>
-    //              </Col>
-    //         </Row> */}
-    //         {/* <div className="twoCol_left">
-    //             <InputGroup.Text>{props.label}</InputGroup.Text>
-    //         </div> */}
-    //         {/* <div className="twoCol_left">
-    //             {props.label}
-    //         </div> */}
-    //         {/* <InputGroup.Text className="twoCol_left">{props.label}</InputGroup.Text> */}
-    //         <Form.Label className="twoCol_left">{props.label}</Form.Label>
-    //         <div className="twoCol_right">
-    //             <Select classNamePrefix="myCustomPrefix" isMulti={props.isMulti} options={props.options} onChange={props.onChange} 
-    //                     isSearchable={true} isClearable={true}/>
-    //         </div>
-    //     </div>
-    // )
-};
+    );
+    // <Select isMulti={props.isMulti} options={props.options} onChange={props.onChange} 
+    //             isSearchable={true} isClearable={true}/>
+}
 
 function FreeText(props) {
     return TwoColumn(
         <Form.Label>{props.label}</Form.Label>,
-        <Form.Control name={props.name} type="text" value={props.value} onChange={props.onChange}/>
+        <Controller
+            control={props.control}
+            name={props.name}
+            render={({ field: { onChange, onBlur, value, ref} }) => (
+              <Form.Control name={props.name} type="text" value={value}
+                    onChange={onChange}
+                    defaultValue={props.defaultValue}
+              />
+            )}
+         />
     )
-    // return (
-    //     <div>
-    //         <Row>
-    //             <Col>
-    //                 <InputGroup.Text>{props.label}</InputGroup.Text>
-    //             </Col>
-    //             <Col>
-    //                 <Form.Control name={props.name} type="text" value={props.value} onChange={props.onChange}/>
-    //             </Col>
-    //         </Row>
-    //     </div>
-    // )
+    // <Form.Control name={props.name} type="text" value={props.value} onChange={props.onChange}/>
 }
 
 function MultipleChoice(props) {
     return (
         TwoColumn(
             <Form.Label>{props.label}</Form.Label>,
-            props.options.map((anOption) => (
-                <Form.Check inline label={anOption.label} name={anOption.value} type={props.type} id={anOption.value} />
-            ))
+            <Controller
+                control={props.control}
+                name={props.name}
+                render={({ field: { onChange, onBlur, value, ref} }) => (
+                    <InputGroup className="mb-3">
+                        {props.options.map((anOption) => (
+                            <Form.Check inline label={anOption.label} name={anOption.value} type={props.type} id={anOption.value} 
+                                        onChange={(value) => {onChange(getValueMultipleChoice(value, props.type))}}/>
+                            ))
+                        }
+                    </InputGroup>
+                )}
+            />         
         )
     )
-    // return (
-    //     <div>
-    //         {/* <InputGroup>
-    //             <InputGroup.Prepend>
-    //                 <InputGroup.Text>{props.label}</InputGroup.Text>
-    //             </InputGroup.Prepend>
-    //             <div>
-    //                 {props.options.map((anOption) => (
-    //                     <Form.Check inline label={anOption.label} name={anOption.value} type={props.type} id={anOption.value} />
-    //                 ))}
-    //             </div>
-    //         </InputGroup> */}
-
-    //         <Row>
-    //             <Col>
-    //                 <InputGroup.Text>{props.label}</InputGroup.Text>
-    //             </Col>
-    //             <Col>
-    //                 {/* <Form.Control name={props.name} type="text" value={props.value} onChange={props.onChange}/>
-    //                 <Form.Check inline label="Online" name="group1" type={"checkbox"} id="Online" />
-    //                 <Form.Check inline label="In person" name="group1" type={"checkbox"} id="In person"/> */}
-    //                 {props.options.map((anOption) => (
-    //                     <Form.Check inline label={anOption.label} name={anOption.value} type={props.type} id={anOption.value} />
-    //                 ))}
-    //             </Col>
-    //         </Row>
-    //     </div>
-    // )
+    // props.options.map((anOption) => (
+    //             <Form.Check inline label={anOption.label} name={anOption.value} type={props.type} id={anOption.value} />
+    //         ))
 }
 
-class Preferences extends Component {
+function Preferences(props) {
 
-    // Constructor
-    constructor(props) {
-        super(props);
-        this.state = {
-        }
+    const { register, handleSubmit, control } = useForm();
 
-    }
-
-
-    // Handling submitting the form
-    handleSubmit(event) {
-        event.preventDefault();
-    }
-
-    // Handling them writing stuff
-    handleInputChange(event) {
-    }
-
-    minorityBackground(props) {
-        return (
-            <div>
-            <MultipleChoice label="Would you like to meet people with similar minority backgrounds as you?" options={yesNoOptions} type="radio"/>
-            <FancySelect label="Minority Background" onChange={props.onChange} options={minorityOptions} isMulti={true}/>
-            </div>
-        )
+    const updatePreferences = (data) => {
+        console.log('form submitted!')
+        console.log(data)
     }
 
       
-    render() {
-        return (
-            <div>
-                <Form onSubmit={this.handleSubmit.bind(this)}>
-                    <FreeText name="name" label="Name" value={this.state.name} onChange={this.handleInputChange.bind(this)}/>
-                    <FreeText name="pronouns" label="Pronouns" value={this.state.pronouns} onChange={this.handleInputChange.bind(this)}/>
+    
+    return (
+        <div>
+            <Form onSubmit={handleSubmit(updatePreferences)}>
+                <FreeText name="name" control={control} defaultValue="" label="Name" value={props.name}/>
+                <FreeText name="pronouns" control={control} defaultValue="" label="Pronouns" value={props.pronouns}/>
 
-                    <FancySelect label="College" onChange={this.handleInputChange} options={collegeOptions} isMulti={false}/>
-                    <FancySelect label="Department/Program" onChange={this.handleInputChange} options={departmentOptions} isMulti={false}/>
-                    <FancySelect label="Year" onChange={this.handleInputChange} options={yearOptions} isMulti={false}/>
-                    <FancySelect label="Time" onChange={this.handleInputChange} options={timeOptions} isMulti={true}/>
+                <FancySelect name="college" control={control} defaultValue="" label="College" options={collegeOptions} isMulti={false}/>
+                <FancySelect name="department" control={control} defaultValue="" label="Department/Program" options={departmentOptions} isMulti={false}/>
+                <FancySelect name="year" control={control} defaultValue="" label="Year" options={yearOptions} isMulti={false}/>
+                <FancySelect name="time" control={control} defaultValue="" label="Time" options={timeOptions} isMulti={true}/>
+                
+                <FancySelect name="group_size" control={control} defaultValue="" label="Group size" options={groupOptions} isMulti={true}/>
 
-                    <MultipleChoice label="Group size" options={groupOptions} type="checkbox"/>
+                <h3>Who do you want to meet? (optional)</h3>
+                <FancySelect name="year_pref" control={control} defaultValue="" label="Preferences between years" options={yearPrefOptions} isMulti={true}/>
 
-
-                    <h3>Who do you want to meet? (optional)</h3>
-                    <MultipleChoice label="Preferences between years" options={yearPrefOptions} type="checkbox"/>
-
-                    <FancySelect label="Preference for talking to specific colleges" onChange={this.handleInputChange} 
-                        options={collegeOptions} isMulti={true}/>
-                    <FancySelect label="Preference for talking to specific departments/programs" onChange={this.handleInputChange} 
-                        options={departmentOptions} isMulti={true}/>
-                    <this.minorityBackground onChange={this.handleInputChange}/>
-
-
-                    <h3>What would you like to talk about? (optional)</h3>
-                    <FancySelect label="Preference for talking to specific departments/programs" onChange={this.handleInputChange} 
-                        options={academicTalkOptions} isMulti={false}/>
-                    <FreeText name="researchTopics" label="Research topics" value={this.state.researchTopics} onChange={this.handleInputChange.bind(this)}/>
-                    <FancySelect label="Hobbies" onChange={this.handleInputChange} options={hobbyOptions} isMulti={true}/>
-                    <FreeText name="hobbiesFreeText" label="Additional hobbies/interests you would like to talk about" 
-                        value={this.state.hobbiesFreeText} onChange={this.handleInputChange.bind(this)}/>
+                <FancySelect name="college_pref" control={control} defaultValue="" label="Preference for talking to specific colleges" 
+                    options={collegeOptions} isMulti={true}/>
+                <FancySelect name="department_pref" control={control} defaultValue="" label="Preference for talking to specific departments/programs" 
+                    options={departmentOptions} isMulti={true}/>
+                
+                <div>
+                    <FancySelect name="minority_background_pref" control={control} defaultValue="" label="Would you like to meet people with similar minority backgrounds as you?" options={yesNoOptions} isMulti={false}/>
+                    <FancySelect name="minority_background" control={control} defaultValue="" label="Minority Background" onChange={props.onChange} options={minorityOptions} isMulti={true}/>
+                </div>
 
 
-                    <h3>Submit!</h3>
-                    {/* <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text>Can we include your anonymized data in our public statistics?</InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <ToggleButtonGroup type="radio" name="options" defaultValue={"yes"}>
-                            <ToggleButton value={"yes"}>Yes</ToggleButton>
-                            <ToggleButton value={"no"}>No</ToggleButton>
-                        </ToggleButtonGroup>
-                    </InputGroup> */}
-
-                    <MultipleChoice label="Can we include your anonymized data in our public statistics?" options={yesNoOptions} type="radio"/>
-                    <FreeText name="other" label="Anything else you want us to know for matching purposes?" 
-                        value={this.state.other} onChange={this.handleInputChange.bind(this)}/>
-                    <Button>Submit</Button>
+                <h3>What would you like to talk about? (optional)</h3>
+                <FancySelect name="academic_talk_pref" control={control} defaultValue="" label="Preference for talking about academic vs. non-academic topics" 
+                    options={academicTalkOptions} isMulti={false}/>
+                <FreeText name="research_topics" control={control} defaultValue="" label="Research topics" value={props.researchTopics}/>
+                <FancySelect name="hobbies" control={control} defaultValue="" label="Hobbies" options={hobbyOptions} isMulti={true}/>
+                <FreeText name="hobbies_freetext" control={control} defaultValue="" name="hobbiesFreeText" label="Additional hobbies/interests you would like to talk about" 
+                    value={props.hobbiesFreeText}/>
 
 
-                </Form>
-            </div>
-        )
-    }
+                <h3>Submit!</h3>
 
+                <FancySelect name="privacy_pref" control={control} defaultValue="" label="Can we include your anonymized data in our public statistics?" options={yesNoOptions} isMulti={false}/>
+                <FreeText name="other" control={control} defaultValue="" label="Anything else you want us to know for matching purposes?" 
+                    value={props.other}/>
+
+                <input type="submit" />
+            </Form>
+        </div>
+    )
 }
 
 
