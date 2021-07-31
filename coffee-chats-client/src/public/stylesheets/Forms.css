@@ -15,6 +15,10 @@ form {
   margin: 20px;
 }
 
+form input {
+  padding-left: 5px;
+}
+
 form * {
   text-align: left;
   width: 100%;
@@ -23,7 +27,7 @@ form * {
 .profile-display {
   width: 600px;
   max-width: 100%;
-  border: 1px solid black;
+  border: 1px solid gray;
   padding: 10px;
   max-width: calc(100% - 40px);
   margin-top: 20px;
@@ -31,4 +35,8 @@ form * {
 }
 .profile-display .name {
   font-weight: 600;
+}
+
+.submit-button {
+  width: max-content
 }

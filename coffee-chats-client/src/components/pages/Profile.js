@@ -40,6 +40,14 @@ function ControlledSelect({control, name, options, isMulti, isClearable, default
       ...base,
       width: "100px"
     }),
+    singleValue: (base) => ({
+      ...base,
+      paddingLeft: "5px"
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      paddingLeft: "0px"
+    }),
   }
 
   return (
@@ -87,7 +95,7 @@ function ProfileEditor(props) {
         <br />
         Motto <input {...register("motto")} defaultValue={props.user.motto}/>
         <br />
-        <input type="submit" value="Update profile"/>
+        <input className="submit-button" type="submit" value="Update profile"/>
       </form>
     </>
   )
