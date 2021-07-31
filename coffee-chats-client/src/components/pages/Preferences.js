@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Row, Col, Form, InputGroup, ToggleButtonGroup, ToggleButton, Button } from 'react-bootstrap';
 import { useForm, Controller, useController } from "react-hook-form";
 import Select from 'react-select';
+import { auth, firestore } from "../../firebaseClient";
+import { firebase } from '@firebase/app';
 
 import "./styles.css";
 
@@ -211,7 +213,19 @@ function Preferences(props) {
 
     const updatePreferences = (data) => {
         console.log('form submitted!')
+        data = {...data, uid: props.user.uid, response_time: firebase.firestore.FieldValue.serverTimestamp()}
+        Object.keys(data).forEach(function(key) {
+            if(data[key] === null | data[key] === undefined) {
+                data[key] = '';
+            }
+        })
+
         console.log(data)
+
+        firestore.collection('responses').add({
+            uid: props.user.uid,
+            ...data
+        });
     }
     
     return (
