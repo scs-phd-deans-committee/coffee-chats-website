@@ -362,3 +362,5 @@ class Preferences extends Component {
 
 
 export default Preferences;
+export { departmentOptions };
+

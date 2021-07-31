@@ -1,19 +1,58 @@
 import React from 'react';
-import { useForm } from "react-hook-form";
+import { useForm, Controller, useController } from "react-hook-form";
 import { Container, Row, Col } from 'react-bootstrap';
 import Login from '../modules/Login';
 import { auth, firestore } from "../../firebaseClient";
+
+import Select from 'react-select';
+import { departmentOptions } from '../pages/Preferences';
 
 import {
   Redirect,
   useHistory
 } from "react-router-dom";
 
+
+// function ControlledSelect({ control, name, props, defaultValue }) {
+//   const {
+//     field: { ref, ...inputProps },
+//     fieldState: {},
+//     formState: {}
+//   } = useController({
+//     name,
+//     control,
+//     rules: { required: true },
+//     defaultValue: defaultValue,
+//   });
+
+//   return <Select isMulti={props.isMulti} options={ departmentOptions }
+//                         isSearchable={true} isClearable={true} inputRef={ref}/>;
+// }
+
+function ControlledSelect({props, control, name, options}){
+  return <Controller
+            control={control}
+            name={name}
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Select isMulti={props.isMulti} options={ options }
+                  isSearchable={true} isClearable={true} inputRef={ref}
+                  onChange={onChange}
+              />
+            )}
+         />;
+ }
+
+
 function Profile(props) {
   const history = useHistory();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm();
 
   const updateUser = (data) => {
+    console.log('form submitted!')
+    console.log(data)
+    console.log(data.department.value)
+    data.department = data.department.value;
+    console.log(data)
     props.setUser({...data, uid: props.user.uid});
     let profileRef = firestore.collection("users").doc(props.user.uid);
     let profile = profileRef.update({...data, year: parseInt(props.user.year)})
@@ -34,7 +73,8 @@ function Profile(props) {
                 <br />
                 Pronoun: <input {...register("pronoun")} defaultValue={props.user.pronoun}/> 
                 <br />
-                Department: <input {...register("department")} defaultValue={props.user.department}/>
+                Department: 
+                <ControlledSelect props={props} control={control} name="department" options={departmentOptions}/>
                 <br />
                 Year: <input type='number' {...register("year")} defaultValue={props.user.year}/>
                 <br />
