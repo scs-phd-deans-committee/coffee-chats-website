@@ -29,7 +29,7 @@ import {
 //                         isSearchable={true} isClearable={true} inputRef={ref}/>;
 // }
 
-function ControlledSelect({control, name, options, isMulti}){
+function ControlledSelect({control, name, options, isMulti, defaultValue}){
   return <Controller
             control={control}
             name={name}
@@ -37,6 +37,7 @@ function ControlledSelect({control, name, options, isMulti}){
               <Select isMulti={isMulti} options={ options }
                   isSearchable={true} isClearable={true} inputRef={ref}
                   onChange={(value) => {onChange(value.value);}}
+                  defaultValue={{'label': defaultValue, 'value': defaultValue}}
               />
             )}
          />;
@@ -60,6 +61,7 @@ function Profile(props) {
 
   if (props.user) {
     if (props.user !== "Invalid") {
+      console.log(props.user)
       return (
         <>
         <Container>
@@ -71,7 +73,7 @@ function Profile(props) {
                 Pronoun: <input {...register("pronoun")} defaultValue={props.user.pronoun}/> 
                 <br />
                 Department: 
-                <ControlledSelect control={control} name="department" options={departmentOptions} isMulti={false}/>
+                <ControlledSelect control={control} name="department" options={departmentOptions} isMulti={false} defaultValue={props.user.department}/>
                 <br />
                 Year: <input type='number' {...register("year")} defaultValue={props.user.year}/>
                 <br />
