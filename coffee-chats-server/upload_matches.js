@@ -11,7 +11,7 @@ const collectionKey = "matches_test";
 
 if (data && (typeof data === "object")) {
   Object.keys(data["matches"]).forEach(i => {
-    admin.firestore.collection(collectionKey).doc().set({"participants": data["matches"][i], "round": data["round"]}, { merge: true }).then((res) => {
+    admin.firestore.collection(collectionKey).doc().set({"user_ids": data["matches"][i]["user_ids"], "response_ids": data["matches"][i]["response_ids"], "round": data["round"]}, { merge: true }).then((res) => {
       console.log("Matches " + i + " successfully written: ");
     }).catch((error) => {
       console.error("Error writing document: ", error);

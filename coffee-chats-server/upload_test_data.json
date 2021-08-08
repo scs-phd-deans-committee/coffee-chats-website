@@ -1,25 +1,26 @@
 {
-    "round": "0",
-    "matches": [
-        [
-            {
-                "uid": "a",
-                "response_id": "yes"
-            },
-            {
-                "uid": "b",
-                "response_id": "no"
-            }
-        ],
-        [
-            {
-                "uid": "2",
-                "response_id": "hi"
-            },
-            {
-                "uid": "r",
-                "response_id": "bye"
-            }
-        ]
+  "round": "0",
+  "matches": 
+    [
+        {
+        "user_ids": [
+          "wAZMlOIHPFQjJkYEJA1obKXJ04l1",
+          "pMCa7vjJn1MWgD3IndrdD6a0UYl1"
+      ],
+      "response_ids": [
+          "JsUPhPpNmN7GcbtYYUov",
+          "vz2mboVEgdxQ0KH4CckF"
+      ]
+        },
+      {
+        "user_ids": [
+          "wAZMlOIHPFQjJkYEJA1obKXJ04l1",
+          "pMCa7vjJn1MWgD3IndrdD6a0UYl1"
+      ],
+      "response_ids": [
+          "JsUPhPpNmN7GcbtYYUov",
+          "vz2mboVEgdxQ0KH4CckF"
+      ]
+        }
     ]
 }
