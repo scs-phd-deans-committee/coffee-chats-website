@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { Container, Row, Col, Form, InputGroup, ToggleButtonGroup, ToggleButton, Button } from 'react-bootstrap';
 import ControlledSelect from '../modules/ControlledSelect';
 import { useForm, Controller } from "react-hook-form";
@@ -44,8 +44,10 @@ function FreeText(props) {
 		  	control={props.control}
 		  	name={props.name}
 		  	render={({ field: { onChange, onBlur, value, ref} }) => (
-		  		<Form.Control name={props.name} type="text" value={value}
-		  			onChange={onChange}
+                  <Form.Control name={props.name} type="text" 
+                //   value={value}
+					  onChange={e => {console.log(e.target.value);
+						 onChange(e);}}
 		  			defaultValue={props.defaultValue}
 		  		/>
 		  	)}
@@ -54,9 +56,45 @@ function FreeText(props) {
 	)
 }
 
+function SubmitOrSavedButton(props) {
+	if (props.isDirty) {
+		return <input className="submit-button" type="submit" value="Submit!"/>;
+	} else {
+		return <input className="submit-button" type="submit" value="Saved!" disabled={true}/>;
+	}
+}
+
+async function getLastResponses(props) {
+	if (!props.user) {
+		return null;
+	}
+	// const admin = require("./firebaseAdmin");
+	let responsesRef = firestore.collection("responses").where("uid", "==", props.user.uid).limitToLast(1);
+	responsesRef.get().then(snapshot => {
+			let data = snapshot.docs.map(doc => doc.data())[0]; // Access the only element in this 1-element array
+			console.log(data);
+			return data;
+		}
+	)
+}
+
 function Preferences(props) {
 
-	const { register, handleSubmit, control } = useForm();
+	const { register, handleSubmit, control, reset, formState: {isDirty, isSubmitSuccessful}  } = useForm();
+	const [initialData, setInitialData] = useState();
+
+	// const initialData = getLastReponses(props);
+	if (!initialData && props.user) {
+		// const admin = require("./firebaseAdmin");
+		let responsesRef = firestore.collection("responses").where("uid", "==", props.user.uid)
+			.orderBy('response_time').limitToLast(1);
+		responsesRef.get().then(snapshot => {
+				let data = snapshot.docs.map(doc => doc.data())[0]; // Access the only element in this 1-element array
+				console.log(data);
+				setInitialData(data);
+			}
+		)
+	}
 
 	const updatePreferences = (data) => {
 		console.log('form submitted!')
@@ -67,22 +105,32 @@ function Preferences(props) {
 			}
 		})
 
-		console.log(data)
+        console.log(data)
+        console.log(props)
 
 		firestore.collection('responses').add({
 			uid: props.user.uid,
 			...data
 		});
+		// setInitialData(data); // Set to null so it reloads
+		reset(data);
+	}
+
+	if (!props.user) {
+		return (<div className="title">Preferences Form</div>);
 	}
 	
+	// https://react-hook-form.com/api/useform/formstate
+	// const { isDirty, isValid } = formState;
+	// console.log(formState.isDirty)
 	return (
 		<Container>
 			<Row className="flex-column align-items-center">
 			  <Form onSubmit={handleSubmit(updatePreferences)}>
 			    <div className="title">Preferences Form</div>
 			  	<hr/>
-			    <FreeText name="name" control={control} defaultValue="" label="Name" value={props.name}/>
-			  	<FreeText name="pronouns" control={control} defaultValue="" label="Pronouns" value={props.pronouns}/>
+			    <FreeText name="name" control={control} defaultValue={props.user ? props.user.name : ""} label="Name"/>
+			  	<FreeText name="pronouns" control={control} defaultValue={props.user.pronouns} label="Pronouns" value={props.pronouns}/>
 
 			  	<FancySelect name="college" control={control} defaultValue="" label="College" options={collegeOptions} isMulti={false}/>
 			  	<FancySelect name="department" control={control} defaultValue="" label="Department/Program" options={departmentOptions} isMulti={false}/>
@@ -113,8 +161,7 @@ function Preferences(props) {
 			  		options={academicTalkOptions} isMulti={false}/>
 			  	<FreeText name="research_topics" control={control} defaultValue="" label="Research topics" value={props.researchTopics}/>
 			  	<FancySelect name="hobbies" control={control} defaultValue="" label="Hobbies" options={hobbyOptions} isMulti={true}/>
-			  	<FreeText name="hobbies_freetext" control={control} defaultValue="" name="hobbiesFreeText" label="Additional hobbies/interests you would like to talk about" 
-			  		value={props.hobbiesFreeText}/>
+			  	<FreeText name="hobbies_freetext" control={control} defaultValue={props.user.hobbiesFreeText} name="hobbiesFreeText" label="Additional hobbies/interests you would like to talk about" />
 
 
 					<br/>
@@ -126,7 +173,8 @@ function Preferences(props) {
 			  		value={props.other}/>
 
 					<br/>
-			  	<input className="submit-button" type="submit" value="Submit!"/>
+			  	{/* <input className="submit-button" type="submit" value="Submit!"/> */}
+				<SubmitOrSavedButton isDirty={isDirty} isSubmitSuccessful={isSubmitSuccessful}/>
 			  </Form>
 			</Row>
 		</Container>
