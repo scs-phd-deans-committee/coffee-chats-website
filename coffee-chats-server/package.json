@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "export GOOGLE_APPLICATION_CREDENTIALS=\"service-account-file.json\";PORT=3001 node ./bin/www"
+    "start": "source ./sendgrid.env; export GOOGLE_APPLICATION_CREDENTIALS=\"service-account-file.json\";PORT=3001 node ./bin/www"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.4.5",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
