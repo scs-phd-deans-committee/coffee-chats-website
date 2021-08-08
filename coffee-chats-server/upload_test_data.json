@@ -1,7 +1,25 @@
 {
     "round": "0",
     "matches": [
-        ["a", "b"],
-        ["2", "r"]
+        [
+            {
+                "uid": "a",
+                "response_id": "yes"
+            },
+            {
+                "uid": "b",
+                "response_id": "no"
+            }
+        ],
+        [
+            {
+                "uid": "2",
+                "response_id": "hi"
+            },
+            {
+                "uid": "r",
+                "response_id": "bye"
+            }
+        ]
     ]
 }
