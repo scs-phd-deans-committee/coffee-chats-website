@@ -43,7 +43,7 @@ function ControlledSelect({control, name, options, isMulti, isClearable, default
              <Select isMulti={isMulti} isClearable={isClearable} options={ options }
                isSearchable={true} inputRef={ref}
                onChange={(value) => {onChange(getValueSelect(value, isMulti))}}
-               defaultValue={{'label': defaultValue, 'value': defaultValue}}
+               defaultValue={defaultValue}
                styles={customStyles}
              />
            </div>
