@@ -45,9 +45,10 @@ function FreeText(props) {
 		  	name={props.name}
 		  	render={({ field: { onChange, onBlur, value, ref} }) => (
                   <Form.Control name={props.name} type="text" 
-                //   value={value}
-					  onChange={e => {console.log(e.target.value);
-						 onChange(e);}}
+				//   value={props.value}
+					onChange={onChange}
+					//   onChange={e => {console.log(e.target.value);
+					// 	 onChange(e);}}
 		  			defaultValue={props.defaultValue}
 		  		/>
 		  	)}
@@ -62,20 +63,6 @@ function SubmitOrSavedButton(props) {
 	} else {
 		return <input className="submit-button" type="submit" value="Saved!" disabled={true}/>;
 	}
-}
-
-async function getLastResponses(props) {
-	if (!props.user) {
-		return null;
-	}
-	// const admin = require("./firebaseAdmin");
-	let responsesRef = firestore.collection("responses").where("uid", "==", props.user.uid).limitToLast(1);
-	responsesRef.get().then(snapshot => {
-			let data = snapshot.docs.map(doc => doc.data())[0]; // Access the only element in this 1-element array
-			console.log(data);
-			return data;
-		}
-	)
 }
 
 function Preferences(props) {
@@ -106,7 +93,7 @@ function Preferences(props) {
 		})
 
         console.log(data)
-        console.log(props)
+        // console.log(props)
 
 		firestore.collection('responses').add({
 			uid: props.user.uid,
@@ -116,7 +103,7 @@ function Preferences(props) {
 		reset(data);
 	}
 
-	if (!props.user) {
+	if (!props.user || !initialData) {
 		return (<div className="title">Preferences Form</div>);
 	}
 	
@@ -161,7 +148,7 @@ function Preferences(props) {
 			  		options={academicTalkOptions} isMulti={false}/>
 			  	<FreeText name="research_topics" control={control} defaultValue="" label="Research topics" value={props.researchTopics}/>
 			  	<FancySelect name="hobbies" control={control} defaultValue="" label="Hobbies" options={hobbyOptions} isMulti={true}/>
-			  	<FreeText name="hobbies_freetext" control={control} defaultValue={props.user.hobbiesFreeText} name="hobbiesFreeText" label="Additional hobbies/interests you would like to talk about" />
+			  	<FreeText name="hobbies_freetext" control={control} defaultValue={initialData.hobbiesFreeText} name="hobbiesFreeText" label="Additional hobbies/interests you would like to talk about" />
 
 
 					<br/>
