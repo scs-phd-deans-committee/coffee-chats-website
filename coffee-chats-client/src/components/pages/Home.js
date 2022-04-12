@@ -21,6 +21,9 @@ function Home(props) {
       <Row>
         <Col>
           <div style={headerStyle}>
+            <h3><Link to="/createprofile"><b>Create a Profile</b></Link></h3>
+          </div>
+          <div style={headerStyle}>
             { (!!props.user) ?  
             <h3>Welcome, {props.user.name}!</h3> :
             <h3>To participate, please <Link to="/profile"><b>sign up / log in!</b></Link></h3>
