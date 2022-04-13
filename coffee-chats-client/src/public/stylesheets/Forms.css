@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 .title {
   font-weight: 600;
   font-size: 1.5rem; 
@@ -92,4 +94,17 @@ form * {
 }
 .free-text {
   margin-bottom: 10px;
+}
+.question-area {
+  width: 65%;
+  height: 400px;
+  background-color: #FFEFEF;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+.question-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  margin: 25px 0px;
 }
