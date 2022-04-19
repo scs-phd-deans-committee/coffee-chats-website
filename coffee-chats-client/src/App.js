@@ -24,7 +24,7 @@ import MatchDetail from './components/pages/MatchDetail';
 import MatchHistory from './components/pages/MatchHistory';
 import Preferences from './components/pages/Preferences';
 import Profile from './components/pages/Profile';
-import CreateProfile from './components/pages/CreateProfile';
+import CCSignUp from './components/pages/CCSignUp';
 import Home from './components/pages/Home';
 // import Logout from './components/Logout';
 
@@ -74,8 +74,8 @@ function App(props) {
         <Route path="/preferences">
           <Preferences user={user} setUser={setUser}/>
         </Route>
-        <Route path="/createprofile">
-          <CreateProfile user={user} setUser={setUser} />
+        <Route path="/ccsignup">
+          <CCSignUp user={user} setUser={setUser} />
         </Route>
         <Route path="/">
           <Home user={user} setUser={setUser} />

@@ -21,7 +21,7 @@ function Home(props) {
       <Row>
         <Col>
           <div style={headerStyle}>
-            <h3><Link to="/createprofile"><b>Create a Profile</b></Link></h3>
+            <h3><Link to="/ccsignup"><b>Sign up for a Coffee Chat!</b></Link></h3>
           </div>
           <div style={headerStyle}>
             { (!!props.user) ?  
