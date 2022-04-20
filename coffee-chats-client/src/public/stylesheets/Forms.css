@@ -139,14 +139,16 @@ form * {
 .btn-custom:hover, .btn-custom.active, .btn-custom-nav:hover:enabled, .btn-custom-nav.active {
   color: white;
   background-color: #A94152 !important;
+  border-color: #A94152 !important;
 }
 .question-nav {
   margin-top: auto;
   margin-bottom: 20px;
 }
 .btn-custom-nav {
-  border-color: #A94152;
-  color: #A94152;
+  border-color: #E3E3E3;
+  background-color: #E3E3E3;
+  color: #585858;
   margin: 0px 40px;
   border-radius: 5px !important;
   font-family: 'Poppins', sans-serif;
@@ -154,9 +156,4 @@ form * {
   font-size: 18px;
   z-index: 1;
   width: 150px;
-}
-.btn-custom-nav:disabled {
-  border-color: #E3E3E3;
-  background-color: #E3E3E3;
-  color: #585858;
 }

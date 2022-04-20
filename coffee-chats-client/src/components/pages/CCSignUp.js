@@ -14,40 +14,32 @@ function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency'];
   const [questionNum, setQuestion] = useState(0);
 
-  // track if question has been answered and therefore the next buttons should be valid
-  const [remoteValid, setRemoteValid] = useState(false);
-  const [activityValid, setActivityValid] = useState(false);
-  const [expectationValid, setExpectationValid] = useState(false);
-  const [frequencyValid, setFrequencyValid] = useState(false);
-
-  // unfinished
-  function handleBtnClick(question, setValidity) {
-    // let buttons = document.getElementById(question).children;
-    // let isActive = false;
-    // for (var i = 0; i < buttons.length; i++) {
-    //   let button = buttons[i];
-    // }
-
+  function handleBtnClick(question, val) {
+    let isActive = (val === []) ? false : true;
+    if (isActive) {
+      document.getElementById(question + "-next").classList.add("active");
+    } else {
+      document.getElementById(question + "-next").classList.remove("active");
+    }
   }
 
   function RemoteQuestion(props) {
     return (
       <><div className="question-text">Where would you want to meet your match?</div>
-      <ToggleButtonGroup className="answerArea" id="remote" type="radio" name="remote">
-        <ToggleButton id="remote-1" value={1} variant="custom" onClick={handleBtnClick("remote", props.setValidity)}>
+      <ToggleButtonGroup className="answerArea" id="remote" type="radio" name="remote" onChange={(val) => handleBtnClick("remote", val)}>
+        <ToggleButton id="remote-1" value={1} variant="custom">
           Online
         </ToggleButton>
-        <ToggleButton id="remote-2" value={2} variant="custom" onClick={handleBtnClick("remote", props.setValidity)}>
+        <ToggleButton id="remote-2" value={2} variant="custom">
           In Person
         </ToggleButton>
-        <ToggleButton id="remote-3" value={3} variant="custom" onClick={handleBtnClick("remote", props.setValidity)}>
+        <ToggleButton id="remote-3" value={3} variant="custom">
           Both
         </ToggleButton>
       </ToggleButtonGroup>
       <br />
       <div className="question-nav">
-        {/* <Button variant="custom-nav" active={props.validity} disabled={!props.validity} onClick={() => setQuestion(questionNum + 1)}>Next</Button> */}
-        <Button variant="custom-nav" active onClick={() => setQuestion(questionNum + 1)}>Next</Button>
+        <Button id="remote-next" variant="custom-nav" onClick={() => setQuestion(questionNum + 1)}>Next</Button>
       </div></>
     )
   }
@@ -57,7 +49,7 @@ function CCSignUp(props) {
     return (
       <><div className="question-text">What activities would you be interested in doing with your match?</div>
       <div className="question-sub-text">Please select around 5 activities!</div>
-      <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" name="activity">
+      <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" name="activity" onChange={(val) => handleBtnClick("activity", val)}>
         <ToggleButton id="activity-1" value={1} variant="custom">
           Play Sports
         </ToggleButton>
@@ -78,9 +70,9 @@ function CCSignUp(props) {
         </ToggleButton>
       </ToggleButtonGroup>
       <br />
-      <div class="question-nav">
+      <div className="question-nav">
         <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
-        <Button variant="custom-nav" active onClick={() => setQuestion(questionNum + 1)}>Next</Button>
+        <Button id="activity-next" variant="custom-nav" onClick={() => setQuestion(questionNum + 1)}>Next</Button>
       </div></>
     )
   }
@@ -89,7 +81,7 @@ function CCSignUp(props) {
     // still in progress
     return (
       <><div className="question-text">My expectation(s) for the Coffee Chat program are to ...</div>
-      <ToggleButtonGroup className="answerArea" id="expectation" type="checkbox" name="expectation">
+      <ToggleButtonGroup className="answerArea" id="expectation" type="checkbox" name="expectation" onChange={(val) => handleBtnClick("expectation", val)}>
         <ToggleButton id="expectation-1" value={1} variant="custom">
           Meet someone new
         </ToggleButton>
@@ -110,9 +102,9 @@ function CCSignUp(props) {
         </ToggleButton>
       </ToggleButtonGroup>
       <br />
-      <div class="question-nav">
+      <div className="question-nav">
         <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
-        <Button variant="custom-nav" active onClick={() => setQuestion(questionNum + 1)}>Next</Button>
+        <Button id="expectation-next" variant="custom-nav" onClick={() => setQuestion(questionNum + 1)}>Next</Button>
       </div></>
     )
   }
@@ -120,7 +112,7 @@ function CCSignUp(props) {
   function FrequencyQuestion(props) {
     return (
       <><div className="question-text">How frequent do you want to participate in Coffee Chat meetups?</div>
-      <ToggleButtonGroup className="answerArea" id="frequency" type="radio" name="frequency">
+      <ToggleButtonGroup className="answerArea" id="frequency" type="radio" name="frequency" onChange={(val) => handleBtnClick("frequency", val)}>
         <ToggleButton id="frequency-1" value={1} variant="custom">
           Once a month
         </ToggleButton>
@@ -132,9 +124,9 @@ function CCSignUp(props) {
         </ToggleButton>
       </ToggleButtonGroup>
       <br />
-      <div class="question-nav">
+      <div className="question-nav">
         <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
-        <Button variant="custom-nav" active onClick={() => setQuestion(questionNum + 1)}>Next</Button>
+        <Button  id="frequency-next" variant="custom-nav" onClick={() => setQuestion(questionNum + 1)}>Next</Button>
       </div></>
     )
   }
@@ -146,13 +138,13 @@ function CCSignUp(props) {
           {(() => {
             switch (questions[props.questionNum]) {
               case 'remote':
-                return <RemoteQuestion validity={remoteValid} setValidity={setRemoteValid}/>
+                return <RemoteQuestion/>
               case 'activity':
-                return <ActivityQuestion validity={activityValid} setValidity={setActivityValid}/>
+                return <ActivityQuestion/>
               case 'expectation':
-                return <ExpectationQuestion validity={expectationValid} setValidity={setExpectationValid}/>
+                return <ExpectationQuestion/>
               case 'frequency':
-                return <FrequencyQuestion validity={frequencyValid} setValidity={setFrequencyValid}/>
+                return <FrequencyQuestion/>
               default:
                 return null
             }
