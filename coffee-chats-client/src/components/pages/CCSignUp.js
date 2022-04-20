@@ -14,23 +14,40 @@ function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency'];
   const [questionNum, setQuestion] = useState(0);
 
+  // track if question has been answered and therefore the next buttons should be valid
+  const [remoteValid, setRemoteValid] = useState(false);
+  const [activityValid, setActivityValid] = useState(false);
+  const [expectationValid, setExpectationValid] = useState(false);
+  const [frequencyValid, setFrequencyValid] = useState(false);
+
+  // unfinished
+  function handleBtnClick(question, setValidity) {
+    // let buttons = document.getElementById(question).children;
+    // let isActive = false;
+    // for (var i = 0; i < buttons.length; i++) {
+    //   let button = buttons[i];
+    // }
+
+  }
+
   function RemoteQuestion(props) {
     return (
       <><div className="question-text">Where would you want to meet your match?</div>
-      <ToggleButtonGroup className="answerArea" id="remote" type="radio" name="remote" defaultValue={1}>
-        <ToggleButton id="remote-1" value={1} variant="custom">
+      <ToggleButtonGroup className="answerArea" id="remote" type="radio" name="remote">
+        <ToggleButton id="remote-1" value={1} variant="custom" onClick={handleBtnClick("remote", props.setValidity)}>
           Online
         </ToggleButton>
-        <ToggleButton id="remote-2" value={2} variant="custom">
+        <ToggleButton id="remote-2" value={2} variant="custom" onClick={handleBtnClick("remote", props.setValidity)}>
           In Person
         </ToggleButton>
-        <ToggleButton id="remote-3" value={3} variant="custom">
+        <ToggleButton id="remote-3" value={3} variant="custom" onClick={handleBtnClick("remote", props.setValidity)}>
           Both
         </ToggleButton>
       </ToggleButtonGroup>
       <br />
-      <div class="question-nav">
-        <Button variant="custom" active onClick={() => setQuestion(questionNum + 1)}>Next</Button>
+      <div className="question-nav">
+        {/* <Button variant="custom-nav" active={props.validity} disabled={!props.validity} onClick={() => setQuestion(questionNum + 1)}>Next</Button> */}
+        <Button variant="custom-nav" active onClick={() => setQuestion(questionNum + 1)}>Next</Button>
       </div></>
     )
   }
@@ -129,13 +146,13 @@ function CCSignUp(props) {
           {(() => {
             switch (questions[props.questionNum]) {
               case 'remote':
-                return <RemoteQuestion />
+                return <RemoteQuestion validity={remoteValid} setValidity={setRemoteValid}/>
               case 'activity':
-                return <ActivityQuestion />
+                return <ActivityQuestion validity={activityValid} setValidity={setActivityValid}/>
               case 'expectation':
-                return <ExpectationQuestion />
+                return <ExpectationQuestion validity={expectationValid} setValidity={setExpectationValid}/>
               case 'frequency':
-                return <FrequencyQuestion />
+                return <FrequencyQuestion validity={frequencyValid} setValidity={setFrequencyValid}/>
               default:
                 return null
             }

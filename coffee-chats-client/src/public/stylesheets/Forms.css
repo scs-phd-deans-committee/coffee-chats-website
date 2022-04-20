@@ -136,7 +136,7 @@ form * {
   z-index: 1;
   height: 40px;
 }
-.btn-custom:hover, .btn-custom.active, .btn-custom-nav:hover, .btn-custom-nav.active {
+.btn-custom:hover, .btn-custom.active, .btn-custom-nav:hover:enabled, .btn-custom-nav.active {
   color: white;
   background-color: #A94152 !important;
 }
@@ -154,4 +154,9 @@ form * {
   font-size: 18px;
   z-index: 1;
   width: 150px;
+}
+.btn-custom-nav:disabled {
+  border-color: #E3E3E3;
+  background-color: #E3E3E3;
+  color: #585858;
 }
