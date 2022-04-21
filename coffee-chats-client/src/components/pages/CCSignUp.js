@@ -10,9 +10,61 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { Button, Modal, ModalDialog, ModalHeader, ModalTitle, ModalBody, ModalFooter, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
+import StepProgressBar from "react-step-progress";
+// import the stylesheet
+import "react-step-progress/dist/index.css";
+
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency'];
   const [questionNum, setQuestion] = useState(0);
+    
+
+  /* STEP PROGRESS BAR */
+  // setup step validators, will be called before proceeding to the next step
+  function step2Validator() {
+    return true;
+  }
+
+  function step3Validator() {
+    // return a boolean
+    return true;
+  }
+    
+  // TODO: need to sync progress bar with the question content
+  // TODO: need to figure out how to change color and font
+  function ProgressBar(props) {
+      return(
+      <div className="App">
+      <StepProgressBar
+        startingStep={0}
+        steps={[
+          {
+            label: "Activities",
+            name: "Activities",
+            content: <h1>Insert Activities content here</h1>
+          },
+          {
+            label: "Expectations",
+            name: "Expectations",
+            content: <h1>Insert Expectations content here</h1>
+          },
+          {
+            label: "Availability",
+            name: "Availability",
+            content: <h1>Insert Availability content here</h1>,
+            validator: step2Validator
+          },
+          {
+            label: "Submit!",
+            name: "Submit!",
+            content: <h1>Insert Submit! content here</h1>
+          }
+        ]}
+      />
+    </div>
+      )
+  }
+  /* END OF STEP PROGRESS BAR */
 
   function handleBtnClick(question, val) {
     let isActive = (val === []) ? false : true;
@@ -156,7 +208,7 @@ function CCSignUp(props) {
   return (
     <Container>
       <Row className="flex-column align-items-center">
-        {/* Include ProgressBar */}
+        <ProgressBar />
         {/* Include QuestionArea, temporarily hard coded*/}
         <QuestionArea questionNum={questionNum}/>
         {/* Include QuestionNav */}
