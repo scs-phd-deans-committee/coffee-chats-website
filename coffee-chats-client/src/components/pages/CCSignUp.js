@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import StepProgressBar from "react-step-progress";
 // import the stylesheet
 import "react-step-progress/dist/index.css";
+import "./styles.css"
 
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency'];

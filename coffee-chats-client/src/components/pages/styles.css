@@ -20,3 +20,47 @@
   align-self: flex-end;
   margin-left: 10px;
 } */
+
+
+/* for Step Progress Bar */
+
+._1hzhf {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* this is for the color of current step circle*/
+._2Jtxm._35Ago ._2kL0S {
+    background-color: #a94152 !important;
+}
+
+/* this is for the color of each completed step circle */
+._2Jtxm._2ZUAI ._2JvrO {
+    background-color: #a94152 !important;
+}
+
+/* this is for the lines between the step circles */
+._2Jtxm._2ZUAI::before, ._2Jtxm._35Ago::before, ._2Jtxm._1CcaK::before {
+    background-position: left bottom !important;
+}
+
+._2Jtxm:first-child::before {
+    content: none !important;
+}
+
+._2Jtxm::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    height: 3px !important;
+    width: 100% !important;
+    right: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: -1 !important;
+    background: linear-gradient(to left, #e7eaf3 50%, #a94152 50%) !important;
+    background-size: 200% 100% !important;
+    background-position: right bottom !important;
+    transition: background-position 200ms ease-in-out !important;
+}
+
+/* end of lines between the step circles */
+/* End of Step Progress Bar */
