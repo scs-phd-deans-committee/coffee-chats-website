@@ -110,8 +110,18 @@ function CCSignUp(props) {
     }
   }
 
+  function toggleCheckbox (e) {
+    var box = document.getElementById(e.target.value).children[1];
+    if (box.classList.contains("unchecked")) {
+      box.classList.remove("unchecked");
+      box.classList.add("checked");
+    } else {
+      box.classList.remove("checked");
+      box.classList.add("unchecked");
+    }
+  }
+
   function ActivityQuestion(props) {
-    // still in progress
     const activities = ["Play sports", "Talk about hobbies", "Play a board game", "Get food or drinks", "Get food or drinks (no alcohol)", "Visit a museum", "Watch a movie", "Tour each other’s academic buildings", "Go on a walk", "Go to a farmer’s market", "Tour Phipps Conservatory", "Get coffee", "Any activities work!"]
     return (
       <><div className="question-text">What activities would you be interested in doing with your match?</div>
@@ -119,11 +129,13 @@ function CCSignUp(props) {
       <Form.Control className="search" placeholder="Search" onChange={filterActivities}/>
       <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" name="activity" onChange={(val) => handleBtnClick("activity", val)}>
         {activities.map((a) => (
-          <ToggleButton value={a} variant="custom">
+          <ToggleButton id={a} value={a} variant="custom" onChange={toggleCheckbox}>
+            <span class="unchecked"></span>
             {a}
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
+      <Button className="skip" variant="link" onClick={() => setQuestion(questionNum + 1)}>Skip this question</Button>
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
@@ -133,29 +145,19 @@ function CCSignUp(props) {
   }
 
   function ExpectationQuestion(props) {
-    // still in progress
+    // Todo: implement ability to add expectation
+    const expectations = ["Meet someone new", "Establish a friendship", "Break away from work", "Talk about research", "Find a hobby partner", "Other: _"]
     return (
       <><div className="question-text">My expectation(s) for the Coffee Chat program are to ...</div>
       <ToggleButtonGroup className="answerArea" id="expectation" type="checkbox" name="expectation" onChange={(val) => handleBtnClick("expectation", val)}>
-        <ToggleButton id="expectation-1" value={1} variant="custom">
-          Meet someone new
-        </ToggleButton>
-        <ToggleButton id="expectation-2" value={2} variant="custom">
-          Establish a friendship
-        </ToggleButton>
-        <ToggleButton id="expectation-3" value={3} variant="custom">
-          Break away from work
-        </ToggleButton>
-        <ToggleButton id="expectation-4" value={4} variant="custom">
-          Talk about research
-        </ToggleButton>
-        <ToggleButton id="expectation-5" value={5} variant="custom">
-          Find a hobby partner
-        </ToggleButton>
-        <ToggleButton id="expectation-6" value={6} variant="custom">
-          Other: _
-        </ToggleButton>
+        {expectations.map((e) => (
+          <ToggleButton id={e} value={e} variant="custom" onChange={toggleCheckbox}>
+            <span class="unchecked"></span>
+            {e}
+          </ToggleButton>
+        ))}
       </ToggleButtonGroup>
+      <Button className="skip" variant="link" onClick={() => setQuestion(questionNum + 1)}>Skip this question</Button>
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
