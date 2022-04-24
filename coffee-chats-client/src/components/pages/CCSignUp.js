@@ -7,7 +7,7 @@ import { firebase } from '@firebase/app';
 import "firebase/auth";
 
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { Button, Modal, ModalDialog, ModalHeader, ModalTitle, ModalBody, ModalFooter, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import { Button, Form, Modal, ModalDialog, ModalHeader, ModalTitle, ModalBody, ModalFooter, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
 import StepProgressBar from "react-step-progress";
@@ -97,30 +97,32 @@ function CCSignUp(props) {
     )
   }
 
+  function filterActivities (e) {
+    var input = e.target.value.toLowerCase();
+    var activities = document.getElementById("activity").children;
+    for (var i=0; i<activities.length; i++) {
+      var activity = activities[i];
+      if (!activity.firstChild.value.toLowerCase().includes(input)) {
+        activity.style.display = "none";
+      } else if (input === '') {
+        activity.style.display = "block";
+      }
+    }
+  }
+
   function ActivityQuestion(props) {
     // still in progress
+    const activities = ["Play sports", "Talk about hobbies", "Play a board game", "Get food or drinks", "Get food or drinks (no alcohol)", "Visit a museum", "Watch a movie", "Tour each other’s academic buildings", "Go on a walk", "Go to a farmer’s market", "Tour Phipps Conservatory", "Get coffee", "Any activities work!"]
     return (
       <><div className="question-text">What activities would you be interested in doing with your match?</div>
       <div className="question-sub-text">Please select around 5 activities!</div>
+      <Form.Control className="search" placeholder="Search" onChange={filterActivities}/>
       <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" name="activity" onChange={(val) => handleBtnClick("activity", val)}>
-        <ToggleButton id="activity-1" value={1} variant="custom">
-          Play Sports
-        </ToggleButton>
-        <ToggleButton id="activity-2" value={2} variant="custom">
-          Talk about hobbies
-        </ToggleButton>
-        <ToggleButton id="activity-3" value={3} variant="custom">
-          Play a board game
-        </ToggleButton>
-        <ToggleButton id="activity-4" value={4} variant="custom">
-          Get food or drinks
-        </ToggleButton>
-        <ToggleButton id="activity-5" value={5} variant="custom">
-          Get food or drinks (no alcohol)
-        </ToggleButton>
-        <ToggleButton id="activity-6" value={6} variant="custom">
-          Visit a museum
-        </ToggleButton>
+        {activities.map((a) => (
+          <ToggleButton value={a} variant="custom">
+            {a}
+          </ToggleButton>
+        ))}
       </ToggleButtonGroup>
       <br />
       <div className="question-nav">
