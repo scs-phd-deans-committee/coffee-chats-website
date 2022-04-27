@@ -16,7 +16,7 @@ import "react-step-progress/dist/index.css";
 import "./styles.css"
 
 function CCSignUp(props) {
-  const questions = ['remote', 'activity', 'expectation', 'frequency'];
+  const questions = ['remote', 'activity', 'expectation', 'frequency', 'diceroll', 'comments'];
   const [questionNum, setQuestion] = useState(0);
     
 
@@ -138,20 +138,20 @@ function CCSignUp(props) {
       <Form.Control className="search" placeholder="Search" onChange={filterActivities}/>
       <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" name="activity" onChange={(val) => handleBtnClick("activity", val)}>
         {activitiesState.map((a) => (
-          <ToggleButton id={a} value={a} variant="custom" onChange={toggleCheckbox}>
-            <span class="unchecked"></span>
+          <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
+            <span className="unchecked"></span>
             {a}
           </ToggleButton>
         ))}
         {addState === "init" &&
-          <div class="addOption" id="addActivity" onClick={() => setAddState("input")}>
-            <span class="add"></span>
+          <div className="addOption" id="addActivity" onClick={() => setAddState("input")}>
+            <span className="add"></span>
           </div>
         }
         {addState === "input" &&
-          <div class="addOptionText" id="addActivity" onClick={() => setAddState("input")}>
-            <span class="add addLeft"></span>
-            <input id="addActivityInput" type="text" class="addInput" placeholder="Your own activity!" onKeyUp={handleInput}/>
+          <div className="addOptionText" id="addActivity" onClick={() => setAddState("input")}>
+            <span className="add addLeft"></span>
+            <input id="addActivityInput" type="text" className="addInput" placeholder="Your own activity!" onKeyUp={handleInput}/>
           </div>
         }
       </ToggleButtonGroup>
@@ -177,23 +177,23 @@ function CCSignUp(props) {
       }
     }
     return (
-      <><div className="question-text">My expectation(s) for the Coffee Chat program are to ...</div>
+      <><div className="question-text">My expectation(s) for the Coffee Chat program are to . . .</div>
       <ToggleButtonGroup className="answerArea" id="expectation" type="checkbox" name="expectation" onChange={(val) => handleBtnClick("expectation", val)}>
         {expectState.map((e) => (
-          <ToggleButton id={e} value={e} variant="custom" onChange={toggleCheckbox}>
-            <span class="unchecked"></span>
+          <ToggleButton key={e} id={e} value={e} variant="custom" onChange={toggleCheckbox}>
+            <span className="unchecked"></span>
             {e}
           </ToggleButton>
         ))}
         {addState === "init" &&
-          <div class="addOption" id="addExpectation" onClick={() => setAddState("input")}>
-            <span class="add"></span>
+          <div className="addOption" id="addExpectation" onClick={() => setAddState("input")}>
+            <span className="add"></span>
           </div>
         }
         {addState === "input" &&
-          <div class="addOptionText" id="addExpectation" onClick={() => setAddState("input")}>
-            <span class="add addLeft"></span>
-            <input id="addExpectationInput" type="text" class="addInput" placeholder="Your own expectation!" onKeyUp={handleInput}/>
+          <div className="addOptionText" id="addExpectation" onClick={() => setAddState("input")}>
+            <span className="add addLeft"></span>
+            <input id="addExpectationInput" type="text" className="addInput" placeholder="Your own expectation!" onKeyUp={handleInput}/>
           </div>
         }
       </ToggleButtonGroup>
@@ -227,6 +227,43 @@ function CCSignUp(props) {
       </div></>
     )
   }
+
+  function DiceRollQuestion(props) {
+    const [diceState, setDiceState] = useState(0);
+    const rollDice = () => {
+      const roll = Math.floor(Math.random() * 6) + 1;
+      setDiceState(roll);
+    }
+    return (
+      <>
+      { (diceState === 0) ?
+        <><div className="question-text">The person who rolls the lowest number will initiate contact</div>
+        {/* TODO: add dice animation */}
+        <Button id="roll-dice" variant="custom-nav" onClick={rollDice}>Try your luck!</Button></>
+        :
+        <><div className="question-text">You rolled a </div>
+        <div id="dice-result">{diceState}</div>
+        <div className="question-text">You’ll have to wait and see what your match gets!</div></>
+      }
+      <><br />
+      <div className="question-nav">
+        <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
+        <Button id="frequency-next" variant="custom-nav" onClick={() => setQuestion(questionNum + 1)}>Next</Button>
+      </div></></>
+    )
+  }
+
+  function CommentsQuestion(props) {
+    return (
+      <><div className="question-text">That’s it, you’re ready to submit! Do you have any final comments for us to consider?</div>
+      <Form.Control id="comments-box" as="textarea" rows={7} placeholder="Additional thoughts" />
+      <br />
+      <div className="question-nav">
+        <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
+        <Button  id="submit" variant="custom-nav" onClick={() => setQuestion(questionNum + 1)}>Submit</Button>
+      </div></>
+    )
+  }
   
   function QuestionArea(props) {
     return (
@@ -242,6 +279,10 @@ function CCSignUp(props) {
                 return <ExpectationQuestion/>
               case 'frequency':
                 return <FrequencyQuestion/>
+              case 'diceroll':
+                return <DiceRollQuestion/>
+              case 'comments':
+                return <CommentsQuestion/>
               default:
                 return null
             }
