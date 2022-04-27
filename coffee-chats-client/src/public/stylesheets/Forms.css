@@ -177,16 +177,24 @@ form * {
   color: #B1B1B1;
   margin-top: auto;
 }
-#activity {
+#activity, #expectation {
   overflow: auto;
   padding: 0px 20px;
 }
 .unchecked {
-  background: url(../../unchecked.png) no-repeat;
+  background: url(../../unchecked-red.png) no-repeat;
   float: left;
   width: 20px;
   height: 20px;
-  margin-top: 5px;
+  margin-top: 4px;
+  background-size: 100%;
+}
+.btn-custom:hover > .unchecked {
+  background: url(../../unchecked-white.png) no-repeat;
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
   background-size: 100%;
 }
 .checked{
@@ -196,4 +204,60 @@ form * {
   height: 20px;
   margin-top: 4px;
   background-size: 100%;
+}
+.add{
+  background: url(../../add-red.png) no-repeat;
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin-top: 9px;
+  background-size: 100%;
+  position: relative;
+  left: 25%;
+}
+.addOption, .addOptionText {
+  width: 40px;
+  border: 1px solid #A94152;
+  color: #A94152;
+  border-radius: 20px !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  z-index: 1;
+  height: 40px;
+}
+.addOption:hover > .add {
+  background: url(../../add-white.png) no-repeat;
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin-top: 9px;
+  background-size: 100%;
+  position: relative;
+  left: 25%;
+}
+.addOption:hover {
+  background-color: #A94152 !important;
+  border-color: #A94152 !important;
+}
+.addOptionText {
+  width: 250px !important;
+  display: flex;
+  flex-direction: row;
+}
+.addLeft{
+  left: 6%;
+}
+.addInput, .addInput:focus {
+  background-color: #F7F7F7;
+  border: none;
+  border-bottom: 1px solid #A94152;
+  border-radius: 0px;
+  width: 175px;
+  margin: 5px 0px 0px 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  height: 25px;
+  outline-width: 0;
+  color: #A94152;
 }

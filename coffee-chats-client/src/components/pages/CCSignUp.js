@@ -122,18 +122,38 @@ function CCSignUp(props) {
   }
 
   function ActivityQuestion(props) {
+    const [addState, setAddState] = useState("init");
     const activities = ["Play sports", "Talk about hobbies", "Play a board game", "Get food or drinks", "Get food or drinks (no alcohol)", "Visit a museum", "Watch a movie", "Tour each other’s academic buildings", "Go on a walk", "Go to a farmer’s market", "Tour Phipps Conservatory", "Get coffee", "Any activities work!"]
+    const [activitiesState, setActivitiesState] = useState(activities);
+    const handleInput = e => {
+      if (e.key === 'Enter') {
+        const value = document.getElementById("addActivityInput").value;
+        setActivitiesState([...activitiesState, value]);
+        setAddState("init")
+      }
+    }
     return (
       <><div className="question-text">What activities would you be interested in doing with your match?</div>
       <div className="question-sub-text">Please select around 5 activities!</div>
       <Form.Control className="search" placeholder="Search" onChange={filterActivities}/>
       <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" name="activity" onChange={(val) => handleBtnClick("activity", val)}>
-        {activities.map((a) => (
+        {activitiesState.map((a) => (
           <ToggleButton id={a} value={a} variant="custom" onChange={toggleCheckbox}>
             <span class="unchecked"></span>
             {a}
           </ToggleButton>
         ))}
+        {addState === "init" &&
+          <div class="addOption" id="addActivity" onClick={() => setAddState("input")}>
+            <span class="add"></span>
+          </div>
+        }
+        {addState === "input" &&
+          <div class="addOptionText" id="addActivity" onClick={() => setAddState("input")}>
+            <span class="add addLeft"></span>
+            <input id="addActivityInput" type="text" class="addInput" placeholder="Your own activity!" onKeyUp={handleInput}/>
+          </div>
+        }
       </ToggleButtonGroup>
       <Button className="skip" variant="link" onClick={() => setQuestion(questionNum + 1)}>Skip this question</Button>
       <br />
@@ -144,18 +164,38 @@ function CCSignUp(props) {
     )
   }
 
+
   function ExpectationQuestion(props) {
-    // Todo: implement ability to add expectation
-    const expectations = ["Meet someone new", "Establish a friendship", "Break away from work", "Talk about research", "Find a hobby partner", "Other: _"]
+    const [addState, setAddState] = useState("init");
+    const expectations = ["Meet someone new", "Establish a friendship", "Break away from work", "Talk about research", "Find a hobby partner"]
+    const [expectState, setExpectState] = useState(expectations);
+    const handleInput = e => {
+      if (e.key === 'Enter') {
+        const value = document.getElementById("addExpectationInput").value;
+        setExpectState([...expectState, value]);
+        setAddState("init")
+      }
+    }
     return (
       <><div className="question-text">My expectation(s) for the Coffee Chat program are to ...</div>
       <ToggleButtonGroup className="answerArea" id="expectation" type="checkbox" name="expectation" onChange={(val) => handleBtnClick("expectation", val)}>
-        {expectations.map((e) => (
+        {expectState.map((e) => (
           <ToggleButton id={e} value={e} variant="custom" onChange={toggleCheckbox}>
             <span class="unchecked"></span>
             {e}
           </ToggleButton>
         ))}
+        {addState === "init" &&
+          <div class="addOption" id="addExpectation" onClick={() => setAddState("input")}>
+            <span class="add"></span>
+          </div>
+        }
+        {addState === "input" &&
+          <div class="addOptionText" id="addExpectation" onClick={() => setAddState("input")}>
+            <span class="add addLeft"></span>
+            <input id="addExpectationInput" type="text" class="addInput" placeholder="Your own expectation!" onKeyUp={handleInput}/>
+          </div>
+        }
       </ToggleButtonGroup>
       <Button className="skip" variant="link" onClick={() => setQuestion(questionNum + 1)}>Skip this question</Button>
       <br />
