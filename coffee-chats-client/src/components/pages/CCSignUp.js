@@ -20,7 +20,7 @@ import ScheduleSelector from "react-schedule-selector";
 
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'availability',
-  'diceroll', 'comments'];
+  'diceroll', 'comments', 'review', 'submit'];
   const [questionNum, setQuestion] = useState(0);
     
 
@@ -407,10 +407,80 @@ function CCSignUp(props) {
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
-        <Button  id="submit" variant="custom-nav" onClick={clickToNextSection}>
-          Submit
+        <Button id="comments-next" variant="custom-nav" onClick={clickToNextSection}>
+          Next
         </Button>
       </div></>
+    )
+  }
+
+  function ReviewQuestion(props) {
+    function clickToNextSection() {
+          setQuestion(questionNum + 1); 
+          setCurSection(4);   
+          };
+          
+    function clickToPrevSection() {
+          setQuestion(questionNum - 1);
+          setCurSection(3);
+          };
+    return (
+      <><div className="question-text">Thanks Scotty!</div>
+      <div className="question-sub-text">
+        Check through your preferences one last time before you submit!
+      </div>
+      <div className="review-section twoCol-container-flex">
+        <div className="review-heading twoCol-left-flex">Activity:</div>
+        <div className="review-text twoCol-right-flex">
+          You prefer meeting <b>in person</b>, and would want to: <b>play sports, play a board game, or visit a museum.</b>
+        </div>
+      </div>
+      <div className="review-section twoCol-container-flex">
+        <div className="review-heading twoCol-left-flex">Expectations:</div>
+        <div className="review-text twoCol-right-flex">
+          You hope to <b>meet someone new</b> and <b>break away from work</b>. You also plan to participate in the Coffee Chats program <b>biweekly</b>.
+        </div>
+      </div>
+      <div className="review-section twoCol-container-flex">
+        <div className="review-heading twoCol-left-flex"></div>
+        <div className="review-text twoCol-right-flex">You also prioritize the following factors:
+        </div>
+      </div>
+      {/* include matching priorities */}
+      <div className="review-section twoCol-container-flex">
+        <div className="review-heading twoCol-left-flex">Scheduling:</div>
+        <div className="review-text twoCol-right-flex">
+          <ScheduleSelector className="review-schedule"
+            selection={[]}
+            numDays={5}
+            minTime={8}
+            maxTime={22}
+            hourlyChunks={1}
+          />
+        </div>
+      </div>
+      <div className="review-section twoCol-container-flex">
+        <div className="review-heading twoCol-left-flex">Comments</div>
+        <div className="review-text twoCol-right-flex">And lastly, you had no final comments to add!
+        </div>
+      </div>
+      <div className="question-text">Does that sound right?</div>
+      <br />
+      <div className="question-nav">
+        <Button id="submit-back" variant="custom-nav" onClick={clickToPrevSection}>No, let's go back</Button>
+        <Button id="submit" variant="custom-nav" onClick={clickToNextSection}>
+          Yes, let's submit!
+        </Button>
+      </div></>
+    )
+  }
+
+  function SubmissionScreen(props) {
+    return (
+      <><div className="submitted-text">
+        Congratulations on submitting!
+        </div>
+      <Button id="back-home" variant="custom-nav">Back to home</Button></>
     )
   }
   
@@ -434,6 +504,10 @@ function CCSignUp(props) {
                 return <DiceRollQuestion/>
               case 'comments':
                 return <CommentsQuestion/>
+              case 'review':
+                return <ReviewQuestion/>
+              case 'submit':
+                return <SubmissionScreen/>
               default:
                 return null
             }
