@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -17,64 +17,52 @@ import "react-step-progress/dist/index.css";
 import "./styles.css"
 
 function CCSignUp(props) {
-  const questions = ['remote', 'activity', 'expectation', 'frequency', 
+  const questions = ['remote', 'activity', 'expectation', 'frequency', 'availability',
   'diceroll', 'comments'];
   const [questionNum, setQuestion] = useState(0);
     
 
-  /* STEP PROGRESS BAR */
-  // setup step validators, will be called before proceeding to the next step
-  function activitiesValidator() {
-    // return a boolean
-    return true;
-  }
-    
-  function expectationsValidator() {
-    // return a boolean
-    return true;
-  }
-    
-  function availabilityValidator() {
-    return true;
-  }
+  /* STEP PROGRESS BAR */ 
 
-  function submitValidator() {
-    // return a boolean
-    return true;
-  }
+  /* sync progress bar with question content */
+  const [curSection, setCurSection] = useState(0);
     
+  
   // TODO: need to sync progress bar with the question content
   function ProgressBar(props) {
+          
       return(
       <StepProgressBar
-        startingStep={0}
+        startingStep={curSection}
         steps={[
-          {
+           {
             label: "Activities",
             name: "Activities",
-            validator: activitiesValidator
           },
-          {
+           {
             label: "Expectations",
             name: "Expectations",
-            content: <h1>Insert Expectations content here</h1>,
-            validator: expectationsValidator
           },
-          {
+           {
             label: "Availability",
             name: "Availability",
-            content: <h1>Insert Availability content here</h1>,
-            validator: availabilityValidator
+          },
+          {
+            label: "Comments",
+            name: "Comments",
+            
           },
           {
             label: "Submit!",
             name: "Submit!",
-            content: <h1>Insert Submit! content here</h1>
+            
           }
         ]}
       />
       )
   }
+
+  
   /* END OF STEP PROGRESS BAR */
 
   // Checking if the "Next" button can be set to valid
@@ -88,6 +76,11 @@ function CCSignUp(props) {
   }
 
   function RemoteQuestion(props) {
+
+    function clickToNextSection() {
+          setQuestion(questionNum + 1); 
+          setCurSection(0);
+          }
     return (
       <><div className="question-text">Where would you want to meet your match?</div>
       <ToggleButtonGroup className="answerArea" id="remote" type="radio" 
@@ -105,7 +98,7 @@ function CCSignUp(props) {
       <br />
       <div className="question-nav">
         <Button id="remote-next" variant="custom-nav" 
-        onClick={() => setQuestion(questionNum + 1)}>Next</Button>
+        onClick={clickToNextSection}>Next</Button>
       </div></>
     )
   }
@@ -155,6 +148,16 @@ function CCSignUp(props) {
         setAddState("init")
       }
     }
+    
+    // update progress bar if next
+    function clickToNextSection() {
+          setQuestion(questionNum + 1); 
+          setCurSection(1);
+          }
+    function clickToPrevSection() {
+          setQuestion(questionNum - 1);
+          setCurSection(0);
+          }
     return (
       <><div className="question-text">
         What activities would you be interested in doing with your match?
@@ -184,14 +187,14 @@ function CCSignUp(props) {
           </div>
         }
       </ToggleButtonGroup>
-      <Button className="skip" variant="link" onClick={() => setQuestion(questionNum + 1)}>
+      <Button className="skip" variant="link" onClick={clickToNextSection}>
         Skip this question
       </Button>
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
         <Button id="activity-next" variant="custom-nav" 
-        onClick={() => setQuestion(questionNum + 1)}>Next</Button>
+        onClick={clickToNextSection}>Next</Button>
       </div></>
     )
   }
@@ -211,6 +214,18 @@ function CCSignUp(props) {
         setAddState("init")
       }
     }
+          
+    // for progress bar if previous
+    function clickToNextSection() {
+          setQuestion(questionNum + 1);
+          setCurSection(1);
+          }
+          
+    function clickToPrevSection() {
+          setQuestion(questionNum - 1);
+          setCurSection(0);
+          }
+    
     return (
       <><div className="question-text">My expectation(s) for the Coffee Chat program are to . . .</div>
       <ToggleButtonGroup className="answerArea" id="expectation" type="checkbox" 
@@ -236,19 +251,29 @@ function CCSignUp(props) {
           </div>
         }
       </ToggleButtonGroup>
-      <Button className="skip" variant="link" onClick={() => setQuestion(questionNum + 1)}>
+      <Button className="skip" variant="link" onClick={clickToNextSection}>
         Skip this question
       </Button>
       <br />
       <div className="question-nav">
-        <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
+        <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
         <Button id="expectation-next" variant="custom-nav" 
-        onClick={() => setQuestion(questionNum + 1)}>Next</Button>
+        onClick={clickToNextSection}>Next</Button>
       </div></>
     )
   }
 
   function FrequencyQuestion(props) {
+          
+    function clickToNextSection() {
+          setQuestion(questionNum + 1); 
+          setCurSection(2);   
+          };
+          
+    function clickToPrevSection() {
+          setQuestion(questionNum - 1);
+          setCurSection(1);
+          };
     return (
       <><div className="question-text">
         How frequent do you want to participate in Coffee Chat meetups?
@@ -267,15 +292,40 @@ function CCSignUp(props) {
       </ToggleButtonGroup>
       <br />
       <div className="question-nav">
-        <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>
+        <Button variant="custom-nav" onClick={clickToPrevSection}>
           Back
         </Button>
-        <Button  id="frequency-next" variant="custom-nav" onClick={() => setQuestion(questionNum + 1)}>
+        <Button  id="frequency-next" variant="custom-nav" onClick={clickToNextSection}>
           Next
         </Button>
       </div></>
     )
   }
+          
+  function AvailabilityQuestion(props) {
+    function clickToNextSection() {
+          setQuestion(questionNum + 1); 
+          setCurSection(2);   
+          };
+          
+    function clickToPrevSection() {
+          setQuestion(questionNum - 1);
+          setCurSection(1);
+          };
+    return (
+      <><div className="question-text">
+        What does your availability look like next week?
+        </div>
+      <Form.Control id="comments-box" as="textarea" rows={7} placeholder="Additional thoughts" />
+      <br />
+      <div className="question-nav">
+        <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
+        <Button  id="submit" variant="custom-nav" onClick={clickToNextSection}>
+          Next
+        </Button>
+      </div></>
+    )
+          }
 
   function DiceRollQuestion(props) {
     const [diceState, setDiceState] = useState(0);
@@ -283,6 +333,16 @@ function CCSignUp(props) {
       const roll = Math.floor(Math.random() * 6) + 1;
       setDiceState(roll);
     }
+          
+    function clickToNextSection() {
+          setQuestion(questionNum + 1); 
+          setCurSection(3);   
+          };
+          
+    function clickToPrevSection() {
+          setQuestion(questionNum - 1);
+          setCurSection(2);
+          };
     return (
       <>
       {/* dice state is initially zero, when the user has not rolled. 
@@ -300,8 +360,8 @@ function CCSignUp(props) {
       }
       <><br />
       <div className="question-nav">
-        <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
-        <Button id="frequency-next" variant="custom-nav" onClick={() => setQuestion(questionNum + 1)}>
+        <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
+        <Button id="frequency-next" variant="custom-nav" onClick={clickToNextSection}>
           Next
         </Button>
       </div></></>
@@ -309,6 +369,15 @@ function CCSignUp(props) {
   }
 
   function CommentsQuestion(props) {
+    function clickToNextSection() {
+          setQuestion(questionNum + 1); 
+          setCurSection(4);   
+          };
+          
+    function clickToPrevSection() {
+          setQuestion(questionNum - 1);
+          setCurSection(2);
+          };
     return (
       <><div className="question-text">
         That’s it, you’re ready to submit! Do you have any final comments for us to consider?
@@ -316,8 +385,8 @@ function CCSignUp(props) {
       <Form.Control id="comments-box" as="textarea" rows={7} placeholder="Additional thoughts" />
       <br />
       <div className="question-nav">
-        <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
-        <Button  id="submit" variant="custom-nav" onClick={() => setQuestion(questionNum + 1)}>
+        <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
+        <Button  id="submit" variant="custom-nav" onClick={clickToNextSection}>
           Submit
         </Button>
       </div></>
@@ -338,6 +407,8 @@ function CCSignUp(props) {
                 return <ExpectationQuestion/>
               case 'frequency':
                 return <FrequencyQuestion/>
+              case 'availability':
+                return <AvailabilityQuestion/>    
               case 'diceroll':
                 return <DiceRollQuestion/>
               case 'comments':
