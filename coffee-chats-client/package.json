@@ -25,6 +25,7 @@
     "react-hook-form": "^7.9.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
+    "react-schedule-selector": "^3.0.0",
     "react-scripts": "^4.0.3",
     "react-select": "^4.3.1",
     "react-step-progress": "^1.0.3",

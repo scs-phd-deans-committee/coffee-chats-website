@@ -16,6 +16,8 @@ import StepProgressBar from "react-step-progress";
 import "react-step-progress/dist/index.css";
 import "./styles.css"
 
+import ScheduleSelector from "react-schedule-selector";
+
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'availability',
   'diceroll', 'comments'];
@@ -303,6 +305,18 @@ function CCSignUp(props) {
   }
           
   function AvailabilityQuestion(props) {
+    const [schedule, setSchedule] = useState([]);
+          
+    useEffect(() => {
+        document.addEventListener("touchstart", {});
+        return () => {
+            document.addEventListener("touchstart", {});
+        }
+    }, []);
+
+    const handleChange = (newSchedule) => {
+      setSchedule(newSchedule);
+    };
     function clickToNextSection() {
           setQuestion(questionNum + 1); 
           setCurSection(2);   
@@ -316,11 +330,18 @@ function CCSignUp(props) {
       <><div className="question-text">
         What does your availability look like next week?
         </div>
-      <Form.Control id="comments-box" as="textarea" rows={7} placeholder="Additional thoughts" />
+      <ScheduleSelector
+          selection={schedule}
+          numDays={5}
+          minTime={8}
+          maxTime={22}
+          hourlyChunks={1}
+          onChange={handleChange}
+        />
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
-        <Button  id="submit" variant="custom-nav" onClick={clickToNextSection}>
+        <Button  id="availability-next" variant="custom-nav" onClick={clickToNextSection}>
           Next
         </Button>
       </div></>
