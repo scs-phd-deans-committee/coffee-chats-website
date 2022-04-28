@@ -203,19 +203,9 @@ function CCSignUp(props) {
 
 
   function ExpectationQuestion(props) {
-    const [addState, setAddState] = useState("init");
     const expectations = ["Meet someone new", "Establish a friendship", 
     "Break away from work", "Talk about research", "Find a hobby partner"]
     const [expectState, setExpectState] = useState(expectations);
-      
-    // adds a new activity based on user's "other" input
-    const handleInput = e => {
-      if (e.key === 'Enter') {
-        const value = document.getElementById("addExpectationInput").value;
-        setExpectState([...expectState, value]);
-        setAddState("init")
-      }
-    }
           
     // for progress bar if previous
     function clickToNextSection() {
@@ -230,6 +220,7 @@ function CCSignUp(props) {
     
     return (
       <><div className="question-text">My expectation(s) for the Coffee Chat program are to . . .</div>
+      <div className="question-sub-text">Your answer(s) will be shared with your match!</div>
       <ToggleButtonGroup className="answerArea" id="expectation" type="checkbox" 
       name="expectation" onChange={(val) => handleBtnClick("expectation", val)}>
         {expectState.map((e) => (
@@ -238,20 +229,6 @@ function CCSignUp(props) {
             {e}
           </ToggleButton>
         ))}
-        {/* displays initial state of add button, just the plus sign */}
-        {addState === "init" &&
-          <div className="addOption" id="addExpectation" onClick={() => setAddState("input")}>
-            <span className="add"></span>
-          </div>
-        }
-        {/* displays input state of add button, including an input field */}
-        {addState === "input" &&
-          <div className="addOptionText" id="addExpectation" onClick={() => setAddState("input")}>
-            <span className="add addLeft"></span>
-            <input id="addExpectationInput" type="text" className="addInput" 
-            placeholder="Your own expectation!" onKeyUp={handleInput}/>
-          </div>
-        }
       </ToggleButtonGroup>
       <Button className="skip" variant="link" onClick={clickToNextSection}>
         Skip this question
