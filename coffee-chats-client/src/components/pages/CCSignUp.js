@@ -67,26 +67,30 @@ function CCSignUp(props) {
   
   /* END OF STEP PROGRESS BAR */
 
-  // Checking if the "Next" button can be set to valid
-  function handleBtnClick(question, val) {
-    let isActive = (val === []) ? false : true;
-    if (isActive) {
-      document.getElementById(question + "-next").classList.add("active");
-    } else {
-      document.getElementById(question + "-next").classList.remove("active");
-    }
-  }
-
   function RemoteQuestion(props) {
 
     function clickToNextSection() {
           setQuestion(questionNum + 1); 
           setCurSection(0);
           }
+
+    // Checking if the "Next" button can be set to valid
+    function handleBtnClick(val) {
+      let isActive = (val === []) ? false : true;
+      var next = document.getElementById("remote-next");
+      if (isActive) {
+        next.classList.add("active");
+        next.disabled = false;
+        next.onclick = clickToNextSection;
+      } else {
+        next.classList.remove("active");
+        next.disabled = true;
+      }
+    }
     return (
       <><div className="question-text">Where would you want to meet your match?</div>
       <ToggleButtonGroup className="answerArea" id="remote" type="radio" 
-      name="remote" onChange={(val) => handleBtnClick("remote", val)}>
+      name="remote" onChange={handleBtnClick}>
         <ToggleButton id="remote-1" value={1} variant="custom">
           Online
         </ToggleButton>
@@ -99,7 +103,7 @@ function CCSignUp(props) {
       </ToggleButtonGroup>
       <br />
       <div className="question-nav">
-        <Button id="remote-next" variant="custom-nav" 
+        <Button id="remote-next" variant="custom-nav" disabled
         onClick={clickToNextSection}>Next</Button>
       </div></>
     )
@@ -157,9 +161,21 @@ function CCSignUp(props) {
           setCurSection(1);
           }
     function clickToPrevSection() {
-          setQuestion(questionNum - 1);
-          setCurSection(0);
-          }
+        setQuestion(questionNum - 1);
+        setCurSection(0);
+        }
+    // Checking if the "Next" button can be set to valid
+    function handleBtnClick(val) {
+      var next = document.getElementById("activity-next");
+      if (val.length && (val[0] !== undefined)) {
+        next.classList.add("active");
+        next.disabled = false;
+        next.onclick = clickToNextSection;
+      } else {
+        next.classList.remove("active");
+        next.disabled = true;
+      }
+    }
     return (
       <><div className="question-text">
         What activities would you be interested in doing with your match?
@@ -167,7 +183,7 @@ function CCSignUp(props) {
       <div className="question-sub-text">Please select around 5 activities!</div>
       <Form.Control className="search" placeholder="Search" onChange={filterActivities}/>
       <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" 
-      name="activity" onChange={(val) => handleBtnClick("activity", val)}>
+      name="activity" onChange={handleBtnClick}>
         {activitiesState.map((a) => (
           <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
             <span className="unchecked"></span>
@@ -189,13 +205,10 @@ function CCSignUp(props) {
           </div>
         }
       </ToggleButtonGroup>
-      <Button className="skip" variant="link" onClick={clickToNextSection}>
-        Skip this question
-      </Button>
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
-        <Button id="activity-next" variant="custom-nav" 
+        <Button id="activity-next" variant="custom-nav" disabled
         onClick={clickToNextSection}>Next</Button>
       </div></>
     )
@@ -217,12 +230,23 @@ function CCSignUp(props) {
           setQuestion(questionNum - 1);
           setCurSection(0);
           }
-    
+    // Checking if the "Next" button can be set to valid
+    function handleBtnClick(val) {
+      var next = document.getElementById("expectation-next");
+      if (val.length) {
+        next.classList.add("active");
+        next.disabled = false;
+        next.onclick = clickToNextSection;
+      } else {
+        next.classList.remove("active");
+        next.disabled = true;
+      }
+    }
     return (
       <><div className="question-text">My expectation(s) for the Coffee Chat program are to . . .</div>
       <div className="question-sub-text">Your answer(s) will be shared with your match!</div>
       <ToggleButtonGroup className="answerArea" id="expectation" type="checkbox" 
-      name="expectation" onChange={(val) => handleBtnClick("expectation", val)}>
+      name="expectation" onChange={handleBtnClick}>
         {expectState.map((e) => (
           <ToggleButton key={e} id={e} value={e} variant="custom" onChange={toggleCheckbox}>
             <span className="unchecked"></span>
@@ -230,13 +254,10 @@ function CCSignUp(props) {
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
-      <Button className="skip" variant="link" onClick={clickToNextSection}>
-        Skip this question
-      </Button>
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
-        <Button id="expectation-next" variant="custom-nav" 
+        <Button id="expectation-next" variant="custom-nav" disabled
         onClick={clickToNextSection}>Next</Button>
       </div></>
     )
@@ -258,7 +279,7 @@ function CCSignUp(props) {
         How frequent do you want to participate in Coffee Chat meetups?
       </div>
       <ToggleButtonGroup className="answerArea" id="frequency" type="radio" 
-      name="frequency" onChange={(val) => handleBtnClick("frequency", val)}>
+      name="frequency">
         <ToggleButton id="frequency-1" value={1} variant="custom">
           Once a month
         </ToggleButton>
@@ -269,12 +290,16 @@ function CCSignUp(props) {
           Once a week
         </ToggleButton>
       </ToggleButtonGroup>
+      <Button className="skip" variant="link" onClick={clickToNextSection}>
+        Skip this question
+      </Button>
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>
           Back
         </Button>
-        <Button  id="frequency-next" variant="custom-nav" onClick={clickToNextSection}>
+        <Button  id="frequency-next" className="active" variant="custom-nav" 
+        onClick={clickToNextSection}>
           Next
         </Button>
       </div></>
@@ -291,18 +316,30 @@ function CCSignUp(props) {
         }
     }, []);
 
-    const handleChange = (newSchedule) => {
-      setSchedule(newSchedule);
-    };
     function clickToNextSection() {
-          setQuestion(questionNum + 1); 
-          setCurSection(2);   
-          };
-          
+      setQuestion(questionNum + 1); 
+      setCurSection(2);   
+      };
+      
     function clickToPrevSection() {
           setQuestion(questionNum - 1);
           setCurSection(1);
           };
+
+    const handleChange = (newSchedule) => {
+      setSchedule(newSchedule);
+      // TODO: add next disabling once we investigate handleChange
+      
+      // var next = document.getElementById("availability-next");
+      // if (schedule.length) {
+      //   next.classList.add("active");
+      //   next.disabled = false;
+      //   next.onclick = clickToNextSection;
+      // } else {
+      //   next.classList.remove("active");
+      //   next.disabled = true;
+      // }
+    };
     return (
       <><div className="question-text">
         What does your availability look like next week?
@@ -326,12 +363,7 @@ function CCSignUp(props) {
           }
 
   function DiceRollQuestion(props) {
-    const [diceState, setDiceState] = useState(0);
-    const rollDice = () => {
-      const roll = Math.floor(Math.random() * 6) + 1;
-      setDiceState(roll);
-    }
-          
+    const [diceState, setDiceState] = useState(0); 
     function clickToNextSection() {
           setQuestion(questionNum + 1); 
           setCurSection(3);   
@@ -341,6 +373,15 @@ function CCSignUp(props) {
           setQuestion(questionNum - 1);
           setCurSection(2);
           };
+    const rollDice = () => {
+      const roll = Math.floor(Math.random() * 6) + 1;
+      setDiceState(roll);
+
+      var next = document.getElementById("dice-next");
+      next.classList.add("active");
+      next.disabled = false;
+      next.onclick = clickToNextSection;
+    }
     return (
       <>
       {/* dice state is initially zero, when the user has not rolled. 
@@ -359,7 +400,7 @@ function CCSignUp(props) {
       <><br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
-        <Button id="frequency-next" variant="custom-nav" onClick={clickToNextSection}>
+        <Button id="dice-next" variant="custom-nav" disabled onClick={clickToNextSection}>
           Next
         </Button>
       </div></></>

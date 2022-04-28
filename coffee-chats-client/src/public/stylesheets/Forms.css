@@ -143,6 +143,7 @@ form * {
   color: white;
   background-color: #A94152 !important;
   border-color: #A94152 !important;
+  opacity: 100%;
 }
 .question-nav {
   margin-top: auto;
@@ -159,6 +160,9 @@ form * {
   font-size: 18px;
   z-index: 1;
   width: 150px;
+}
+.btn-custom-nav:disabled:hover {
+  color: #585858;
 }
 .search, .search:focus {
   width: 60%;
