@@ -24,6 +24,16 @@
 
 /* for Step Progress Bar */
 
+/*make the width the same as the question area*/
+._53Ji7 {
+    width: 80% !important;
+}
+
+/* hide the next/previous buttons from react-step-progress */
+._3uApM {
+    display: none !important;
+}
+
 ._1hzhf {
     font-family: 'Poppins', sans-serif !important;
 }

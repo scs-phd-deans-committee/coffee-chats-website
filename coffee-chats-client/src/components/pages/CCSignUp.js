@@ -44,17 +44,14 @@ function CCSignUp(props) {
   }
     
   // TODO: need to sync progress bar with the question content
-  // TODO: need to figure out how to change color and font
   function ProgressBar(props) {
       return(
-      <div className="App">
       <StepProgressBar
         startingStep={0}
         steps={[
           {
             label: "Activities",
             name: "Activities",
-            content: <h1>Insert Activities content here</h1>,
             validator: activitiesValidator
           },
           {
@@ -76,7 +73,6 @@ function CCSignUp(props) {
           }
         ]}
       />
-    </div>
       )
   }
   /* END OF STEP PROGRESS BAR */
@@ -357,7 +353,7 @@ function CCSignUp(props) {
   return (
     <Container>
       <Row className="flex-column align-items-center">
-        <ProgressBar />
+        <ProgressBar/>
         {/* Include QuestionArea, temporarily hard coded*/}
         <QuestionArea questionNum={questionNum}/>
         {/* Include QuestionNav */}
