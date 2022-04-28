@@ -24,11 +24,21 @@ function CCSignUp(props) {
 
   /* STEP PROGRESS BAR */
   // setup step validators, will be called before proceeding to the next step
-  function step2Validator() {
+  function activitiesValidator() {
+    // return a boolean
+    return true;
+  }
+    
+  function expectationsValidator() {
+    // return a boolean
+    return true;
+  }
+    
+  function availabilityValidator() {
     return true;
   }
 
-  function step3Validator() {
+  function submitValidator() {
     // return a boolean
     return true;
   }
@@ -44,18 +54,20 @@ function CCSignUp(props) {
           {
             label: "Activities",
             name: "Activities",
-            content: <h1>Insert Activities content here</h1>
+            content: <h1>Insert Activities content here</h1>,
+            validator: activitiesValidator
           },
           {
             label: "Expectations",
             name: "Expectations",
-            content: <h1>Insert Expectations content here</h1>
+            content: <h1>Insert Expectations content here</h1>,
+            validator: expectationsValidator
           },
           {
             label: "Availability",
             name: "Availability",
             content: <h1>Insert Availability content here</h1>,
-            validator: step2Validator
+            validator: availabilityValidator
           },
           {
             label: "Submit!",
@@ -108,7 +120,7 @@ function CCSignUp(props) {
     var activities = document.getElementById("activity").children;
     for (var i=0; i<activities.length; i++) {
       var activity = activities[i];
-      if (!activity.firstChild.value.toLowerCase().includes(input)) {
+      if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
         activity.style.display = "none";
       } else if (input === '') {
         activity.style.display = "block";
