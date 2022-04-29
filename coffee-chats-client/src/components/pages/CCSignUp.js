@@ -113,12 +113,13 @@ function CCSignUp(props) {
   function filterActivities (e) {
     var input = e.target.value.toLowerCase();
     var activities = document.getElementById("activity").children;
+    console.log(activities);
     for (var i=0; i<activities.length; i++) {
       var activity = activities[i];
-      if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
-        activity.style.display = "none";
-      } else if (input === '') {
+      if (input === '') {
         activity.style.display = "block";
+      } else if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
+        activity.style.display = "none";
       }
     }
   }
