@@ -19,7 +19,7 @@ import "./styles.css"
 import ScheduleSelector from "react-schedule-selector";
 
 function CCSignUp(props) {
-  const questions = ['remote', 'activity', 'expectation', 'frequency', 'availability',
+  const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'availability',
   'diceroll', 'comments', 'review', 'submit'];
   const [questionNum, setQuestion] = useState(0);
     
@@ -268,7 +268,7 @@ function CCSignUp(props) {
           
     function clickToNextSection() {
           setQuestion(questionNum + 1); 
-          setCurSection(2);   
+          setCurSection(1);   
           };
           
     function clickToPrevSection() {
@@ -303,6 +303,68 @@ function CCSignUp(props) {
         onClick={clickToNextSection}>
           Next
         </Button>
+      </div></>
+    )
+  }
+
+  function PrioritiesQuestion(props) {
+          
+    function clickToNextSection() {
+          setQuestion(questionNum + 1); 
+          setCurSection(2);   
+          };
+          
+    function clickToPrevSection() {
+          setQuestion(questionNum - 1);
+          setCurSection(1);
+          };
+    const options = ["the same as mine", "different than mine", "anything works!"]
+    return (
+      <><div className="factor-section">
+        <div className="factor-question">I care that my match’s <b>academic interests</b> are</div>
+        <div className="factor-options">
+          {options.map((option) => (
+            <Form.Check type="radio" id={`academic-${option}`} label={option} name="academic"/>
+          ))}
+        </div>
+      </div>
+      <div className="factor-section">
+        <div className="factor-question">I care that my match’s <b>college</b> is</div>
+        <div className="factor-options">
+          {options.map((option) => (
+            <Form.Check type="radio" id={`academic-${option}`} label={option}  name="college"/>
+          ))}
+        </div>
+      </div>
+      <div className="factor-section">
+        <div className="factor-question">I care that my match’s <b>hobbies</b> are</div>
+        <div className="factor-options">
+          {options.map((option) => (
+            <Form.Check type="radio" id={`academic-${option}`} label={option}  name="hobbies"/>
+          ))}
+        </div>
+      </div>
+      <div className="factor-section">
+        <div className="factor-question">I care that my match’s <b>year at CMU</b> is</div>
+        <div className="factor-options">
+          {options.map((option) => (
+            <Form.Check type="radio" id={`academic-${option}`} label={option}  name="year"/>
+          ))}
+        </div>
+      </div>
+      <div className="factor-section">
+        <div className="factor-question">I care that my match’s <b>background</b> is</div>
+        <div className="factor-options">
+          {options.map((option) => (
+            <Form.Check type="radio" id={`academic-${option}`} label={option}  name="background"/>
+          ))}
+        </div>
+      </div>
+      <br />
+      <div className="question-nav">
+        <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
+        <Button id="expectation-next" variant="custom-nav" disabled
+        onClick={clickToNextSection}>Next</Button>
       </div></>
     )
   }
@@ -517,6 +579,8 @@ function CCSignUp(props) {
                 return <ExpectationQuestion/>
               case 'frequency':
                 return <FrequencyQuestion/>
+              case 'priorities':
+                return <PrioritiesQuestion/>
               case 'availability':
                 return <AvailabilityQuestion/>    
               case 'diceroll':

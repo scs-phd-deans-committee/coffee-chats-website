@@ -324,3 +324,22 @@ form * {
   width: 200px;
   margin-top: 100px;
 }
+.factor-section {
+  text-align: left;
+  align-self: start;
+  padding: 30px 0px 0px 100px;
+}
+.factor-question {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+.factor-options {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+.form-check {
+  margin-top: 5px;
+}
+/* .form-check > input {
+
+} */
