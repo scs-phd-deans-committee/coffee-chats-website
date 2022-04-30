@@ -120,6 +120,14 @@ form * {
   color: #A94152;
   font-size: 14px;
 }
+.question-header {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: #A94152;
+  font-size: 30px;
+  margin: 25px 0px 10px 0px;
+  max-width: 80%;
+}
 .answerArea {
   margin: 20px 0px;
   width: 80%;

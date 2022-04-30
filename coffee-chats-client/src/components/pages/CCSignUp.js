@@ -18,10 +18,14 @@ import "./styles.css"
 
 import ScheduleSelector from "react-schedule-selector";
 
+import ReactDice from "react-dice-complete";
+import "react-dice-complete/dist/react-dice-complete.css";
+
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'availability',
   'diceroll', 'comments', 'review', 'submit'];
   const [questionNum, setQuestion] = useState(0);
+  
     
 
   /* STEP PROGRESS BAR */ 
@@ -29,8 +33,6 @@ function CCSignUp(props) {
   /* sync progress bar with question content */
   const [curSection, setCurSection] = useState(0);
     
-  
-  // TODO: need to sync progress bar with the question content
   function ProgressBar(props) {
           
       return(
@@ -324,7 +326,7 @@ function CCSignUp(props) {
         <div className="factor-question">I care that my match’s <b>academic interests</b> are</div>
         <div className="factor-options">
           {options.map((option) => (
-            <Form.Check type="radio" id={`academic-${option}`} label={option} name="academic"/>
+            <Form.Check type="radio" id={'academic-${option}'} label={option} name="academic"/>
           ))}
         </div>
       </div>
@@ -332,7 +334,7 @@ function CCSignUp(props) {
         <div className="factor-question">I care that my match’s <b>college</b> is</div>
         <div className="factor-options">
           {options.map((option) => (
-            <Form.Check type="radio" id={`academic-${option}`} label={option}  name="college"/>
+            <Form.Check type="radio" id={'academic-${option}'} label={option}  name="college"/>
           ))}
         </div>
       </div>
@@ -340,7 +342,7 @@ function CCSignUp(props) {
         <div className="factor-question">I care that my match’s <b>hobbies</b> are</div>
         <div className="factor-options">
           {options.map((option) => (
-            <Form.Check type="radio" id={`academic-${option}`} label={option}  name="hobbies"/>
+            <Form.Check type="radio" id={'academic-${option}'} label={option}  name="hobbies"/>
           ))}
         </div>
       </div>
@@ -348,7 +350,7 @@ function CCSignUp(props) {
         <div className="factor-question">I care that my match’s <b>year at CMU</b> is</div>
         <div className="factor-options">
           {options.map((option) => (
-            <Form.Check type="radio" id={`academic-${option}`} label={option}  name="year"/>
+            <Form.Check type="radio" id={'academic-${option}'} label={option}  name="year"/>
           ))}
         </div>
       </div>
@@ -356,14 +358,14 @@ function CCSignUp(props) {
         <div className="factor-question">I care that my match’s <b>background</b> is</div>
         <div className="factor-options">
           {options.map((option) => (
-            <Form.Check type="radio" id={`academic-${option}`} label={option}  name="background"/>
+            <Form.Check type="radio" id={'academic-${option}'} label={option}  name="background"/>
           ))}
         </div>
       </div>
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
-        <Button id="expectation-next" variant="custom-nav" disabled
+        <Button id="expectation-next" variant="custom-nav active" //set as active for now
         onClick={clickToNextSection}>Next</Button>
       </div></>
     )
@@ -424,9 +426,13 @@ function CCSignUp(props) {
       </div></>
     )
           }
-
+                
+  //this is to prevent rerolling
+  const [diceState, setDiceState] = useState(0); 
+                 
   function DiceRollQuestion(props) {
-    const [diceState, setDiceState] = useState(0); 
+    
+    const [dice, setDice] = useState(null);
     function clickToNextSection() {
           setQuestion(questionNum + 1); 
           setCurSection(3);   
@@ -437,35 +443,72 @@ function CCSignUp(props) {
           setCurSection(2);
           };
     const rollDice = () => {
-      const roll = Math.floor(Math.random() * 6) + 1;
-      setDiceState(roll);
+      dice.rollAll();
 
-      var next = document.getElementById("dice-next");
+      let next = document.getElementById("dice-next");
       next.classList.add("active");
       next.disabled = false;
       next.onclick = clickToNextSection;
     }
     return (
       <>
+        <div className="question-text">
+          The person who rolls the lowest number will initiate contact!
+          </div>
+          <div className="question-sub-text">
+          You'll find out what your match rolled when the match results are announced :)
+          </div>
       {/* dice state is initially zero, when the user has not rolled. 
       the UI is replaced when the user rolls the dice */}
       { (diceState === 0) ?
-        <><div className="question-text">
-          The person who rolls the lowest number will initiate contact
+        <>       
+        {/* Dice Animation */}
+                 
+          <div style={{marginTop: "5%"}}>
+            <ReactDice
+              numDice={1}
+              rollDone={(num) => setDiceState(num)}
+              dieSize={125}
+              faceColor={"rgb(169, 65, 82)"}
+              dotColor={"rgb(255,255,255)"}
+              rollTime={0.75}
+              disableIndividual={true}
+              ref={(dice) => setDice(dice)}
+            />  
           </div>
-        {/* TODO: add dice animation */}
-        <Button id="roll-dice" variant="custom-nav" onClick={rollDice}>Try your luck!</Button></>
+      
+          <Button id="roll-dice" variant="custom-nav" onClick={rollDice}>
+            Try your luck!</Button> 
+          </>
         :
-        <><div className="question-text">You rolled a </div>
-        <div id="dice-result">{diceState}</div>
-        <div className="question-text">You’ll have to wait and see what your match gets!</div></>
+        
+        <>
+          <div style={{marginTop: "5%"}}>
+            <ReactDice
+              numDice={1}
+              dieSize={125}
+              faceColor={"rgb(169, 65, 82)"}
+              dotColor={"rgb(255,255,255)"}
+              defaultRoll={diceState}
+              rollTime={0.2}
+              disableIndividual={true}
+            />
+          </div>
+        <div className="question-header">You rolled a {diceState}!</div>
+       </>
       }
       <><br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
-        <Button id="dice-next" variant="custom-nav" disabled onClick={clickToNextSection}>
-          Next
-        </Button>
+        { (diceState === 0) ? 
+            <Button id="dice-next" variant="custom-nav" disabled onClick={clickToNextSection}>
+            Next
+            </Button>
+          :
+            <Button id="dice-next" className="active" variant="custom-nav" onClick={clickToNextSection}>
+            Next
+            </Button> 
+        }
       </div></></>
     )
   }
