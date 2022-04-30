@@ -348,6 +348,6 @@ form * {
 .form-check {
   margin-top: 5px;
 }
-/* .form-check > input {
-
-} */
+.form-check > label {
+  margin-left: 10px;
+}

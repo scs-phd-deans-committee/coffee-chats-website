@@ -22,7 +22,7 @@ import ReactDice from "react-dice-complete";
 import "react-dice-complete/dist/react-dice-complete.css";
 
 function CCSignUp(props) {
-  const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'availability',
+  const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'prioritiesBubbles', 'availability',
   'diceroll', 'comments', 'review', 'submit'];
   const [questionNum, setQuestion] = useState(0);
   
@@ -115,7 +115,6 @@ function CCSignUp(props) {
   function filterActivities (e) {
     var input = e.target.value.toLowerCase();
     var activities = document.getElementById("activity").children;
-    console.log(activities);
     for (var i=0; i<activities.length; i++) {
       var activity = activities[i];
       if (input === '') {
@@ -309,7 +308,100 @@ function CCSignUp(props) {
     )
   }
 
+  const factors = ["academic interests", "college", "hobbies", "year at CMU", "background"];
+  const options = ["the same as mine", "different than mine", "anything works!"];
+  const [factorState, setFactorState] = useState({});
+
   function PrioritiesQuestion(props) {
+          
+    function clickToNextSection() {
+          setQuestion(questionNum + 1); 
+          setCurSection(1);   
+          };
+
+    function skipSection() {
+          setQuestion(questionNum + 2); 
+          setCurSection(2);   
+          };
+          
+    function clickToPrevSection() {
+          setQuestion(questionNum - 1);
+          setCurSection(1);
+          };
+    const handleChange = e => {
+      const factor = e.target.name;
+      const id = e.target.id
+      const option = parseInt(id.charAt(id.length - 1));
+      factorState[factor] = option;
+      setFactorState(factorState);
+
+      var next = document.getElementById("priorities-next");
+      if (Object.keys(factorState).length === factors.length) {
+        next.classList.add("active");
+        next.disabled = false;
+        next.onclick = clickToNextSection;
+      } else {
+        next.classList.remove("active");
+        next.disabled = true;
+      }
+    }
+    return (
+      <><div className="question-text">
+        Your Priorities
+      </div>
+      <Button className="skip" variant="link" onClick={skipSection}>
+        Skip this question
+      </Button>
+      <div className="factor-section">
+          <div className="factor-question">I care that my match’s <b>academic interests</b> are</div>
+          <div key="academic" className="factor-options" onChange={handleChange}>
+            {options.map((option, idx) => (
+              <Form.Check label={option} name="academic" type="radio" id={`academic-${idx}`}/>
+            ))}
+          </div>
+      </div>
+      <div className="factor-section">
+          <div className="factor-question">I care that my match’s <b>college</b> is</div>
+          <div key="college" className="factor-options" onChange={handleChange}>
+            {options.map((option, idx) => (
+              <Form.Check label={option} name="college" type="radio" id={`college-${idx}`} />
+            ))}
+          </div>
+      </div>
+      <div className="factor-section">
+          <div className="factor-question">I care that my match’s <b>hobbies</b> are</div>
+          <div key="hobbies" className="factor-options" onChange={handleChange}>
+            {options.map((option, idx) => (
+              <Form.Check label={option} name="hobbies" type="radio" id={`hobbies-${idx}`} />
+            ))}
+          </div>
+      </div>
+      <div className="factor-section">
+          <div className="factor-question">I care that my match’s <b>year at CMU</b> is</div>
+          <div key="year" className="factor-options" onChange={handleChange}>
+            {options.map((option, idx) => (
+              <Form.Check label={option} name="year" type="radio" id={`year-${idx}`} />
+            ))}
+          </div>
+      </div>
+      <div className="factor-section">
+          <div className="factor-question">I care that my match’s <b>background</b> is</div>
+          <div key="background" className="factor-options" onChange={handleChange}>
+            {options.map((option, idx) => (
+              <Form.Check label={option} name="background" type="radio" id={`background-${idx}`} />
+            ))}
+          </div>
+      </div>
+      <br />
+      <div className="question-nav">
+        <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
+        <Button id="priorities-next" variant="custom-nav active" disabled
+        onClick={clickToNextSection}>Next</Button>
+      </div></>
+    )
+  }
+
+  function PrioritiesBubblesQuestion(props) {
           
     function clickToNextSection() {
           setQuestion(questionNum + 1); 
@@ -320,52 +412,22 @@ function CCSignUp(props) {
           setQuestion(questionNum - 1);
           setCurSection(1);
           };
-    const options = ["the same as mine", "different than mine", "anything works!"]
+
     return (
-      <><div className="factor-section">
-        <div className="factor-question">I care that my match’s <b>academic interests</b> are</div>
-        <div className="factor-options">
-          {options.map((option) => (
-            <Form.Check type="radio" id={'academic-${option}'} label={option} name="academic"/>
-          ))}
-        </div>
+      <><div className="question-text">
+        Your Priorities
       </div>
-      <div className="factor-section">
-        <div className="factor-question">I care that my match’s <b>college</b> is</div>
-        <div className="factor-options">
-          {options.map((option) => (
-            <Form.Check type="radio" id={'academic-${option}'} label={option}  name="college"/>
-          ))}
-        </div>
+      <div className="question-sub-text">
+       Click on the circle to indicate priority, the larger the circle, the most priority.
       </div>
-      <div className="factor-section">
-        <div className="factor-question">I care that my match’s <b>hobbies</b> are</div>
-        <div className="factor-options">
-          {options.map((option) => (
-            <Form.Check type="radio" id={'academic-${option}'} label={option}  name="hobbies"/>
-          ))}
-        </div>
-      </div>
-      <div className="factor-section">
-        <div className="factor-question">I care that my match’s <b>year at CMU</b> is</div>
-        <div className="factor-options">
-          {options.map((option) => (
-            <Form.Check type="radio" id={'academic-${option}'} label={option}  name="year"/>
-          ))}
-        </div>
-      </div>
-      <div className="factor-section">
-        <div className="factor-question">I care that my match’s <b>background</b> is</div>
-        <div className="factor-options">
-          {options.map((option) => (
-            <Form.Check type="radio" id={'academic-${option}'} label={option}  name="background"/>
-          ))}
-        </div>
-      </div>
+        {
+          Object.entries(factorState)
+          .map(([key, value]) => ((value !== 2) && <div>{key + value}</div>))
+        }
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
-        <Button id="expectation-next" variant="custom-nav active" //set as active for now
+        <Button id="priorities-next" variant="custom-nav active"
         onClick={clickToNextSection}>Next</Button>
       </div></>
     )
@@ -387,7 +449,7 @@ function CCSignUp(props) {
       };
       
     function clickToPrevSection() {
-          setQuestion(questionNum - 1);
+          setQuestion(questionNum - 2);
           setCurSection(1);
           };
 
@@ -624,6 +686,8 @@ function CCSignUp(props) {
                 return <FrequencyQuestion/>
               case 'priorities':
                 return <PrioritiesQuestion/>
+              case 'prioritiesBubbles':
+                return <PrioritiesBubblesQuestion/>
               case 'availability':
                 return <AvailabilityQuestion/>    
               case 'diceroll':
