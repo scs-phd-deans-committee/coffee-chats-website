@@ -20,6 +20,11 @@ import ScheduleSelector from "react-schedule-selector";
 
 import ReactDice from "react-dice-complete";
 import "react-dice-complete/dist/react-dice-complete.css";
+import academic_img from '../../academic.png';
+import college_img from '../../college.png';
+import hobbies_img from '../../hobbies.png';
+import year_img from '../../year.png';
+import background_img from '../../background.png';
 
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'prioritiesBubbles', 'availability',
@@ -308,7 +313,6 @@ function CCSignUp(props) {
     )
   }
 
-  const factors = ["academic interests", "college", "hobbies", "year at CMU", "background"];
   const options = ["the same as mine", "different than mine", "anything works!"];
   const [factorState, setFactorState] = useState({});
 
@@ -336,7 +340,8 @@ function CCSignUp(props) {
       setFactorState(factorState);
 
       var next = document.getElementById("priorities-next");
-      if (Object.keys(factorState).length === factors.length) {
+      const numFactors = 5;
+      if (Object.keys(factorState).length === numFactors) {
         next.classList.add("active");
         next.disabled = false;
         next.onclick = clickToNextSection;
@@ -401,8 +406,39 @@ function CCSignUp(props) {
     )
   }
 
+  // randomly generate 5 bubble positions, stays static through entire flow
+  const [margins, setMargins] = useState([]);
+  if (margins.length == 0) {
+    for (var i=0; i<5; i++) {
+      var margin = Math.floor(Math.random() * 100);
+      // alternate heights
+      if (i % 2 == 0) {
+        margin += 100;
+      }
+      const marginStr = margin.toString() + "px"
+      setMargins(margins => [...margins, marginStr]);
+    }
+  }
+
   function PrioritiesBubblesQuestion(props) {
-          
+    const factors = ["academic", "college", "hobbies", "year", "background"];
+    const factorNames = 
+      {"academic": "academic interests", 
+      "college": "colleges & departments",
+      "hobbies": "hobbies & interests",
+      "year": "year at CMU",
+      "background": "background",
+      };
+    const factorImgs = 
+      {"academic": academic_img, 
+      "college": college_img,
+      "hobbies": hobbies_img,
+      "year": year_img,
+      "background": background_img,
+      };
+    const numSizes = 5;
+    const baseSize = 125;
+    const interval = 10;
     function clickToNextSection() {
           setQuestion(questionNum + 1); 
           setCurSection(2);   
@@ -412,6 +448,37 @@ function CCSignUp(props) {
           setQuestion(questionNum - 1);
           setCurSection(1);
           };
+    function handleBubbleClick(e) {
+      const id = e.target.id;
+      var bubble = document.getElementById(id);
+      if (bubble === null) {return;}
+      console.log(id);
+      const sizeStr = bubble.style.width;
+      // width not yet set, so it is at the default size of 125px
+      var newSize = 0;
+      if (sizeStr == "") {
+        newSize = baseSize + interval;
+      } else {
+        const size = parseInt(sizeStr.slice(0, sizeStr.length - 2));
+        newSize = (size === baseSize + interval * (numSizes-1)) ? baseSize : (size + interval);
+      }
+      const newSizeStr = newSize.toString() + "px";
+      bubble.style.maxWidth = newSizeStr;
+      bubble.style.maxHeight = newSizeStr;
+      bubble.style.width = newSizeStr;
+      bubble.style.height = newSizeStr;
+    }
+    function resetSizes() {
+      for (var i=0; i<factors.length; i++) {
+        const factor = factors[i];
+        var bubble = document.getElementById(factor);
+        const baseSizeStr = baseSize.toString() + "px";
+        bubble.style.maxWidth = baseSizeStr;
+        bubble.style.maxHeight = baseSizeStr;
+        bubble.style.width = baseSizeStr;
+        bubble.style.height = baseSizeStr;
+      }
+    }
 
     return (
       <><div className="question-text">
@@ -420,10 +487,33 @@ function CCSignUp(props) {
       <div className="question-sub-text">
        Click on the circle to indicate priority, the larger the circle, the most priority.
       </div>
+      <div id="bubbleContainer">
         {
           Object.entries(factorState)
-          .map(([key, value]) => ((value !== 2) && <div>{key + value}</div>))
+          .map(([key, value], idx) => 
+          ((value !== 2) && 
+          <div className="bubble" id={key} onClick={handleBubbleClick} 
+          style={{marginTop: margins[idx], backgroundColor: (value === 0)? "#048621" : "#A94152"}}>
+            <img src={factorImgs[key]} />
+            <div className="bubbleText">
+              {factorNames[key]}
+            </div>
+          </div>))
         }
+      </div>
+      <div id="bubbleControls">
+        <div className="legend">
+          <div id="sameBubble" className="legendColor"></div>
+          <div className="legendText">same</div>
+        </div>
+        <div className="legend">
+          <div id="differentBubble" className="legendColor"></div>
+          <div className="legendText">different</div>
+        </div>
+        <Button id="resetSizes" variant="link" onClick={resetSizes}>
+          reset sizes
+        </Button>
+      </div>
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>

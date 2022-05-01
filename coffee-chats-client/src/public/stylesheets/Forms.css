@@ -351,3 +351,72 @@ form * {
 .form-check > label {
   margin-left: 10px;
 }
+#bubbleContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow-x: auto;
+}
+.bubble {
+  max-width: 125px;
+  max-height: 125px;
+  height: 125px;
+  width: 125px;
+  background: #A94152;
+  border-radius: 50%;
+  flex: 1;
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.bubbleText {
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+  padding: 0px 10px;
+}
+#bubbleControls {
+  margin-top: 30px;
+  width: 90%;
+}
+.legend {
+  float: left;
+  margin: 0px 20px;
+}
+.legendColor {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.legendText {
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: middle;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}
+#sameBubble {
+  background: #048621;
+}
+#differentBubble {
+  background: #A94152;
+}
+#resetSizes {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  text-decoration-line: underline;
+  color: #B1B1B1;
+  float: right;
+}
