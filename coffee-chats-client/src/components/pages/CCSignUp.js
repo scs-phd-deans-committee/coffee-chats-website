@@ -313,6 +313,21 @@ function CCSignUp(props) {
     )
   }
 
+  const factors = ["academic", "college", "hobbies", "year", "background"];
+  const factorNames = 
+    {"academic": "academic interests", 
+    "college": "colleges & departments",
+    "hobbies": "hobbies & interests",
+    "year": "year at CMU",
+    "background": "background",
+    };
+  const factorImgs = 
+    {"academic": academic_img, 
+    "college": college_img,
+    "hobbies": hobbies_img,
+    "year": year_img,
+    "background": background_img,
+    };
   const options = ["the same as mine", "different than mine", "anything works!"];
   const [factorState, setFactorState] = useState({});
 
@@ -421,21 +436,6 @@ function CCSignUp(props) {
   }
 
   function PrioritiesBubblesQuestion(props) {
-    const factors = ["academic", "college", "hobbies", "year", "background"];
-    const factorNames = 
-      {"academic": "academic interests", 
-      "college": "colleges & departments",
-      "hobbies": "hobbies & interests",
-      "year": "year at CMU",
-      "background": "background",
-      };
-    const factorImgs = 
-      {"academic": academic_img, 
-      "college": college_img,
-      "hobbies": hobbies_img,
-      "year": year_img,
-      "background": background_img,
-      };
     const numSizes = 5;
     const baseSize = 125;
     const interval = 10;
@@ -722,7 +722,37 @@ function CCSignUp(props) {
         <div className="review-text twoCol-right-flex">You also prioritize the following factors:
         </div>
       </div>
-      {/* include matching priorities */}
+      <div className="review-section twoCol-container-flex">
+        <div className="review-heading twoCol-left-flex"></div>
+        <div className="review-text twoCol-right-flex">
+          <div id="bubbleContainer">
+            {
+              Object.entries(factorState)
+              .map(([key, value], idx) => 
+              ((value !== 2) && 
+              <div className="bubble" id={key}
+              style={{marginTop: margins[idx], backgroundColor: (value === 0)? "#048621" : "#A94152"}}>
+                <img src={factorImgs[key]} />
+                <div className="bubbleText">
+                  {factorNames[key]}
+                </div>
+              </div>))
+            }
+          </div>
+          <div id="bubbleControls">
+            <div className="legend">
+              <div id="sameBubble" className="legendColor"></div>
+              <div className="legendText">same</div>
+            </div>
+            <div className="legend">
+              <div id="differentBubble" className="legendColor"></div>
+              <div className="legendText">different</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
       <div className="review-section twoCol-container-flex">
         <div className="review-heading twoCol-left-flex">Scheduling:</div>
         <div className="review-text twoCol-right-flex">
