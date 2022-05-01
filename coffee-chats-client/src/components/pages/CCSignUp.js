@@ -376,7 +376,8 @@ function CCSignUp(props) {
           <div className="factor-question">I care that my match’s <b>academic interests</b> are</div>
           <div key="academic" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
-              <Form.Check label={option} name="academic" type="radio" id={`academic-${idx}`}/>
+              <Form.Check label={option} name="academic" type="radio" 
+              id={`academic-${idx}`} key={`academic-${idx}`}/>
             ))}
           </div>
       </div>
@@ -384,7 +385,8 @@ function CCSignUp(props) {
           <div className="factor-question">I care that my match’s <b>college</b> is</div>
           <div key="college" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
-              <Form.Check label={option} name="college" type="radio" id={`college-${idx}`} />
+              <Form.Check label={option} name="college" type="radio" 
+              id={`college-${idx}`} key={`college-${idx}`}/>
             ))}
           </div>
       </div>
@@ -392,7 +394,8 @@ function CCSignUp(props) {
           <div className="factor-question">I care that my match’s <b>hobbies</b> are</div>
           <div key="hobbies" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
-              <Form.Check label={option} name="hobbies" type="radio" id={`hobbies-${idx}`} />
+              <Form.Check label={option} name="hobbies" type="radio" 
+              id={`hobbies-${idx}`} key={`hobbies-${idx}`}/>
             ))}
           </div>
       </div>
@@ -400,7 +403,7 @@ function CCSignUp(props) {
           <div className="factor-question">I care that my match’s <b>year at CMU</b> is</div>
           <div key="year" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
-              <Form.Check label={option} name="year" type="radio" id={`year-${idx}`} />
+              <Form.Check label={option} name="year" type="radio" id={`year-${idx}`} key={`year-${idx}`}/>
             ))}
           </div>
       </div>
@@ -408,7 +411,8 @@ function CCSignUp(props) {
           <div className="factor-question">I care that my match’s <b>background</b> is</div>
           <div key="background" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
-              <Form.Check label={option} name="background" type="radio" id={`background-${idx}`} />
+              <Form.Check label={option} name="background" type="radio" 
+              id={`background-${idx}`} key={`background-${idx}`}/>
             ))}
           </div>
       </div>
@@ -452,7 +456,6 @@ function CCSignUp(props) {
       const id = e.target.id;
       var bubble = document.getElementById(id);
       if (bubble === null) {return;}
-      console.log(id);
       const sizeStr = bubble.style.width;
       // width not yet set, so it is at the default size of 125px
       var newSize = 0;
@@ -492,7 +495,7 @@ function CCSignUp(props) {
           Object.entries(factorState)
           .map(([key, value], idx) => 
           ((value !== 2) && 
-          <div className="bubble" id={key} onClick={handleBubbleClick} 
+          <div className="bubble" id={key} key={key} onClick={handleBubbleClick} 
           style={{marginTop: margins[idx], backgroundColor: (value === 0)? "#048621" : "#A94152"}}>
             <img src={factorImgs[key]} />
             <div className="bubbleText">
@@ -730,7 +733,7 @@ function CCSignUp(props) {
               Object.entries(factorState)
               .map(([key, value], idx) => 
               ((value !== 2) && 
-              <div className="bubble" id={key}
+              <div className="bubble" id={key} key={key}
               style={{marginTop: margins[idx], backgroundColor: (value === 0)? "#048621" : "#A94152"}}>
                 <img src={factorImgs[key]} />
                 <div className="bubbleText">
