@@ -100,11 +100,13 @@ form * {
   margin-bottom: 10px;
 }
 .question-area {
-  width: 80%;
   min-height: 500px;
   border-radius: 14px;
   margin-top: 20px;
+  width: 80%;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  /* width: 100%; */
 }
 .question-text {
   font-family: 'Poppins', sans-serif;
@@ -334,21 +336,36 @@ form * {
   width: 200px;
   margin-top: 100px;
 }
-.factor-section {
-  text-align: left;
+#factors {
   width: 70%;
   margin-top: 30px;
+}
+.factor-section {
+  width: 100%;
+  margin-bottom: 60px;
 }
 .factor-question {
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
+  text-align: left;
+}
+.factor-question > div {
+ display: inline-block;
+}
+.factor-num {
+  font-size: 20px;
+  font-weight: 700;
+  color: #A94152;
+}
+.factor-text {
+  margin-left: 20px;
 }
 .factor-options {
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   margin: 20px 0px;
-  gap: 20px;
-  align-items: center;
+  gap: 25px;
+  display: flex;
 }
 .form-check {
   margin-top: 5px;
