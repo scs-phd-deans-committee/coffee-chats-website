@@ -347,16 +347,13 @@ function CCSignUp(props) {
           setQuestion(questionNum - 1);
           setCurSection(1);
           };
-    const handleChange = e => {
-      const factor = e.target.name;
-      const id = e.target.id
-      const option = parseInt(id.charAt(id.length - 1));
-      factorState[factor] = option;
+    const handleChange = val => {
+      const [factor, option] = val.split("-");
+      factorState[factor] = parseInt(option);
       setFactorState(factorState);
 
       var next = document.getElementById("priorities-next");
-      const numFactors = 5;
-      if (Object.keys(factorState).length === numFactors) {
+      if (Object.keys(factorState).length === factors.length) {
         next.classList.add("active");
         next.disabled = false;
         next.onclick = clickToNextSection;
@@ -373,48 +370,54 @@ function CCSignUp(props) {
         Skip this question
       </Button>
       <div className="factor-section">
-          <div className="factor-question">I care that my match’s <b>academic interests</b> are</div>
-          <div key="academic" className="factor-options" onChange={handleChange}>
+          <div className="factor-question">1. I care that my match’s <b>academic interests</b> are</div>
+          <ToggleButtonGroup key="academic" className="factor-options" onChange={handleChange} type="radio" 
+          name="academic">
             {options.map((option, idx) => (
-              <Form.Check label={option} name="academic" type="radio" 
-              id={`academic-${idx}`} key={`academic-${idx}`}/>
+              <ToggleButton name={`academic-${idx}`} key={`academic-${idx}`}
+              value={`academic-${idx}`} variant="custom">{option}</ToggleButton>
             ))}
-          </div>
+          </ToggleButtonGroup>
       </div>
       <div className="factor-section">
-          <div className="factor-question">I care that my match’s <b>college</b> is</div>
-          <div key="college" className="factor-options" onChange={handleChange}>
+          <div className="factor-question">2. I care that my match’s <b>college</b> is</div>
+          <ToggleButtonGroup key="college" className="factor-options" onChange={handleChange} type="radio" 
+          name="college">
             {options.map((option, idx) => (
-              <Form.Check label={option} name="college" type="radio" 
-              id={`college-${idx}`} key={`college-${idx}`}/>
+              <ToggleButton name={`college-${idx}`} key={`college-${idx}`}
+              value={`college-${idx}`} variant="custom">{option}</ToggleButton>
             ))}
-          </div>
+          </ToggleButtonGroup>
       </div>
       <div className="factor-section">
-          <div className="factor-question">I care that my match’s <b>hobbies</b> are</div>
-          <div key="hobbies" className="factor-options" onChange={handleChange}>
+          <div className="factor-question">3. I care that my match’s <b>hobbies</b> are</div>
+          <ToggleButtonGroup key="hobbies" className="factor-options" onChange={handleChange} type="radio" 
+          name="hobbies">
             {options.map((option, idx) => (
-              <Form.Check label={option} name="hobbies" type="radio" 
-              id={`hobbies-${idx}`} key={`hobbies-${idx}`}/>
+              <ToggleButton name={`hobbies-${idx}`} key={`hobbies-${idx}`}
+              value={`hobbies-${idx}`} variant="custom">{option}</ToggleButton>
             ))}
-          </div>
+          </ToggleButtonGroup>
       </div>
       <div className="factor-section">
-          <div className="factor-question">I care that my match’s <b>year at CMU</b> is</div>
-          <div key="year" className="factor-options" onChange={handleChange}>
+          <div className="factor-question">4. I care that my match’s <b>year at CMU</b> is</div>
+          <ToggleButtonGroup key="year" className="factor-options" onChange={handleChange} type="radio" 
+          name="year">
             {options.map((option, idx) => (
-              <Form.Check label={option} name="year" type="radio" id={`year-${idx}`} key={`year-${idx}`}/>
+              <ToggleButton name={`year-${idx}`} key={`year-${idx}`}
+              value={`year-${idx}`} variant="custom">{option}</ToggleButton>
             ))}
-          </div>
+          </ToggleButtonGroup>
       </div>
       <div className="factor-section">
-          <div className="factor-question">I care that my match’s <b>background</b> is</div>
-          <div key="background" className="factor-options" onChange={handleChange}>
+          <div className="factor-question">5. I care that my match’s <b>background</b> is</div>
+          <ToggleButtonGroup key="background" className="factor-options" onChange={handleChange} type="radio" 
+          name="background">
             {options.map((option, idx) => (
-              <Form.Check label={option} name="background" type="radio" 
-              id={`background-${idx}`} key={`background-${idx}`}/>
+              <ToggleButton name={`background-${idx}`} key={`background-${idx}`}
+              value={`background-${idx}`} variant="custom">{option}</ToggleButton>
             ))}
-          </div>
+          </ToggleButtonGroup>
       </div>
       <br />
       <div className="question-nav">
