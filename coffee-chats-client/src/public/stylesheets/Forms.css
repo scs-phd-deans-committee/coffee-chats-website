@@ -420,3 +420,13 @@ form * {
   color: #B1B1B1;
   float: right;
 }
+
+#availability-buttons {
+    top: 25%;
+    font-family: 'Poppins', sans-serif;
+}
+
+#availability-buttons > * {
+    margin-bottom: 10%;
+    border-radius: 5px;
+}

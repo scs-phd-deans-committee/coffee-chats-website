@@ -377,7 +377,7 @@ function CCSignUp(props) {
           <div key="academic" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
               <Form.Check label={option} name="academic" type="radio" 
-              id={`academic-${idx}`} key={`academic-${idx}`}/>
+              id={'academic-${idx}'} key={'academic-${idx}'}/>
             ))}
           </div>
       </div>
@@ -386,7 +386,7 @@ function CCSignUp(props) {
           <div key="college" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
               <Form.Check label={option} name="college" type="radio" 
-              id={`college-${idx}`} key={`college-${idx}`}/>
+              id={'college-${idx}'} key={'college-${idx}'}/>
             ))}
           </div>
       </div>
@@ -395,7 +395,7 @@ function CCSignUp(props) {
           <div key="hobbies" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
               <Form.Check label={option} name="hobbies" type="radio" 
-              id={`hobbies-${idx}`} key={`hobbies-${idx}`}/>
+              id={'hobbies-${idx}'} key={'hobbies-${idx}'}/>
             ))}
           </div>
       </div>
@@ -403,7 +403,7 @@ function CCSignUp(props) {
           <div className="factor-question">I care that my match’s <b>year at CMU</b> is</div>
           <div key="year" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
-              <Form.Check label={option} name="year" type="radio" id={`year-${idx}`} key={`year-${idx}`}/>
+              <Form.Check label={option} name="year" type="radio" id={'year-${idx}'} key={'year-${idx}'}/>
             ))}
           </div>
       </div>
@@ -412,7 +412,7 @@ function CCSignUp(props) {
           <div key="background" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
               <Form.Check label={option} name="background" type="radio" 
-              id={`background-${idx}`} key={`background-${idx}`}/>
+              id={'background-${idx}'} key={'background-${idx}'}/>
             ))}
           </div>
       </div>
@@ -545,37 +545,62 @@ function CCSignUp(props) {
           setQuestion(questionNum - 2);
           setCurSection(1);
           };
+      
+    const [nextDisabled, setNextDisabled] = useState(true);
 
     const handleChange = (newSchedule) => {
       setSchedule(newSchedule);
-      // TODO: add next disabling once we investigate handleChange
-      
-      // var next = document.getElementById("availability-next");
-      // if (schedule.length) {
-      //   next.classList.add("active");
-      //   next.disabled = false;
-      //   next.onclick = clickToNextSection;
-      // } else {
-      //   next.classList.remove("active");
-      //   next.disabled = true;
-      // }
+      setNextDisabled(newSchedule.length === 0);
+
     };
+     
+    const [radioValue, setRadioValue] = useState('1');
+      
+    const availabilities = [
+        { name: 'Available', value: '1'},
+        { name: 'Flexible', value: '2'},
+        { name: 'Busy', value: '3'},
+    ];
+    const [selectColor, setSelectColor] = useState('rgba(40, 167, 69, 1)');
+      
+    
     return (
       <><div className="question-text">
         What does your availability look like next week?
         </div>
+      <Container>
+      <Row>
+      <Col sm={4}>
+        <ToggleButtonGroup type="radio" name="availability" defaultValue={1} size="lg" id="availability-buttons" vertical>
+          <ToggleButton id="tbg-radio-1" variant="outline-success" value={1} onClick={() => setSelectColor('rgba(40, 167, 69, 1)')}>
+            Available
+          </ToggleButton>
+          <ToggleButton id="tbg-radio-2" variant="outline-warning" value={2} onClick={() => setSelectColor('rgba(255, 193, 7, 1)')}>
+            Flexible
+          </ToggleButton>
+          <ToggleButton id="tbg-radio-3" variant="outline-danger" value={3} onClick={() => setSelectColor('rgba(220, 53, 69, 1)')}>
+            Busy
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Col>
+      <Col sm={8}>
       <ScheduleSelector
           selection={schedule}
-          numDays={5}
-          minTime={8}
-          maxTime={22}
+          startDate={'2022-03-17'}
+          numDays={7}
+          minTime={9}
+          maxTime={20}
           hourlyChunks={1}
           onChange={handleChange}
+          selectedColor={selectColor}
         />
+      </Col>
+      </Row>
+      </Container>
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
-        <Button  id="availability-next" variant="custom-nav" onClick={clickToNextSection}>
+        <Button  id="availability-next" variant="custom-nav" disabled={nextDisabled} onClick={!nextDisabled ? clickToNextSection : null} >
           Next
         </Button>
       </div></>
