@@ -528,6 +528,7 @@ function CCSignUp(props) {
           
   function AvailabilityQuestion(props) {
     const [schedule, setSchedule] = useState([]);
+    const [customSchedule, setCustomSchedule] = useState({});
           
     useEffect(() => {
         document.addEventListener("touchstart", {});
@@ -547,21 +548,44 @@ function CCSignUp(props) {
           };
       
     const [nextDisabled, setNextDisabled] = useState(true);
-
-    const handleChange = (newSchedule) => {
-      setSchedule(newSchedule);
-      setNextDisabled(newSchedule.length === 0);
-
-    };
      
     const [radioValue, setRadioValue] = useState('1');
       
     const availabilities = [
         { name: 'Available', value: '1'},
         { name: 'Flexible', value: '2'},
-        { name: 'Busy', value: '3'},
+        // { name: 'Busy', value: '3'},
     ];
-    const [selectColor, setSelectColor] = useState('rgba(40, 167, 69, 1)');
+
+    const handleChange = (newSchedule) => {
+      setSchedule(newSchedule);
+      setNextDisabled(newSchedule.length === 0);
+
+      // update custom schedule with additions
+      for (var i=0; i<newSchedule.length; i++) {
+        const time = newSchedule[i];
+        if (!(time in customSchedule)) {
+          customSchedule[time] = radioValue;
+          setCustomSchedule(customSchedule);
+        }
+      }
+
+      // update custom schedule with removals
+      for (let k in customSchedule) {
+        if (newSchedule.filter((x) => x == k).length == 0) {
+          delete customSchedule[k];
+          setCustomSchedule(customSchedule);
+        }
+      }
+    };
+
+    const renderCustomDateCell = (time, selected, innerRef) => (
+      <div ref={innerRef}>
+        {!selected && <div className="calendarCell" style={{backgroundColor: '#dbedff'}}></div>}
+        {selected && customSchedule[time] == '1' && <div className="calendarCell" style={{backgroundColor: '#28a745'}}></div>}
+        {selected && customSchedule[time] == '2' && <div className="calendarCell" style={{backgroundColor: '#ffc107'}}></div>}
+      </div>
+    )
       
     
     return (
@@ -572,15 +596,15 @@ function CCSignUp(props) {
       <Row>
       <Col sm={4}>
         <ToggleButtonGroup type="radio" name="availability" defaultValue={1} size="lg" id="availability-buttons" vertical>
-          <ToggleButton id="tbg-radio-1" variant="outline-success" value={1} onClick={() => setSelectColor('rgba(40, 167, 69, 1)')}>
+          <ToggleButton id="tbg-radio-1" variant="outline-success" value={1} onClick={() => setRadioValue('1')}>
             Available
           </ToggleButton>
-          <ToggleButton id="tbg-radio-2" variant="outline-warning" value={2} onClick={() => setSelectColor('rgba(255, 193, 7, 1)')}>
+          <ToggleButton id="tbg-radio-2" variant="outline-warning" value={2} onClick={() => setRadioValue('2')}>
             Flexible
           </ToggleButton>
-          <ToggleButton id="tbg-radio-3" variant="outline-danger" value={3} onClick={() => setSelectColor('rgba(220, 53, 69, 1)')}>
+          {/* <ToggleButton id="tbg-radio-3" variant="outline-danger" value={3} onClick={() => setSelectColor('rgba(220, 53, 69, 1)')}>
             Busy
-          </ToggleButton>
+          </ToggleButton> */}
         </ToggleButtonGroup>
       </Col>
       <Col sm={8}>
@@ -592,7 +616,7 @@ function CCSignUp(props) {
           maxTime={20}
           hourlyChunks={1}
           onChange={handleChange}
-          selectedColor={selectColor}
+          renderDateCell={renderCustomDateCell}
         />
       </Col>
       </Row>
