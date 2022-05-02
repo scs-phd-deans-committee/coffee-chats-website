@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+.phase-area {
+    margin-top: 5%;
+}
+
+.phase-section {
+    background-color: white;
+    padding-bottom: 20%;
+    border-radius: 20px;
+}
+
+.phase-section {
+    background-color: white;
+    padding-bottom: 20%;
+    border-radius: 20px;
+}
+
+.phase-active:hover {   
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.phase-inactive > * {
+    color: #C4C4C4 !important;
+}
+
+#circle {
+    width: 18px;
+    height: 18px;
+    background: #C4C4C4;
+    border-radius: 50%;
+    margin: 0px 20px 0px 20px;
+}
+
+.three-circles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.phase-icon-signup {
+    object-fit: scale-down;
+    padding-top: 5%;
+}
+
+.phase-icon-matching {
+    object-fit: scale-down;
+    padding-top: 5%;
+    padding-bottom: 3%;
+}
+
+.phase-icon-results {
+    object-fit: scale-down;
+    margin-top: 3%;
+}
+
+
+.phase-header {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #A94152;
+    padding-top: 5%;
+}
+
+.phase-header-results {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #A94152;
+}
+
+.deadline {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    color: black;
+    padding-bottom: 5%;
+}
+
+.deadline-results {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    color: black;
+    padding-bottom: 4%;
+}
+
+.no-decor, .no-decor:focus, .no-decor:hover {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+.btn-phase {
+  background-color: #A94152;
+  color: white !important;
+  font-family: 'Poppins', sans-serif;
+}
+
+.btn-phase-inactive {
+  background-color: #C4C4C4;
+  color: white !important;
+  font-family: 'Poppins', sans-serif;
+}
