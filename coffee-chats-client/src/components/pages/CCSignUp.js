@@ -364,7 +364,7 @@ function CCSignUp(props) {
     }
     return (
       <><div className="question-text">
-        What characteristics of your do you want to prioritize in your match?
+        What characteristics do you want to prioritize in your match?
       </div>
       <Button className="skip" variant="link" onClick={skipSection}>
         Skip this question
