@@ -559,7 +559,14 @@ function CCSignUp(props) {
 
     const handleChange = (newSchedule) => {
       setSchedule(newSchedule);
-      setNextDisabled(newSchedule.length === 0);
+      var next = document.getElementById("availability-next");
+      if (newSchedule.length !== 0) {
+        next.classList.add("active");
+        setNextDisabled(false);
+      } else {
+        next.classList.remove("active");
+        setNextDisabled(true);
+      }
 
       // update custom schedule with additions
       for (var i=0; i<newSchedule.length; i++) {
