@@ -377,7 +377,7 @@ function CCSignUp(props) {
           <div key="academic" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
               <Form.Check label={option} name="academic" type="radio" 
-              id={'academic-${idx}'} key={'academic-${idx}'}/>
+              id={`academic-${idx}`} key={`academic-${idx}`}/>
             ))}
           </div>
       </div>
@@ -386,7 +386,7 @@ function CCSignUp(props) {
           <div key="college" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
               <Form.Check label={option} name="college" type="radio" 
-              id={'college-${idx}'} key={'college-${idx}'}/>
+              id={`college-${idx}`} key={`college-${idx}`}/>
             ))}
           </div>
       </div>
@@ -395,7 +395,7 @@ function CCSignUp(props) {
           <div key="hobbies" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
               <Form.Check label={option} name="hobbies" type="radio" 
-              id={'hobbies-${idx}'} key={'hobbies-${idx}'}/>
+              id={`hobbies-${idx}`} key={`hobbies-${idx}`}/>
             ))}
           </div>
       </div>
@@ -403,7 +403,7 @@ function CCSignUp(props) {
           <div className="factor-question">I care that my match’s <b>year at CMU</b> is</div>
           <div key="year" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
-              <Form.Check label={option} name="year" type="radio" id={'year-${idx}'} key={'year-${idx}'}/>
+              <Form.Check label={option} name="year" type="radio" id={`year-${idx}`} key={`year-${idx}`}/>
             ))}
           </div>
       </div>
@@ -412,7 +412,7 @@ function CCSignUp(props) {
           <div key="background" className="factor-options" onChange={handleChange}>
             {options.map((option, idx) => (
               <Form.Check label={option} name="background" type="radio" 
-              id={'background-${idx}'} key={'background-${idx}'}/>
+              id={`background-${idx}`} key={`background-${idx}`}/>
             ))}
           </div>
       </div>
@@ -475,6 +475,7 @@ function CCSignUp(props) {
       for (var i=0; i<factors.length; i++) {
         const factor = factors[i];
         var bubble = document.getElementById(factor);
+        if (bubble === null) {continue;}
         const baseSizeStr = baseSize.toString() + "px";
         bubble.style.maxWidth = baseSizeStr;
         bubble.style.maxHeight = baseSizeStr;
@@ -554,7 +555,6 @@ function CCSignUp(props) {
     const availabilities = [
         { name: 'Available', value: '1'},
         { name: 'Flexible', value: '2'},
-        // { name: 'Busy', value: '3'},
     ];
 
     const handleChange = (newSchedule) => {
@@ -602,9 +602,6 @@ function CCSignUp(props) {
           <ToggleButton id="tbg-radio-2" variant="outline-warning" value={2} onClick={() => setRadioValue('2')}>
             Flexible
           </ToggleButton>
-          {/* <ToggleButton id="tbg-radio-3" variant="outline-danger" value={3} onClick={() => setSelectColor('rgba(220, 53, 69, 1)')}>
-            Busy
-          </ToggleButton> */}
         </ToggleButtonGroup>
       </Col>
       <Col sm={8}>
