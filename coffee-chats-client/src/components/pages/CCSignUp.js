@@ -661,6 +661,7 @@ function CCSignUp(props) {
   function DiceRollQuestion(props) {
     
     const [dice, setDice] = useState(null);
+      
     function clickToNextSection() {
           setQuestion(questionNum + 1); 
           setCurSection(3);   
@@ -678,6 +679,7 @@ function CCSignUp(props) {
       next.disabled = false;
       next.onclick = clickToNextSection;
     }
+
     return (
       <>
         <div className="question-text">
@@ -686,10 +688,6 @@ function CCSignUp(props) {
           <div className="question-sub-text">
           You'll find out what your match rolled when the match results are announced :)
           </div>
-      {/* dice state is initially zero, when the user has not rolled. 
-      the UI is replaced when the user rolls the dice */}
-      { (diceState === 0) ?
-        <>       
         {/* Dice Animation */}
                  
           <div style={{marginTop: "5%"}}>
@@ -704,6 +702,10 @@ function CCSignUp(props) {
               ref={(dice) => setDice(dice)}
             />  
           </div>
+      {/* dice state is initially zero, when the user has not rolled. 
+      the UI is replaced when the user rolls the dice */}
+      { (diceState === 0) ?
+        <>       
       
           <Button id="roll-dice" variant="custom-nav" onClick={rollDice}>
             Try your luck!</Button> 
@@ -711,17 +713,6 @@ function CCSignUp(props) {
         :
         
         <>
-          <div style={{marginTop: "5%"}}>
-            <ReactDice
-              numDice={1}
-              dieSize={125}
-              faceColor={"rgb(169, 65, 82)"}
-              dotColor={"rgb(255,255,255)"}
-              defaultRoll={diceState}
-              rollTime={0.2}
-              disableIndividual={true}
-            />
-          </div>
         <div className="question-header">You rolled a {diceState}!</div>
        </>
       }
