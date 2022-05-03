@@ -15,7 +15,7 @@ function CCNewHome(props) {
     
     function ThreeCircles(props) {
         return (
-            <Row>
+            <Row className="three-circles-row">
                 <div id="circle" />
                 <div id="circle" />
                 <div id="circle" />
