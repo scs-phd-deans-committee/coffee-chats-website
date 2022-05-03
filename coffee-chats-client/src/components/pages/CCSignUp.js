@@ -378,8 +378,8 @@ function CCSignUp(props) {
           <ToggleButtonGroup key="academic" className="factor-options" onChange={handleChange} type="radio" 
           name="academic">
             {options.map((option, idx) => (
-              <ToggleButton name={'academic-${idx}'} key={'academic-${idx}'}
-              value={'academic-${idx}'} variant="custom">{option}</ToggleButton>
+              <ToggleButton name={`academic-${idx}`} key={`academic-${idx}`}
+              value={`academic-${idx}`} variant="custom">{option}</ToggleButton>
             ))}
           </ToggleButtonGroup>
         </div>
@@ -391,8 +391,8 @@ function CCSignUp(props) {
           <ToggleButtonGroup key="college" className="factor-options" onChange={handleChange} type="radio" 
           name="college">
             {options.map((option, idx) => (
-              <ToggleButton name={'college-${idx}'} key={'college-${idx}'}
-              value={'college-${idx}'} variant="custom">{option}</ToggleButton>
+              <ToggleButton name={`college-${idx}`} key={`college-${idx}`}
+              value={`college-${idx}`} variant="custom">{option}</ToggleButton>
             ))}
           </ToggleButtonGroup>
         </div>
@@ -404,8 +404,8 @@ function CCSignUp(props) {
           <ToggleButtonGroup key="hobbies" className="factor-options" onChange={handleChange} type="radio" 
           name="hobbies">
             {options.map((option, idx) => (
-              <ToggleButton name={'hobbies-${idx}'} key={'hobbies-${idx}'}
-              value={'hobbies-${idx}'} variant="custom">{option}</ToggleButton>
+              <ToggleButton name={`hobbies-${idx}`} key={`hobbies-${idx}`}
+              value={`hobbies-${idx}`} variant="custom">{option}</ToggleButton>
             ))}
           </ToggleButtonGroup>
         </div>
@@ -417,8 +417,8 @@ function CCSignUp(props) {
           <ToggleButtonGroup key="year" className="factor-options" onChange={handleChange} type="radio" 
           name="year">
             {options.map((option, idx) => (
-              <ToggleButton name={'year-${idx}'} key={'year-${idx}'}
-              value={'year-${idx}'} variant="custom">{option}</ToggleButton>
+              <ToggleButton name={`year-${idx}`} key={`year-${idx}`}
+              value={`year-${idx}`} variant="custom">{option}</ToggleButton>
             ))}
           </ToggleButtonGroup>
         </div>
@@ -430,8 +430,8 @@ function CCSignUp(props) {
           <ToggleButtonGroup key="background" className="factor-options" onChange={handleChange} type="radio" 
           name="background">
             {options.map((option, idx) => (
-              <ToggleButton name={'background-${idx}'} key={'background-${idx}'}
-              value={'background-${idx}'} variant="custom">{option}</ToggleButton>
+              <ToggleButton name={`background-${idx}`} key={`background-${idx}`}
+              value={`background-${idx}`} variant="custom">{option}</ToggleButton>
             ))}
           </ToggleButtonGroup>
         </div>
