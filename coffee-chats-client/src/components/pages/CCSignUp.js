@@ -119,16 +119,22 @@ function CCSignUp(props) {
   // Filter activities displayed based on search input
   function filterActivities (e) {
     var input = e.target.value.toLowerCase();
-    var activities = document.getElementById("activity").children;
-    for (var i=0; i<activities.length; i++) {
-      var activity = activities[i];
-      if (input === '') {
-        activity.style.display = "block";
-      } else if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
-        activity.style.display = "none";
-      }
+    // var activities = document.getElementById("activity").children;
+    var allActivities = document.querySelectorAll("#activity");
+    for (var j=0; j<allActivities.length; j++) {
+        var activities = allActivities[j];
+        for (var i=0; i<activities.length; i++) {
+            var activity = activities[i];
+            if (input === '') {
+                activity.style.display = "block";
+            } else if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
+                       activity.style.display = "none";
+            }
+        }
     }
   }
+
+  const [selectedActivities, setSelectedActivities] = useState([]);
 
   // Toggle checkbox icon when button is clicked or unclicked
   function toggleCheckbox (e) {
@@ -141,6 +147,7 @@ function CCSignUp(props) {
       box.classList.add("unchecked");
     }
   }
+ 
 
   function ActivityQuestion(props) {
     const [addState, setAddState] = useState("init");
@@ -148,16 +155,23 @@ function CCSignUp(props) {
     const activities = ["Play sports", "Talk about hobbies", "Play a board game", 
     "Get food or drinks", "Get food or drinks (no alcohol)", "Visit a museum", 
     "Watch a movie", "Tour each other’s academic buildings", "Go on a walk", 
-    "Go to a farmer’s market", "Tour Phipps Conservatory", "Get coffee", 
-    "Any activities work!"]
+    "Go to a farmer’s market", "Tour Phipps Conservatory", "Get coffee"];
+    
+    const indoorActivities = ["Create a DIY art project", "Get food or drinks", "Get food or drinks (no alcohol)", "Go to the gym", "Go to a jazz club/cafe", "Just talk", "Make candles", "Manicure/Pedicure/Spa", "Paint and sip", "Play a board game", "Tour each other's academic buildings", "Watch a CMU Drama production", "Visit a museum", "Watch a movie"];
+    
+    const outdoorActivities = ["Get coffee", "Go to an art gallery", "Go to a farmer's market", "Go to a music concert", "Go on a walk", "Hammock at Schenley Park", "Hike", "Picnic", "Play sports", "Tour Phipps Conservatory"];
+    
+    const ownActivities = [];
     
     const [activitiesState, setActivitiesState] = useState(activities);
+    const [ownActivitiesState, setOwnActivitiesState] = useState(ownActivities);
     
     // adds a new activity based on user's "other" input
     const handleInput = e => {
       if (e.key === 'Enter') {
         const value = document.getElementById("addActivityInput").value;
         setActivitiesState([...activitiesState, value]);
+        setOwnActivitiesState([...ownActivitiesState, value]);
         setAddState("init")
       }
     }
@@ -174,6 +188,7 @@ function CCSignUp(props) {
     // Checking if the "Next" button can be set to valid
     function handleBtnClick(val) {
       var next = document.getElementById("activity-next");
+
       if (val.length && (val[0] !== undefined)) {
         next.classList.add("active");
         next.disabled = false;
@@ -187,17 +202,59 @@ function CCSignUp(props) {
       <><div className="question-text">
         What activities would you be interested in doing with your match?
         </div>
+        
       <div className="question-sub-text">Please select around 5 activities!</div>
-      <Form.Control className="search" placeholder="Search" onChange={filterActivities}/>
+        <Row className="search-bar-and-any-option">
+      <Col sm="7">
+        <Form.Control className="search activity-search" placeholder="Search" onChange={filterActivities}/>
+      </Col>
+      <Col sm="5">
+        <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" 
+      name="activity" onChange={handleBtnClick}>
+          <ToggleButton key="Any activities work!" id="Any activities work!" value="Any activities work!" variant="custom" onChange={toggleCheckbox}>
+            <span className="unchecked"></span>
+                 Any activities work!
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Col>
+      </Row>
+                 
+      <Col className="activity-category">
+      Indoor
+      </Col>
       <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" 
       name="activity" onChange={handleBtnClick}>
-        {activitiesState.map((a) => (
+        {indoorActivities.map((a) => (
           <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
             <span className="unchecked"></span>
             {a}
           </ToggleButton>
         ))}
-        {/* displays initial state of add button, just the plus sign */}
+      </ToggleButtonGroup>
+      <Col className="activity-category">
+        Outdoor
+      </Col>
+      <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" 
+      name="activity" onChange={handleBtnClick}>
+        {outdoorActivities.map((a) => (
+          <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
+            <span className="unchecked"></span>
+            {a}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+      <Col className="activity-category">
+        Add Your Own
+      </Col>
+      <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" 
+      name="activity" onChange={handleBtnClick}>
+       {ownActivitiesState.map((a) => (
+          <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
+            <span className="unchecked"></span>
+            {a}
+          </ToggleButton>
+        ))}
+      {/* displays initial state of add button, just the plus sign */}
         {addState === "init" &&
           <div className="addOption" id="addActivity" onClick={() => setAddState("input")}>
             <span className="add"></span>
@@ -212,6 +269,7 @@ function CCSignUp(props) {
           </div>
         }
       </ToggleButtonGroup>
+                 
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
