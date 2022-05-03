@@ -853,7 +853,9 @@ function CCSignUp(props) {
       <><div className="submitted-text">
         Congratulations on submitting!
         </div>
-      <Button id="back-home" variant="custom-nav">Back to home</Button></>
+      <Button id="back-home" variant="custom-nav">
+        <Link to="/ccnewhome" className="no-decor">Back to home </Link>
+      </Button></>
     )
   }
   
