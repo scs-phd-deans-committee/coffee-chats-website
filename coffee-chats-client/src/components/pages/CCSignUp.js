@@ -27,6 +27,7 @@ import year_img from '../../year.png';
 import background_img from '../../background.png';
 import diffpriority_img from '../../diffpriority.png';
 import samepriority_img from '../../samepriority.png';
+import submit_img from '../../formsubmit.png';
 
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'prioritiesBubbles', 'availability',
@@ -942,8 +943,10 @@ function CCSignUp(props) {
 
   function SubmissionScreen(props) {
     return (
-      <><div className="submitted-text">
-        Congratulations on submitting!
+      <>
+        <Image src={submit_img} fluid className="submit-image"/>
+        <div className="submitted-text">
+          Congratulations on submitting!
         </div>
       <Button id="back-home" variant="custom-nav">
         <Link to="/ccnewhome" className="no-decor">Back to home </Link>
