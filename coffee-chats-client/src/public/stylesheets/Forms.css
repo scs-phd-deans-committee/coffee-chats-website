@@ -194,7 +194,7 @@ form * {
   color: #B1B1B1;
   margin-top: auto;
 }
-#activity, #expectation {
+#any-activity, #indoor-activity, #outdoor-activity, #own-activity, #expectation {
   overflow: auto;
   padding: 0px 20px;
 }

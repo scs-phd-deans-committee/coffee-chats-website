@@ -152,25 +152,16 @@ function CCSignUp(props) {
   function ActivityQuestion(props) {
     const [addState, setAddState] = useState("init");
     
-    const activities = ["Play sports", "Talk about hobbies", "Play a board game", 
-    "Get food or drinks", "Get food or drinks (no alcohol)", "Visit a museum", 
-    "Watch a movie", "Tour each other’s academic buildings", "Go on a walk", 
-    "Go to a farmer’s market", "Tour Phipps Conservatory", "Get coffee"];
-    
     const indoorActivities = ["Create a DIY art project", "Get food or drinks", "Get food or drinks (no alcohol)", "Go to the gym", "Go to a jazz club/cafe", "Just talk", "Make candles", "Manicure/Pedicure/Spa", "Paint and sip", "Play a board game", "Tour each other's academic buildings", "Watch a CMU Drama production", "Visit a museum", "Watch a movie"];
     
     const outdoorActivities = ["Get coffee", "Go to an art gallery", "Go to a farmer's market", "Go to a music concert", "Go on a walk", "Hammock at Schenley Park", "Hike", "Picnic", "Play sports", "Tour Phipps Conservatory"];
     
-    const ownActivities = [];
-    
-    const [activitiesState, setActivitiesState] = useState(activities);
-    const [ownActivitiesState, setOwnActivitiesState] = useState(ownActivities);
+    const [ownActivitiesState, setOwnActivitiesState] = useState([]);
     
     // adds a new activity based on user's "other" input
     const handleInput = e => {
       if (e.key === 'Enter') {
         const value = document.getElementById("addActivityInput").value;
-        setActivitiesState([...activitiesState, value]);
         setOwnActivitiesState([...ownActivitiesState, value]);
         setAddState("init")
       }
@@ -188,14 +179,27 @@ function CCSignUp(props) {
     // Checking if the "Next" button can be set to valid
     function handleBtnClick(val) {
       var next = document.getElementById("activity-next");
+    
+      const anySelected = document.getElementById("Any activities work!").children[1].classList.contains("checked");
+      
+      const indoorActs = document.getElementById("indoor-activity").childNodes;
+      const indoorSelected = [...indoorActs].filter((act) => act.children[1].classList.contains("checked")).length > 0;
+                       
+      const outdoorActs = document.getElementById("outdoor-activity").childNodes;
+      const outdoorSelected = [...outdoorActs].filter((act) => act.children[1].classList.contains("checked")).length > 0;
 
-      if (val.length && (val[0] !== undefined)) {
+      const ownActs = document.getElementById("own-activity").childNodes;
+      const ownSelected = ownActs[0].getAttribute("id") === "addActivity" ? false : [...ownActs].filter((act) => act.getAttribute("id") !== "addActivity" && act.children[1].classList.contains("checked")).length > 0;
+                       
+      if (anySelected || indoorSelected || outdoorSelected || ownSelected) {
+        console.log("next is on");
         next.classList.add("active");
         next.disabled = false;
         next.onclick = clickToNextSection;
       } else {
         next.classList.remove("active");
         next.disabled = true;
+        console.log("next is off");
       }
     }
     return (
@@ -209,7 +213,7 @@ function CCSignUp(props) {
         <Form.Control className="search activity-search" placeholder="Search" onChange={filterActivities}/>
       </Col>
       <Col sm="5">
-        <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" 
+        <ToggleButtonGroup className="answerArea" id="any-activity" type="checkbox" 
       name="activity" onChange={handleBtnClick}>
           <ToggleButton key="Any activities work!" id="Any activities work!" value="Any activities work!" variant="custom" onChange={toggleCheckbox}>
             <span className="unchecked"></span>
@@ -222,7 +226,7 @@ function CCSignUp(props) {
       <Col className="activity-category">
       Indoor
       </Col>
-      <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" 
+      <ToggleButtonGroup className="answerArea" id="indoor-activity" type="checkbox" 
       name="activity" onChange={handleBtnClick}>
         {indoorActivities.map((a) => (
           <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
@@ -234,7 +238,7 @@ function CCSignUp(props) {
       <Col className="activity-category">
         Outdoor
       </Col>
-      <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" 
+      <ToggleButtonGroup className="answerArea" id="outdoor-activity" type="checkbox" 
       name="activity" onChange={handleBtnClick}>
         {outdoorActivities.map((a) => (
           <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
@@ -246,7 +250,7 @@ function CCSignUp(props) {
       <Col className="activity-category">
         Add Your Own
       </Col>
-      <ToggleButtonGroup className="answerArea" id="activity" type="checkbox" 
+      <ToggleButtonGroup className="answerArea" id="own-activity" type="checkbox" 
       name="activity" onChange={handleBtnClick}>
        {ownActivitiesState.map((a) => (
           <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
