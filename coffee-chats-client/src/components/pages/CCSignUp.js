@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 
 import { auth, firestore } from "../../firebaseClient";
 import { firebase } from '@firebase/app';
@@ -25,6 +25,8 @@ import college_img from '../../college.png';
 import hobbies_img from '../../hobbies.png';
 import year_img from '../../year.png';
 import background_img from '../../background.png';
+import diffpriority_img from '../../diffpriority.png';
+import samepriority_img from '../../samepriority.png';
 
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'prioritiesBubbles', 'availability',
@@ -180,6 +182,7 @@ function CCSignUp(props) {
     function handleBtnClick(val) {
       var next = document.getElementById("activity-next");
     
+      // check if any activities from any category are selected
       const anySelected = document.getElementById("Any activities work!").children[1].classList.contains("checked");
       
       const indoorActs = document.getElementById("indoor-activity").childNodes;
@@ -536,8 +539,9 @@ function CCSignUp(props) {
           };
     function handleBubbleClick(e) {
       const id = e.target.id;
+      console.log(id);
       var bubble = document.getElementById(id);
-      if (bubble === null) {return;}
+      if (bubble === null) {console.log("couldn't find"); return;}
       const sizeStr = bubble.style.width;
       // width not yet set, so it is at the default size of 125px
       var newSize = 0;
@@ -561,51 +565,77 @@ function CCSignUp(props) {
         const baseSizeStr = baseSize.toString() + "px";
         bubble.style.maxWidth = baseSizeStr;
         bubble.style.maxHeight = baseSizeStr;
-        bubble.style.width = baseSizeStr;
         bubble.style.height = baseSizeStr;
       }
     }
 
     return (
-      <><div className="question-text">
+      <>
+      <Col className="priority-images-same">
+        <Image src={samepriority_img} fluid/>
+      </Col>
+      <Col className="priority-images-diff">
+        <Image src={diffpriority_img} fluid/>
+      </Col>
+      <Col styles={{position: "absolute"}}>
+      <div className="question-text">
         Your Priorities
       </div>
       <div className="question-sub-text">
-       Click on the circle to indicate priority, the larger the circle, the most priority.
+       Click on the circle to indicate priority. The larger the circle, the more the priority.
       </div>
-      <div id="bubbleContainer">
-        {
-          Object.entries(factorState)
+      <Button id="resetSizes" variant="custom-nav" onClick={resetSizes}>
+          Reset Sizes
+        </Button>
+      <Row id="bubblesContainer">
+        <Col id="sameBubbles">
+            The Same As Me
+        <Row id="bubblesContainer">
+            {
+          Object.entries(factorState).filter(([key, value], idx) => value === 0)
           .map(([key, value], idx) => 
           ((value !== 2) && 
-          <div className="bubble" id={key} key={key} onClick={handleBubbleClick} 
-          style={{marginTop: margins[idx], backgroundColor: (value === 0)? "#048621" : "#A94152"}}>
+          <Col> <div className="bubble" id={key} key={key} onClick={handleBubbleClick} 
+          style={{marginTop: margins[idx], backgroundColor: "#A94152"}}>
             <img src={factorImgs[key]} />
             <div className="bubbleText">
               {factorNames[key]}
             </div>
-          </div>))
+            </div>
+          </Col>))
         }
-      </div>
-      <div id="bubbleControls">
-        <div className="legend">
-          <div id="sameBubble" className="legendColor"></div>
-          <div className="legendText">same</div>
-        </div>
-        <div className="legend">
-          <div id="differentBubble" className="legendColor"></div>
-          <div className="legendText">different</div>
-        </div>
-        <Button id="resetSizes" variant="link" onClick={resetSizes}>
-          reset sizes
-        </Button>
-      </div>
+        </Row>
+        </Col>
+        <Col id="differentBubbles">
+            Different From Me
+            <Row id="bubblesContainer">
+            {
+          Object.entries(factorState).filter(([key, value], idx) => value === 1)
+          .map(([key, value], idx) => 
+          ((value !== 2) && 
+          <Col> <div className="bubble" id={key} key={key} onClick={handleBubbleClick} 
+          style={{marginTop: margins[idx], backgroundColor: "#3F3D56"}}>
+            <img src={factorImgs[key]} />
+            <div className="bubbleText">
+              {factorNames[key]}
+            </div>
+          </div>
+          </Col>))
+        }
+        </Row>
+        </Col>
+      </Row>
+   
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
         <Button id="priorities-next" variant="custom-nav active"
         onClick={clickToNextSection}>Next</Button>
-      </div></>
+      </div>
+      </Col>
+      
+      </>
+      
     )
   }
           
