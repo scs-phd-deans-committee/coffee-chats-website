@@ -119,10 +119,10 @@ function CCSignUp(props) {
   // Filter activities displayed based on search input
   function filterActivities (e) {
     var input = e.target.value.toLowerCase();
-    // var activities = document.getElementById("activity").children;
-    var allActivities = document.querySelectorAll("#activity");
+    var allActivities = document.querySelectorAll("#indoor-activity, #outdoor-activity, #own-activity");
+    console.log(allActivities);
     for (var j=0; j<allActivities.length; j++) {
-        var activities = allActivities[j];
+        var activities = allActivities[j].children;
         for (var i=0; i<activities.length; i++) {
             var activity = activities[i];
             if (input === '') {
