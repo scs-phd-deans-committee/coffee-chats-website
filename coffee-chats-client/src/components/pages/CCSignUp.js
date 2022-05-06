@@ -424,9 +424,22 @@ function CCSignUp(props) {
   function PrioritiesQuestion(props) {
           
     function clickToNextSection() {
-          setQuestion(questionNum + 1); 
-          setCurSection(1);   
-          };
+      // check if "anything works" was selected for all factors
+      var skip = true;
+      const anythingIdx = 2;
+      for (let k in factorState) {
+        if (factorState[k] !== anythingIdx) {
+          skip = false;
+        }
+      }
+
+      if (skip) {
+        skipSection();
+      } else {
+        setQuestion(questionNum + 1); 
+        setCurSection(1);   
+      }
+    };
 
     function skipSection() {
           setQuestion(questionNum + 2); 
