@@ -714,7 +714,7 @@ function CCSignUp(props) {
         </div>
       <Container>
       <Row>
-      <Col sm={4}>
+      <Col sm={2}>
         <ToggleButtonGroup type="radio" name="availability" defaultValue={1} size="lg" id="availability-buttons" vertical>
           <ToggleButton id="tbg-radio-1" variant="outline-success" value={1} onClick={() => setRadioValue('1')}>
             Available
@@ -724,14 +724,15 @@ function CCSignUp(props) {
           </ToggleButton>
         </ToggleButtonGroup>
       </Col>
-      <Col sm={8}>
+      <Col sm={10}>
       <ScheduleSelector
           selection={schedule}
-          startDate={'2022-03-17'}
+          startDate={'2022-03-13'}
           numDays={7}
           minTime={9}
           maxTime={20}
           hourlyChunks={1}
+          dateFormat="ddd M/D"
           onChange={handleChange}
           renderDateCell={renderCustomDateCell}
         />
