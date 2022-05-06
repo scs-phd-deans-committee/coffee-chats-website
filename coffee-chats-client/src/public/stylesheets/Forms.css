@@ -113,7 +113,7 @@ form * {
   font-weight: 500;
   text-align: center;
   color: #A94152;
-  font-size: 20px;
+  font-size: 1.7em;
   margin: 10px 0px 10px 0px;
   /* max-width: 80%; */
 }
@@ -121,13 +121,13 @@ form * {
   font-family: 'Poppins', sans-serif;
   font-weight: 275;
   color: #A94152;
-  font-size: 14px;
+  font-size: 1.3em;
 }
 .question-header {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   color: #A94152;
-  font-size: 30px;
+  font-size: 1.7em;
   margin: 25px 0px 10px 0px;
   max-width: 80%;
 }
@@ -190,7 +190,7 @@ form * {
 .skip, .skip:hover {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1.1em;
   text-decoration-line: underline;
   color: #B1B1B1;
   margin-top: auto;
@@ -293,12 +293,7 @@ form * {
 #roll-dice {
   margin-top: auto;
 }
-#dice-result {
-  font-family: 'Poppins', sans-serif;
-  font-size: 96px;
-  font-weight: 1000;
-  color: #A94152;
-}
+
 .review-section {
   padding: 20px 60px 0px 20px;
   width: 100%;
@@ -354,11 +349,12 @@ form * {
  display: inline-block;
 }
 .factor-num {
-  font-size: 20px;
+  font-size: 1.4em;
   font-weight: 700;
   color: #A94152;
 }
 .factor-text {
+  font-size: 1.2em;
   margin-left: 20px;
 }
 .factor-options {
