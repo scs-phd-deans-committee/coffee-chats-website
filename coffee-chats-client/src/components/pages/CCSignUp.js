@@ -791,7 +791,7 @@ function CCSignUp(props) {
               faceColor={"rgb(169, 65, 82)"}
               dotColor={"rgb(255,255,255)"}
               rollTime={0.75}
-              disableIndividual={true}
+              disableIndividual={diceState !== 0}
               ref={(dice) => setDice(dice)}
             />  
           </div>
