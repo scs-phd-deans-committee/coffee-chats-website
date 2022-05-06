@@ -739,8 +739,8 @@ function CCSignUp(props) {
     const renderCustomDateCell = (time, selected, innerRef) => (
       <div ref={innerRef}>
         {!selected && <div className="calendarCell" style={{backgroundColor: '#dbedff'}}></div>}
-        {selected && customSchedule[time] == '1' && <div className="calendarCell" style={{backgroundColor: '#28a745'}}></div>}
-        {selected && customSchedule[time] == '2' && <div className="calendarCell" style={{backgroundColor: '#ffc107'}}></div>}
+        {selected && customSchedule[time] == '1' && <div className="calendarCell" style={{backgroundColor: '#A94152'}}></div>}
+        {selected && customSchedule[time] == '2' && <div className="calendarCell" style={{backgroundColor: '#3F3D56'}}></div>}
       </div>
     )
       
@@ -752,12 +752,14 @@ function CCSignUp(props) {
       <Container fluid>
       <Row fluid className="calendar-row">
       <Col sm={2}>
-        <ToggleButtonGroup type="radio" name="availability" defaultValue={1} size="lg" id="availability-buttons" vertical>
-          <ToggleButton id="tbg-radio-1" variant="outline-success" value={1} onClick={() => setRadioValue('1')}>
-            Available
+        <ToggleButtonGroup type="radio" name="availability" defaultValue={1} id="availability-buttons" vertical>
+          <ToggleButton variant="custom-calendar" value={1} onClick={() => setRadioValue('1')}>
+            <span id="available-toggle"></span>
+            available
           </ToggleButton>
-          <ToggleButton id="tbg-radio-2" variant="outline-warning" value={2} onClick={() => setRadioValue('2')}>
-            Flexible
+          <ToggleButton variant="custom-calendar" value={2} onClick={() => setRadioValue('2')}>
+            <span id="flexible-toggle"></span>
+            flexible
           </ToggleButton>
         </ToggleButtonGroup>
       </Col>
