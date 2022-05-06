@@ -103,33 +103,36 @@ form * {
   min-height: 500px;
   border-radius: 14px;
   /* margin-top: 10px; */
-  /* width: 80%;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
-
-  width: 100%;
+  /* width: 80%; */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  width: 80vw;
+  height: 70vh;
+  flex-wrap: nowrap !important;
 }
 .question-text {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   text-align: center;
   color: #A94152;
-  font-size: 1.7em;
-  margin: 10px 0px 10px 0px;
+  font-size: 1.5vw;
+  margin-top: 5%;
   /* max-width: 80%; */
 }
 .question-sub-text {
   font-family: 'Poppins', sans-serif;
   font-weight: 275;
   color: #A94152;
-  font-size: 1.3em;
+  font-size: 1.2vw;
 }
-.question-header {
+.dice-result {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   color: #A94152;
-  font-size: 1.7em;
+  font-size: 1.5vw;
   margin: 25px 0px 10px 0px;
   max-width: 80%;
+  margin-bottom: 10vh;
 }
 .answerArea {
   margin: 20px 0px;
@@ -149,6 +152,7 @@ form * {
   font-size: 18px;
   z-index: 1;
   height: 40px;
+  width: 20vw;
 }
 .btn-custom:hover, .btn-custom.active, .btn-custom-nav:hover:enabled, .btn-custom-nav.active {
   color: white !important;
@@ -157,8 +161,7 @@ form * {
   opacity: 100%;
 }
 .question-nav {
-  margin-top: auto;
-  margin-bottom: 20px;
+  margin-bottom: 3vh;
 }
 .btn-custom-nav {
   border-color: #A94152;
@@ -190,14 +193,16 @@ form * {
 .skip, .skip:hover {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
-  font-size: 1.1em;
+  font-size: 1vw;
   text-decoration-line: underline;
   color: #B1B1B1;
-  margin-top: auto;
 }
 #any-activity, #indoor-activity, #outdoor-activity, #own-activity, #expectation {
   overflow: auto;
-  padding: 0px 20px;
+  padding: 0px 2vw;
+  width: 100%;
+  margin-bottom: 2vh;
+    
 }
 .unchecked {
   background: url(../../unchecked-red.png) no-repeat;
@@ -281,7 +286,8 @@ form * {
 }
 #comments-box {
   max-width: 80%;
-  margin-top: 30px;
+  margin-top: 10vh;
+  margin-bottom: 14vh;
   font-family: 'Poppins', sans-serif;
   font-size: 16px;
 }
@@ -291,7 +297,8 @@ form * {
   color: white;
 }
 #roll-dice {
-  margin-top: auto;
+  margin-top: 2vh;
+  margin-bottom: 10.5vh;
 }
 
 .review-section {
@@ -303,7 +310,7 @@ form * {
   text-align: right;
   font-family: 'Poppins';
   font-weight: 700;
-  font-size: 16px;
+  font-size: 1.1vw;
   color: #A94152;
 }
 .review-text {
@@ -312,7 +319,11 @@ form * {
   padding-left: 20px;
   font-family: 'Poppins';
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1vw;
+}
+
+.review-top {
+    margin-top: 2vh;
 }
 .review-schedule {
   padding-right: 100px;
@@ -330,11 +341,12 @@ form * {
 }
 #back-home {
   width: 200px;
-  margin-top: 3%;
+  margin-top: 4vh;
 }
 #factors {
   width: 70%;
-  margin-top: 30px;
+  overflow-y: scroll;
+  margin-top: 1vh;
 }
 .factor-section {
   width: 100%;
@@ -349,12 +361,12 @@ form * {
  display: inline-block;
 }
 .factor-num {
-  font-size: 1.4em;
+  font-size: 1.4vw;
   font-weight: 700;
   color: #A94152;
 }
 .factor-text {
-  font-size: 1.2em;
+  font-size: 1vw;
   margin-left: 20px;
 }
 .factor-options {
@@ -456,10 +468,8 @@ form * {
 
 .search-bar-and-any-option {
     display: flex;
-    width: inherit;
-    padding-left: 11%;
-    padding-right: 11%;
-    justify-content: center;
+    width: 100%;
+    margin-left: 2vw;
     align-content: center;
 }
 
@@ -470,14 +480,18 @@ form * {
 
 .activity-category {
     font-family: 'Poppins', sans-serif;
-    font-size: 18px;
+    font-size: 0.9vw;
     font-weight: 500;
     text-align: left;
-    padding-left: 12%;
+    padding-left: 3vw;
+    width: 100%;
+    margin-bottom: 0.5vh;
 }
 
 #bubblesContainer {
-    width: inherit;
+    width: 60%;
+    height: 34.5vh;
+    margin-left: 15.7vw;
 }
 
 #sameBubbles {
@@ -501,16 +515,68 @@ form * {
     width: 15%;
     position: absolute;
     left: 10%;
-    bottom: 0;
+    bottom: 8vh;
 }
 .priority-images-diff {
     width: 17%;
     position: absolute;
     right: 10%;
-    bottom: 0;
+    bottom: 8vh;
 }
 
 .submit-image {
-    width: 30%;
+    width: 20vw;
     margin-bottom: 3%;
+}
+
+.activity-container {
+    height: 35vh;
+    margin-bottom: 2vh;
+}
+
+.activity-scroll {
+    height: inherit;
+    overflow-y: scroll;
+}
+
+#remote {
+    margin-top: 10vh;
+    margin-bottom: 21vh;
+}
+
+#expectation {
+    margin-top: 13vh;
+    margin-bottom: 21.5vh;
+}
+
+#frequency {
+    margin-top: 10vh;
+    margin-bottom: 16vh;
+}
+
+.calendar-row {
+  margin-top: 5vh; 
+  margin-left: 2vw; 
+  margin-right: 2vw;
+  height: 43vh;
+}
+
+.results-container {
+    overflow-y: scroll;
+}
+
+#activity-img {
+    position: absolute;
+    width: 25vw;
+    bottom: 0;
+    right: -4vw;
+    z-index: -1;
+}
+
+#expectation-img {
+    position: absolute;
+    width: 23vw;
+    bottom: 1vh;
+    right: 5vw;
+    clip-path: inset(0 5vw 8vh 0 round 0 0 3% 0);
 }

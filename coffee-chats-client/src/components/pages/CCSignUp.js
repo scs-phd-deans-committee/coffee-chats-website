@@ -28,6 +28,8 @@ import background_img from '../../background.png';
 import diffpriority_img from '../../diffpriority.png';
 import samepriority_img from '../../samepriority.png';
 import submit_img from '../../formsubmit.png';
+import signup_bg1 from '../../signup_bg1.png';
+import signup_bg2 from '../../signup_bg2.png';
 
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'prioritiesBubbles', 'availability',
@@ -207,16 +209,18 @@ function CCSignUp(props) {
       }
     }
     return (
-      <><div className="question-text">
+      <>
+        <Image src={signup_bg1} id="activity-img" fluid/>
+        <div className="question-text">
         What activities would you be interested in doing with your match?
         </div>
         
       <div className="question-sub-text">Please select around 5 activities!</div>
         <Row className="search-bar-and-any-option">
-      <Col sm="7">
+      <Col sm="8">
         <Form.Control className="search activity-search" placeholder="Search" onChange={filterActivities}/>
       </Col>
-      <Col sm="5">
+      <Col sm="3">
         <ToggleButtonGroup className="answerArea" id="any-activity" type="checkbox" 
       name="activity" onChange={handleBtnClick}>
           <ToggleButton key="Any activities work!" id="Any activities work!" value="Any activities work!" variant="custom" onChange={toggleCheckbox}>
@@ -226,10 +230,12 @@ function CCSignUp(props) {
         </ToggleButtonGroup>
       </Col>
       </Row>
-                 
-      <Col className="activity-category">
+      
+      <div className="activity-container">
+        <div className="activity-scroll">
+      <Row className="activity-category">
       Indoor
-      </Col>
+      </Row>
       <ToggleButtonGroup className="answerArea" id="indoor-activity" type="checkbox" 
       name="activity" onChange={handleBtnClick}>
         {indoorActivities.map((a) => (
@@ -239,9 +245,9 @@ function CCSignUp(props) {
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
-      <Col className="activity-category">
+      <Row className="activity-category">
         Outdoor
-      </Col>
+      </Row>
       <ToggleButtonGroup className="answerArea" id="outdoor-activity" type="checkbox" 
       name="activity" onChange={handleBtnClick}>
         {outdoorActivities.map((a) => (
@@ -251,9 +257,9 @@ function CCSignUp(props) {
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
-      <Col className="activity-category">
+      <Row className="activity-category">
         Add Your Own
-      </Col>
+      </Row>
       <ToggleButtonGroup className="answerArea" id="own-activity" type="checkbox" 
       name="activity" onChange={handleBtnClick}>
        {ownActivitiesState.map((a) => (
@@ -277,13 +283,16 @@ function CCSignUp(props) {
           </div>
         }
       </ToggleButtonGroup>
-                 
+      </div>
+      </div>
+
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
         <Button id="activity-next" variant="custom-nav" disabled
         onClick={clickToNextSection}>Next</Button>
-      </div></>
+      </div>
+</>
     )
   }
 
@@ -316,7 +325,9 @@ function CCSignUp(props) {
       }
     }
     return (
-      <><div className="question-text">My expectation(s) for the Coffee Chat program are to . . .</div>
+      <>
+        <Image src={signup_bg2} id="expectation-img" fluid/>
+        <div className="question-text">My expectation(s) for the Coffee Chat program are to . . .</div>
       <div className="question-sub-text">Your answer(s) will be shared with your match!</div>
       <ToggleButtonGroup className="answerArea" id="expectation" type="checkbox" 
       name="expectation" onChange={handleBtnClick}>
@@ -347,12 +358,25 @@ function CCSignUp(props) {
           setQuestion(questionNum - 1);
           setCurSection(1);
           };
+    // Checking if the "Next" button can be set to valid
+    function handleBtnClick(val) {
+      let isActive = (val === []) ? false : true;
+      var next = document.getElementById("frequency-next");
+      if (isActive) {
+        next.classList.add("active");
+        next.disabled = false;
+        next.onclick = clickToNextSection;
+      } else {
+        next.classList.remove("active");
+        next.disabled = true;
+      }
+    }
     return (
       <><div className="question-text">
         How frequent do you want to participate in Coffee Chat meetups?
       </div>
       <ToggleButtonGroup className="answerArea" id="frequency" type="radio" 
-      name="frequency">
+      name="frequency" onChange={handleBtnClick}>
         <ToggleButton id="frequency-1" value={1} variant="custom">
           Once a month
         </ToggleButton>
@@ -371,7 +395,7 @@ function CCSignUp(props) {
         <Button variant="custom-nav" onClick={clickToPrevSection}>
           Back
         </Button>
-        <Button  id="frequency-next" className="active" variant="custom-nav" 
+        <Button  id="frequency-next" disabled variant="custom-nav" 
         onClick={clickToNextSection}>
           Next
         </Button>
@@ -505,7 +529,7 @@ function CCSignUp(props) {
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
-        <Button id="priorities-next" variant="custom-nav active" disabled
+        <Button id="priorities-next" variant="custom-nav" disabled
         onClick={clickToNextSection}>Next</Button>
       </div></>
     )
@@ -578,7 +602,7 @@ function CCSignUp(props) {
       <Col className="priority-images-diff">
         <Image src={diffpriority_img} fluid/>
       </Col>
-      <Col styles={{position: "absolute"}}>
+      <Col className="priority-bubble-section">
       <div className="question-text">
         Your Priorities
       </div>
@@ -591,7 +615,7 @@ function CCSignUp(props) {
       <Row id="bubblesContainer">
         <Col id="sameBubbles">
             The Same As Me
-        <Row id="bubblesContainer">
+        <Row id="selectedBubbles">
             {
           Object.entries(factorState).filter(([key, value], idx) => value === 0)
           .map(([key, value], idx) => 
@@ -609,7 +633,7 @@ function CCSignUp(props) {
         </Col>
         <Col id="differentBubbles">
             Different From Me
-            <Row id="bubblesContainer">
+            <Row id="selectedBubbles">
             {
           Object.entries(factorState).filter(([key, value], idx) => value === 1)
           .map(([key, value], idx) => 
@@ -712,8 +736,8 @@ function CCSignUp(props) {
       <><div className="question-text">
         What does your availability look like next week?
         </div>
-      <Container>
-      <Row>
+      <Container fluid>
+      <Row fluid className="calendar-row">
       <Col sm={2}>
         <ToggleButtonGroup type="radio" name="availability" defaultValue={1} size="lg" id="availability-buttons" vertical>
           <ToggleButton id="tbg-radio-1" variant="outline-success" value={1} onClick={() => setRadioValue('1')}>
@@ -784,11 +808,11 @@ function CCSignUp(props) {
           </div>
         {/* Dice Animation */}
                  
-          <div style={{marginTop: "5%"}}>
+          <div style={{marginTop: "5vh"}}>
             <ReactDice
               numDice={1}
               rollDone={(num) => {setDiceState(num)}}
-              dieSize={125}
+              dieSize={200}
               faceColor={"rgb(169, 65, 82)"}
               dotColor={"rgb(255,255,255)"}
               rollTime={0.75}
@@ -807,7 +831,7 @@ function CCSignUp(props) {
         :
         
         <>
-        <div className="question-header">You rolled a {diceState}!</div>
+        <div className="dice-result">You rolled a {diceState}!</div>
        </>
       }
       <><br />
@@ -840,7 +864,7 @@ function CCSignUp(props) {
       <><div className="question-text">
         That’s it, you’re ready to submit! Do you have any final comments for us to consider?
         </div>
-      <Form.Control id="comments-box" as="textarea" rows={7} placeholder="Additional thoughts" />
+      <Form.Control id="comments-box" as="textarea" rows={10} placeholder="Additional thoughts" />
       <br />
       <div className="question-nav">
         <Button variant="custom-nav" onClick={clickToPrevSection}>Back</Button>
@@ -862,11 +886,13 @@ function CCSignUp(props) {
           setCurSection(3);
           };
     return (
-      <><div className="question-text">Thanks Scotty!</div>
+      <>
+      <div className="results-container">
+      <div className="question-text">Thanks Scotty!</div>
       <div className="question-sub-text">
         Check through your preferences one last time before you submit!
       </div>
-      <div className="review-section twoCol-container-flex">
+      <div className="review-section twoCol-container-flex review-top">
         <div className="review-heading twoCol-left-flex">Activity:</div>
         <div className="review-text twoCol-right-flex">
           You prefer meeting <b>in person</b>, and would want to: <b>play sports, play a board game, or visit a museum.</b>
@@ -938,7 +964,9 @@ function CCSignUp(props) {
         <Button id="submit" variant="custom-nav" onClick={clickToNextSection}>
           Yes, let's submit!
         </Button>
-      </div></>
+      </div>
+      </div>
+    </>
     )
   }
 
@@ -992,7 +1020,7 @@ function CCSignUp(props) {
   }
 
   return (
-    <Container>
+    <Container fluid>
       <Row className="flex-column align-items-center">
         <ProgressBar/>
         <QuestionArea questionNum={questionNum}/>
