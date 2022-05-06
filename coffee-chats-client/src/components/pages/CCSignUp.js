@@ -290,7 +290,7 @@ function CCSignUp(props) {
 
   function ExpectationQuestion(props) {
     const expectations = ["Meet someone new", "Establish a friendship", 
-    "Break away from work", "Talk about research", "Find a hobby partner"]
+    "Break away from work", "Talk about research", "Find a hobby partner", "No expectations in particular"]
     const [expectState, setExpectState] = useState(expectations);
           
     // for progress bar if previous
