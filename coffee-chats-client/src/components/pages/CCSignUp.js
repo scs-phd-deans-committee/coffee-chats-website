@@ -903,7 +903,7 @@ function CCSignUp(props) {
     return (
       <>
       <div className="results-container">
-      <div className="question-text">Thanks Scotty!</div>
+      <div className="question-text heading">On fire, Scotty!</div>
       <div className="question-sub-text">
         Check through your preferences one last time before you submit!
       </div>
@@ -933,7 +933,7 @@ function CCSignUp(props) {
               .map(([key, value], idx) => 
               ((value !== 2) && 
               <div className="bubble" id={key} key={key}
-              style={{marginTop: margins[idx], backgroundColor: (value === 0)? "#048621" : "#A94152"}}>
+              style={{marginTop: margins[idx], backgroundColor: (value === 0)? "#A94152" : "#3F3D56"}}>
                 <img src={factorImgs[key]} />
                 <div className="bubbleText">
                   {factorNames[key]}

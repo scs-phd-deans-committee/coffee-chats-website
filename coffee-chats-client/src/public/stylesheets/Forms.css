@@ -119,6 +119,11 @@ form * {
   margin-top: 5%;
   /* max-width: 80%; */
 }
+.heading {
+  font-weight: 600;
+  color: #566478;
+  font-size: 2vw;
+}
 .question-sub-text {
   font-family: 'Poppins', sans-serif;
   font-weight: 275;
@@ -437,10 +442,10 @@ form * {
   font-size: 14px;
 }
 #sameBubble {
-  background: #048621;
+  background: #A94152;
 }
 #differentBubble {
-  background: #A94152;
+  background: #3F3D56;
 }
 #resetSizes {
   margin-top: 2%;
