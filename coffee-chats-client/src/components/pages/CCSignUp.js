@@ -100,7 +100,7 @@ function CCSignUp(props) {
       }
     }
     return (
-      <><div className="question-text">Where would you want to meet your match?</div>
+      <><div className="question-text">Where would you want to meet?</div>
       <ToggleButtonGroup className="answerArea" id="remote" type="radio" 
       name="remote" onChange={handleBtnClick}>
         <ToggleButton id="remote-1" value={1} variant="custom">
@@ -373,7 +373,7 @@ function CCSignUp(props) {
     }
     return (
       <><div className="question-text">
-        How frequent do you want to participate in Coffee Chat meetups?
+        How frequently do you want to participate in Coffee Chat meetups?
       </div>
       <ToggleButtonGroup className="answerArea" id="frequency" type="radio" 
       name="frequency" onChange={handleBtnClick}>
@@ -620,7 +620,7 @@ function CCSignUp(props) {
         Your Priorities
       </div>
       <div className="question-sub-text">
-       Click on the circle to indicate priority. The larger the circle, the more the priority.
+      Click on the circle to indicate priority. The larger the circle, the higher priority. The circle size goes back to level 1 after reaching the maximum level.
       </div>
       <Button id="resetSizes" variant="custom-nav" onClick={resetSizes}>
           Reset Sizes
@@ -747,7 +747,7 @@ function CCSignUp(props) {
     
     return (
       <><div className="question-text">
-        What does your availability look like next week?
+        What's your availability?
         </div>
       <Container fluid>
       <Row fluid className="calendar-row">
@@ -816,10 +816,7 @@ function CCSignUp(props) {
     return (
       <>
         <div className="question-text">
-          The person who rolls the lowest number will initiate contact!
-          </div>
-          <div className="question-sub-text">
-          You'll find out what your match rolled when the match results are announced :)
+          The person who rolls the lowest number will initiate contact :)
           </div>
         {/* Dice Animation */}
                  
@@ -877,7 +874,7 @@ function CCSignUp(props) {
           };
     return (
       <><div className="question-text">
-        That’s it, you’re ready to submit! Do you have any final comments for us to consider?
+        That’s it, you’re ready to submit! Do you have any final comments for us to consider in finding you the best match?
         </div>
       <Form.Control id="comments-box" as="textarea" rows={10} placeholder="Additional thoughts" />
       <br />
