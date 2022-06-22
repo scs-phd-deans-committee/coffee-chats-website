@@ -4,7 +4,7 @@ After cloning the repository, you need to install the dependencies. To start the
 
 1. cd coffee-chats-server
 2. npm install
-3. PORT=3001 node bin/www
+3. npm start
 
 To start the client app:
 1. cd coffee-chats-client
