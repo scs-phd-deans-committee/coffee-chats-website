@@ -20,16 +20,16 @@ import ScheduleSelector from "react-schedule-selector";
 
 import ReactDice from "react-dice-complete";
 import "react-dice-complete/dist/react-dice-complete.css";
-import academic_img from '../../academic.png';
-import college_img from '../../college.png';
-import hobbies_img from '../../hobbies.png';
-import year_img from '../../year.png';
-import background_img from '../../background.png';
-import diffpriority_img from '../../diffpriority.png';
-import samepriority_img from '../../samepriority.png';
-import submit_img from '../../formsubmit.png';
-import signup_bg1 from '../../signup_bg1.png';
-import signup_bg2 from '../../signup_bg2.png';
+import academic_img from '../../public/images/academic.png';
+import college_img from '../../public/images/college.png';
+import hobbies_img from '../../public/images/hobbies.png';
+import year_img from '../../public/images/year.png';
+import background_img from '../../public/images/background.png';
+import diffpriority_img from '../../public/images/diffpriority.png';
+import samepriority_img from '../../public/images/samepriority.png';
+import submit_img from '../../public/images/formsubmit.png';
+import signup_bg1 from '../../public/images/signup_bg1.png';
+import signup_bg2 from '../../public/images/signup_bg2.png';
 
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'prioritiesBubbles', 'availability',

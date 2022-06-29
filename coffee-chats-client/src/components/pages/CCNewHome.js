@@ -4,9 +4,9 @@ import Image from 'react-bootstrap/Image';
 
 import { Link } from "react-router-dom";
 
-import signup_img from "../../signupicon.png";
-import matching_img from "../../matchingicon.png";
-import results_img from "../../resultsicon.png";
+import signup_img from "../../public/images/signupicon.png";
+import matching_img from "../../public/images/matchingicon.png";
+import results_img from "../../public/images/resultsicon.png";
 
 import  "./CCNewHome-styles.css"
 

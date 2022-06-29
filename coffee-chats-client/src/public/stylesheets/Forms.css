@@ -210,7 +210,7 @@ form * {
     
 }
 .unchecked {
-  background: url(../../unchecked-red.png) no-repeat;
+  background: url(../../public/images/unchecked-red.png) no-repeat;
   float: left;
   width: 20px;
   height: 20px;
@@ -218,7 +218,7 @@ form * {
   background-size: 100%;
 }
 .btn-custom:hover > .unchecked {
-  background: url(../../unchecked-white.png) no-repeat;
+  background: url(../../public/images/unchecked-white.png) no-repeat;
   float: left;
   width: 20px;
   height: 20px;
@@ -226,7 +226,7 @@ form * {
   background-size: 100%;
 }
 .checked{
-  background: url(../../checked.png) no-repeat;
+  background: url(../../public/images/checked.png) no-repeat;
   float: left;
   width: 20px;
   height: 20px;
@@ -234,7 +234,7 @@ form * {
   background-size: 100%;
 }
 .add{
-  background: url(../../add-red.png) no-repeat;
+  background: url(../../public/images/add-red.png) no-repeat;
   float: left;
   width: 20px;
   height: 20px;
@@ -255,7 +255,7 @@ form * {
   height: 40px;
 }
 .addOption:hover > .add {
-  background: url(../../add-white.png) no-repeat;
+  background: url(../../public/images/add-white.png) no-repeat;
   float: left;
   width: 20px;
   height: 20px;

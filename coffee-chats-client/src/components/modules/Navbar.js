@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import { Navbar, Nav, NavItem,  Dropdown } from 'react-bootstrap';
 import Login from '../modules/Login';
-import logo_image from '../../coffee.png';
+import logo_image from '../../public/images/coffee.png';
 import {
   Link,
   Redirect,
