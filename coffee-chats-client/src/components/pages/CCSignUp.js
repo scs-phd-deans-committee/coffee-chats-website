@@ -79,6 +79,7 @@ function CCSignUp(props) {
   
   /* END OF STEP PROGRESS BAR */
 
+  const [remoteQVals, setRemoteQVals] = useState({remote: null});
   function RemoteQuestion(props) {
 
     function clickToNextSection() {
