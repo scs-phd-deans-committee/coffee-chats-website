@@ -31,6 +31,54 @@ import submit_img from '../../public/images/formsubmit.png';
 import signup_bg1 from '../../public/images/signup_bg1.png';
 import signup_bg2 from '../../public/images/signup_bg2.png';
 
+
+function RemoteQuestion(props) {
+  useEffect(() => {
+    handleBtnClick(props.val);
+  }, []);
+
+  // Checking if the "Next" button can be set to valid
+  function handleBtnClick(val) {
+    // let isActive = (val === []) ? false : true;
+    let isActive = (props.val === null) ? false : true;
+    var next = document.getElementById("remote-next");
+    if (isActive) {
+      next.classList.add("active");
+      next.disabled = false;
+      next.onclick = props.clickToNextSection;
+    } else {
+      next.classList.remove("active");
+      next.disabled = true;
+    }
+    props.setter(val);
+    // console.log(val, remoteQVals);
+  }
+  return (
+    <><div className="question-text">Where would you want to meet?</div>
+    <ToggleButtonGroup className="answerArea" id="remote" type="radio" 
+    name="remote" onChange={handleBtnClick} value={props.val}>
+      <ToggleButton id="remote-1" value={"online"} variant="custom">
+        Online
+      </ToggleButton>
+      <ToggleButton id="remote-2" value={"in_person"} variant="custom">
+        In Person
+      </ToggleButton>
+      <ToggleButton id="remote-3" value={"both"} variant="custom">
+        Both
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <br />
+    <div className="question-nav">
+      <Button id="remote-next" variant="custom-nav" 
+      // disabled={props.val === null}
+      onClick={props.clickToNextSection}>Next</Button>
+      RemoteQValue: {props.val} 
+    </div></>
+  )
+}
+
+
+
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'prioritiesBubbles', 'availability',
   'diceroll', 'comments', 'review', 'submit'];
@@ -42,7 +90,11 @@ function CCSignUp(props) {
 
   /* sync progress bar with question content */
   const [curSection, setCurSection] = useState(0);
-    
+  function clickToNextSection() {
+    setQuestion(questionNum + 1); 
+    setCurSection(0);
+  }
+  
   function ProgressBar(props) {
           
       return(
@@ -79,48 +131,7 @@ function CCSignUp(props) {
   
   /* END OF STEP PROGRESS BAR */
 
-  const [remoteQVals, setRemoteQVals] = useState({remote: null});
-  function RemoteQuestion(props) {
-
-    function clickToNextSection() {
-          setQuestion(questionNum + 1); 
-          setCurSection(0);
-          }
-
-    // Checking if the "Next" button can be set to valid
-    function handleBtnClick(val) {
-      let isActive = (val === []) ? false : true;
-      var next = document.getElementById("remote-next");
-      if (isActive) {
-        next.classList.add("active");
-        next.disabled = false;
-        next.onclick = clickToNextSection;
-      } else {
-        next.classList.remove("active");
-        next.disabled = true;
-      }
-    }
-    return (
-      <><div className="question-text">Where would you want to meet?</div>
-      <ToggleButtonGroup className="answerArea" id="remote" type="radio" 
-      name="remote" onChange={handleBtnClick}>
-        <ToggleButton id="remote-1" value={1} variant="custom">
-          Online
-        </ToggleButton>
-        <ToggleButton id="remote-2" value={2} variant="custom">
-          In Person
-        </ToggleButton>
-        <ToggleButton id="remote-3" value={3} variant="custom">
-          Both
-        </ToggleButton>
-      </ToggleButtonGroup>
-      <br />
-      <div className="question-nav">
-        <Button id="remote-next" variant="custom-nav" disabled
-        onClick={clickToNextSection}>Next</Button>
-      </div></>
-    )
-  }
+  const [remoteQVals, setRemoteQVals] = useState(null);
 
   // Filter activities displayed based on search input
   function filterActivities (e) {
@@ -157,12 +168,14 @@ function CCSignUp(props) {
 
   function ActivityQuestion(props) {
     const [addState, setAddState] = useState("init");
-    
-    const indoorActivities = ["Create a DIY art project", "Get food or drinks", "Get food or drinks (no alcohol)", "Go to the gym", "Go to a jazz club/cafe", "Just talk", "Make candles", "Manicure/Pedicure/Spa", "Paint and sip", "Play a board game", "Tour each other's academic buildings", "Watch a CMU Drama production", "Visit a museum", "Watch a movie"];
-    
-    const outdoorActivities = ["Get coffee", "Go to an art gallery", "Go to a farmer's market", "Go to a music concert", "Go on a walk", "Hammock at Schenley Park", "Hike", "Picnic", "Play sports", "Tour Phipps Conservatory"];
-    
     const [ownActivitiesState, setOwnActivitiesState] = useState([]);
+    
+    const indoorActivities = ["Create a DIY art project", "Get food or drinks", "Get food or drinks (no alcohol)", "Go to the gym", 
+        "Go to a jazz club/cafe", "Just talk", "Make candles", "Manicure/Pedicure/Spa", "Paint and sip", "Play a board game", 
+        "Tour each other's academic buildings", "Watch a CMU Drama production", "Visit a museum", "Watch a movie"];
+    
+    const outdoorActivities = ["Get coffee", "Go to an art gallery", "Go to a farmer's market", "Go to a music concert", 
+        "Go on a walk", "Hammock at Schenley Park", "Hike", "Picnic", "Play sports", "Tour Phipps Conservatory"];
     
     // adds a new activity based on user's "other" input
     const handleInput = e => {
@@ -1003,7 +1016,8 @@ function CCSignUp(props) {
           {(() => {
             switch (questions[props.questionNum]) {
               case 'remote':
-                return <RemoteQuestion/>
+                return <RemoteQuestion val={remoteQVals} 
+                  setter={setRemoteQVals} clickToNextSection={clickToNextSection}/>
               case 'activity':
                 return <ActivityQuestion/>
               case 'expectation':
