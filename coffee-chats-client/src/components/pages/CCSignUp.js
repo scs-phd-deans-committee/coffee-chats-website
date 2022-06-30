@@ -77,7 +77,171 @@ function RemoteQuestion(props) {
   )
 }
 
+function ActivityQuestion(props) {
+  
+  const indoorActivities = ["Create a DIY art project", "Get food or drinks", "Get food or drinks (no alcohol)", "Go to the gym", 
+      "Go to a jazz club/cafe", "Just talk", "Make candles", "Manicure/Pedicure/Spa", "Paint and sip", "Play a board game", 
+      "Tour each other's academic buildings", "Watch a CMU Drama production", "Visit a museum", "Watch a movie"];
+  
+  const outdoorActivities = ["Get coffee", "Go to an art gallery", "Go to a farmer's market", "Go to a music concert", 
+      "Go on a walk", "Hammock at Schenley Park", "Hike", "Picnic", "Play sports", "Tour Phipps Conservatory"];
 
+  // Filter activities displayed based on search input
+  function filterActivities (e) {
+    var input = e.target.value.toLowerCase();
+    var allActivities = document.querySelectorAll("#indoor-activity, #outdoor-activity, #own-activity");
+    console.log(allActivities);
+    for (var j=0; j<allActivities.length; j++) {
+        var activities = allActivities[j].children;
+        for (var i=0; i<activities.length; i++) {
+            var activity = activities[i];
+            if (input === '') {
+                activity.style.display = "block";
+            } else if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
+                        activity.style.display = "none";
+            }
+        }
+    }
+  }
+  
+  // adds a new activity based on user's "other" input
+  const handleInput = e => {
+    if (e.key === 'Enter') {
+      const value = document.getElementById("addActivityInput").value;
+      props.setOwnActivitiesState([...props.ownActivitiesState, value]);
+      props.setAddState("init");
+    }
+  }
+  
+  // update progress bar if next
+  function clickToNextSection() {
+    console.log("AT CLICK NEXT");
+    props.setQuestion(props.questionNum + 1); 
+    props.setCurSection(1);
+  }
+  // function clickToPrevSection() {
+  //     setQuestion(questionNum - 1);
+  //     setCurSection(0);
+  //     }
+  // Checking if the "Next" button can be set to valid
+  function handleBtnClick(val) {
+    var next = document.getElementById("activity-next");
+  
+    // check if any activities from any category are selected
+    const anySelected = document.getElementById("Any activities work!").children[1].classList.contains("checked");
+    
+    const indoorActs = document.getElementById("indoor-activity").childNodes;
+    const indoorSelected = [...indoorActs].filter((act) => act.children[1].classList.contains("checked")).length > 0;
+                     
+    const outdoorActs = document.getElementById("outdoor-activity").childNodes;
+    const outdoorSelected = [...outdoorActs].filter((act) => act.children[1].classList.contains("checked")).length > 0;
+
+    const ownActs = document.getElementById("own-activity").childNodes;
+    const ownSelected = ownActs[0].getAttribute("id") === "addActivity" ? false : [...ownActs].filter((act) => act.getAttribute("id") !== "addActivity" && act.children[1].classList.contains("checked")).length > 0;
+                     
+    if (anySelected || indoorSelected || outdoorSelected || ownSelected) {
+      console.log("next is on");
+      next.classList.add("active");
+      next.disabled = false;
+      next.onclick = clickToNextSection;
+    } else {
+      next.classList.remove("active");
+      next.disabled = true;
+      console.log("next is off");
+    }
+  }
+  return (
+    <>
+    <Image src={signup_bg1} id="activity-img" fluid/>
+    <div className="question-text">
+    What activities would you be interested in doing with your match?
+    </div>
+      
+    <div className="question-sub-text">Please select around 5 activities!</div>
+    <Row className="search-bar-and-any-option">
+    <Col sm="8">
+      <Form.Control className="search activity-search" placeholder="Search" onChange={filterActivities}/>
+    </Col>
+    <Col sm="3">
+      <ToggleButtonGroup className="answerArea" id="any-activity" type="checkbox" 
+        name="activity" onChange={handleBtnClick}>
+        <ToggleButton key="Any activities work!" id="Any activities work!" value="Any activities work!" variant="custom" onChange={props.toggleCheckbox}>
+          <span className="unchecked"></span>
+               Any activities work!
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </Col>
+    </Row>
+    
+    <div className="activity-container">
+      <div className="activity-scroll">
+        <Row className="activity-category">
+        Indoor
+        </Row>
+        <ToggleButtonGroup className="answerArea" id="indoor-activity" type="checkbox" 
+          name="activity" onChange={handleBtnClick}>
+          {indoorActivities.map((a) => (
+            <ToggleButton key={a} id={a} value={a} variant="custom" onChange={props.toggleCheckbox}>
+              <span className="unchecked"></span>
+              {a}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+        <Row className="activity-category">
+          Outdoor
+        </Row>
+        <ToggleButtonGroup className="answerArea" id="outdoor-activity" type="checkbox" 
+          name="activity" onChange={handleBtnClick}>
+          {outdoorActivities.map((a) => (
+            <ToggleButton key={a} id={a} value={a} variant="custom" onChange={props.toggleCheckbox}>
+              <span className="unchecked"></span>
+              {a}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+        <Row className="activity-category">
+          Add Your Own
+        </Row>
+        <ToggleButtonGroup className="answerArea" id="own-activity" type="checkbox" 
+          name="activity" onChange={handleBtnClick}>
+          {props.ownActivitiesState.map((a) => (
+              <ToggleButton key={a} id={a} value={a} variant="custom" onChange={props.toggleCheckbox}>
+                <span className="unchecked"></span>
+                {a}
+              </ToggleButton>
+            ))}
+          {/* displays initial state of add button, just the plus sign */}
+          {props.addState === "init" &&
+            <div className="addOption" id="addActivity" onClick={() => props.setAddState("input")}>
+              <span className="add"></span>
+            </div>
+          }
+          {/* displays input state of add button, including an input field */}
+          {props.addState === "input" &&
+            <div className="addOptionText" id="addActivity" onClick={() => props.setAddState("input")}>
+              <span className="add addLeft"></span>
+              <input id="addActivityInput" type="text" className="addInput" 
+              placeholder="Your own activity!" onKeyUp={handleInput}/>
+            </div>
+          }
+        </ToggleButtonGroup>
+      </div>
+    </div>
+
+    <br />
+    <div className="question-nav">
+      <Button variant="custom-nav" onClick={() => props.setQuestion(props.questionNum - 1)}>Back</Button>
+      <Button id="activity-next" variant="custom-nav" disabled
+      onClick={clickToNextSection}>Next</Button>
+    </div>
+    <div>
+      Activities: {props.ownActivitiesState}
+      Add state: {props.addState}
+      QuestionNum: {props.questionNum}
+    </div>
+    </>
+  )
+}
 
 function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'prioritiesBubbles', 'availability',
@@ -133,24 +297,6 @@ function CCSignUp(props) {
 
   const [remoteQVals, setRemoteQVals] = useState(null);
 
-  // Filter activities displayed based on search input
-  function filterActivities (e) {
-    var input = e.target.value.toLowerCase();
-    var allActivities = document.querySelectorAll("#indoor-activity, #outdoor-activity, #own-activity");
-    console.log(allActivities);
-    for (var j=0; j<allActivities.length; j++) {
-        var activities = allActivities[j].children;
-        for (var i=0; i<activities.length; i++) {
-            var activity = activities[i];
-            if (input === '') {
-                activity.style.display = "block";
-            } else if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
-                       activity.style.display = "none";
-            }
-        }
-    }
-  }
-
   const [selectedActivities, setSelectedActivities] = useState([]);
 
   // Toggle checkbox icon when button is clicked or unclicked
@@ -165,150 +311,6 @@ function CCSignUp(props) {
     }
   }
  
-
-  function ActivityQuestion(props) {
-    const [addState, setAddState] = useState("init");
-    const [ownActivitiesState, setOwnActivitiesState] = useState([]);
-    
-    const indoorActivities = ["Create a DIY art project", "Get food or drinks", "Get food or drinks (no alcohol)", "Go to the gym", 
-        "Go to a jazz club/cafe", "Just talk", "Make candles", "Manicure/Pedicure/Spa", "Paint and sip", "Play a board game", 
-        "Tour each other's academic buildings", "Watch a CMU Drama production", "Visit a museum", "Watch a movie"];
-    
-    const outdoorActivities = ["Get coffee", "Go to an art gallery", "Go to a farmer's market", "Go to a music concert", 
-        "Go on a walk", "Hammock at Schenley Park", "Hike", "Picnic", "Play sports", "Tour Phipps Conservatory"];
-    
-    // adds a new activity based on user's "other" input
-    const handleInput = e => {
-      if (e.key === 'Enter') {
-        const value = document.getElementById("addActivityInput").value;
-        setOwnActivitiesState([...ownActivitiesState, value]);
-        setAddState("init")
-      }
-    }
-    
-    // update progress bar if next
-    function clickToNextSection() {
-          setQuestion(questionNum + 1); 
-          setCurSection(1);
-          }
-    function clickToPrevSection() {
-        setQuestion(questionNum - 1);
-        setCurSection(0);
-        }
-    // Checking if the "Next" button can be set to valid
-    function handleBtnClick(val) {
-      var next = document.getElementById("activity-next");
-    
-      // check if any activities from any category are selected
-      const anySelected = document.getElementById("Any activities work!").children[1].classList.contains("checked");
-      
-      const indoorActs = document.getElementById("indoor-activity").childNodes;
-      const indoorSelected = [...indoorActs].filter((act) => act.children[1].classList.contains("checked")).length > 0;
-                       
-      const outdoorActs = document.getElementById("outdoor-activity").childNodes;
-      const outdoorSelected = [...outdoorActs].filter((act) => act.children[1].classList.contains("checked")).length > 0;
-
-      const ownActs = document.getElementById("own-activity").childNodes;
-      const ownSelected = ownActs[0].getAttribute("id") === "addActivity" ? false : [...ownActs].filter((act) => act.getAttribute("id") !== "addActivity" && act.children[1].classList.contains("checked")).length > 0;
-                       
-      if (anySelected || indoorSelected || outdoorSelected || ownSelected) {
-        console.log("next is on");
-        next.classList.add("active");
-        next.disabled = false;
-        next.onclick = clickToNextSection;
-      } else {
-        next.classList.remove("active");
-        next.disabled = true;
-        console.log("next is off");
-      }
-    }
-    return (
-      <>
-        <Image src={signup_bg1} id="activity-img" fluid/>
-        <div className="question-text">
-        What activities would you be interested in doing with your match?
-        </div>
-        
-      <div className="question-sub-text">Please select around 5 activities!</div>
-        <Row className="search-bar-and-any-option">
-      <Col sm="8">
-        <Form.Control className="search activity-search" placeholder="Search" onChange={filterActivities}/>
-      </Col>
-      <Col sm="3">
-        <ToggleButtonGroup className="answerArea" id="any-activity" type="checkbox" 
-      name="activity" onChange={handleBtnClick}>
-          <ToggleButton key="Any activities work!" id="Any activities work!" value="Any activities work!" variant="custom" onChange={toggleCheckbox}>
-            <span className="unchecked"></span>
-                 Any activities work!
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </Col>
-      </Row>
-      
-      <div className="activity-container">
-        <div className="activity-scroll">
-      <Row className="activity-category">
-      Indoor
-      </Row>
-      <ToggleButtonGroup className="answerArea" id="indoor-activity" type="checkbox" 
-      name="activity" onChange={handleBtnClick}>
-        {indoorActivities.map((a) => (
-          <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
-            <span className="unchecked"></span>
-            {a}
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
-      <Row className="activity-category">
-        Outdoor
-      </Row>
-      <ToggleButtonGroup className="answerArea" id="outdoor-activity" type="checkbox" 
-      name="activity" onChange={handleBtnClick}>
-        {outdoorActivities.map((a) => (
-          <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
-            <span className="unchecked"></span>
-            {a}
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
-      <Row className="activity-category">
-        Add Your Own
-      </Row>
-      <ToggleButtonGroup className="answerArea" id="own-activity" type="checkbox" 
-      name="activity" onChange={handleBtnClick}>
-       {ownActivitiesState.map((a) => (
-          <ToggleButton key={a} id={a} value={a} variant="custom" onChange={toggleCheckbox}>
-            <span className="unchecked"></span>
-            {a}
-          </ToggleButton>
-        ))}
-      {/* displays initial state of add button, just the plus sign */}
-        {addState === "init" &&
-          <div className="addOption" id="addActivity" onClick={() => setAddState("input")}>
-            <span className="add"></span>
-          </div>
-        }
-        {/* displays input state of add button, including an input field */}
-        {addState === "input" &&
-          <div className="addOptionText" id="addActivity" onClick={() => setAddState("input")}>
-            <span className="add addLeft"></span>
-            <input id="addActivityInput" type="text" className="addInput" 
-            placeholder="Your own activity!" onKeyUp={handleInput}/>
-          </div>
-        }
-      </ToggleButtonGroup>
-      </div>
-      </div>
-
-      <br />
-      <div className="question-nav">
-        <Button variant="custom-nav" onClick={() => setQuestion(questionNum - 1)}>Back</Button>
-        <Button id="activity-next" variant="custom-nav" disabled
-        onClick={clickToNextSection}>Next</Button>
-      </div>
-</>
-    )
-  }
 
 
   function ExpectationQuestion(props) {
@@ -1009,6 +1011,8 @@ function CCSignUp(props) {
     )
   }
   
+  const [addState, setAddState] = useState("init");
+  const [ownActivitiesState, setOwnActivitiesState] = useState([]);
   function QuestionArea(props) {
     return (
         <Row className="question-area flex-column align-items-center">
@@ -1019,7 +1023,12 @@ function CCSignUp(props) {
                 return <RemoteQuestion val={remoteQVals} 
                   setter={setRemoteQVals} clickToNextSection={clickToNextSection}/>
               case 'activity':
-                return <ActivityQuestion/>
+                return <ActivityQuestion 
+                  ownActivitiesState={ownActivitiesState} setOwnActivitiesState={setOwnActivitiesState}
+                  addState={addState} setAddState={setAddState}
+                  questionNum={questionNum} setQuestion={setQuestion}
+                  setCurSection={setCurSection}
+                  toggleCheckbox={toggleCheckbox}  />
               case 'expectation':
                 return <ExpectationQuestion/>
               case 'frequency':
