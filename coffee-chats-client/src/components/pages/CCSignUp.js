@@ -55,6 +55,9 @@ function RemoteQuestion(props) {
   }
   return (
     <><div className="question-text">Where would you want to meet?</div>
+
+
+
     <ToggleButtonGroup className="answerArea" id="remote" type="radio" 
     name="remote" onChange={handleBtnClick} value={props.val}>
       <ToggleButton id="remote-1" value={"online"} variant="custom">
