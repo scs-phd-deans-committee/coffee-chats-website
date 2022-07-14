@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { Container, Row, Col, Image } from 'react-bootstrap';
-
 import { auth, firestore } from "../../firebaseClient";
 import { firebase } from '@firebase/app';
 import "firebase/auth";
 
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { Button, Form, Modal, ModalDialog, ModalHeader, ModalTitle, ModalBody, 
+import { Container, Row, Col, Image, Button, Form, Modal, ModalDialog, ModalHeader, ModalTitle, ModalBody, 
   ModalFooter, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
@@ -15,6 +13,8 @@ import StepProgressBar from "react-step-progress";
 // import the stylesheet
 import "react-step-progress/dist/index.css";
 import "./styles.css"
+
+import { useForm, Controller, useController } from "react-hook-form";
 
 import ScheduleSelector from "react-schedule-selector";
 
@@ -35,7 +35,24 @@ function CCSignUp(props) {
   const questions = ['remote', 'activity', 'expectation', 'frequency', 'priorities', 'prioritiesBubbles', 'availability',
   'diceroll', 'comments', 'review', 'submit'];
   const [questionNum, setQuestion] = useState(0);
+ 
+  const [signup, setSignup] = useState({"isRemote": true, "availability":"Mornings"});
+  const updateSignup = (data) => {
+    console.log('form submitted!')
+    data = {...data, uid: props.user.uid, response_time: firebase.firestore.FieldValue.serverTimestamp()}
+    Object.keys(data).forEach(function(key) {
+      if(data[key] === null | data[key] === undefined) {
+          data[key] = '';
+      }
+    })
   
+    console.log(data)
+  
+    firestore.collection('signups').add({
+        uid: props.user.uid,
+        ...data
+    });
+  }
     
 
   /* STEP PROGRESS BAR */ 
@@ -127,15 +144,15 @@ function CCSignUp(props) {
     var allActivities = document.querySelectorAll("#indoor-activity, #outdoor-activity, #own-activity");
     console.log(allActivities);
     for (var j=0; j<allActivities.length; j++) {
-        var activities = allActivities[j].children;
-        for (var i=0; i<activities.length; i++) {
-            var activity = activities[i];
-            if (input === '') {
-                activity.style.display = "block";
-            } else if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
-                       activity.style.display = "none";
-            }
-        }
+      var activities = allActivities[j].children;
+      for (var i=0; i<activities.length; i++) {
+          var activity = activities[i];
+          if (input === '') {
+              activity.style.display = "block";
+          } else if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
+                     activity.style.display = "none";
+          }
+      }
     }
   }
 
@@ -973,7 +990,7 @@ function CCSignUp(props) {
       <br />
       <div className="question-nav">
         <Button id="submit-back" variant="custom-nav" onClick={clickToPrevSection}>No, let's go back</Button>
-        <Button id="submit" variant="custom-nav" onClick={clickToNextSection}>
+        <Button id="submit" variant="custom-nav" onClick={() => {props.updateSignup(signup); clickToNextSection()}}>
           Yes, let's submit!
         </Button>
       </div>
@@ -982,7 +999,7 @@ function CCSignUp(props) {
     )
   }
 
-  function SubmissionScreen(props) {
+  function SignupScreen(props) {
     return (
       <>
         <Image src={submit_img} fluid className="submit-image"/>
@@ -1020,9 +1037,9 @@ function CCSignUp(props) {
               case 'comments':
                 return <CommentsQuestion/>
               case 'review':
-                return <ReviewQuestion/>
+                return <ReviewQuestion signup={props.signup} updateSignup={props.updateSignup}/>
               case 'submit':
-                return <SubmissionScreen/>
+                return <SignupScreen/>
               default:
                 return null
             }
@@ -1035,7 +1052,7 @@ function CCSignUp(props) {
     <Container fluid>
       <Row className="flex-column align-items-center">
         <ProgressBar/>
-        <QuestionArea questionNum={questionNum}/>
+        <QuestionArea questionNum={questionNum} signup={signup} updateSignup={updateSignup}/>
       </Row>
     </Container>
   )
