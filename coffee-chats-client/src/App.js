@@ -20,7 +20,6 @@ import { auth, firestore } from "./firebaseClient";
 import CCNavbar from './components/modules/Navbar';
 import Login from './components/modules/Login';
 
-import MatchDetail from './components/pages/MatchDetail';
 import MatchHistory from './components/pages/MatchHistory';
 import Preferences from './components/pages/Preferences';
 import Profile from './components/pages/Profile';
@@ -68,9 +67,6 @@ function App(props) {
         }}/>
         <Route path="/matchlist">
           <MatchHistory user={user} setUser={setUser}/>
-        </Route>
-        <Route path="/match">
-          <MatchDetail user={user} setUser={setUser}/>
         </Route>
         <Route path="/preferences">
           <Preferences user={user} setUser={setUser}/>

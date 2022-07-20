@@ -11,14 +11,46 @@ import {
   useHistory
 } from "react-router-dom";
 
+// page corresponding to a single match
+function SingleMatchPage(props){
+  let match = props.match
+  return (
+    <>
+      <p style={{textAlign: "left"}}><b>Group members: </b></p>
+      {match.user_ids.map(
+        (user_id) => {
+          let user = props.users[user_id];
+          return (
+            <>
+              <div className="profile-display text-center">
+                <div><span className="name">{user.name}</span>{user.pronoun ? <span className="pronouns"> ({user.pronoun})</span> : <></>}</div>
+                { (user.department || user.year) ?
+                  <div>
+                    {user.department}, year {user.year}
+                  </div>
+                  :
+                  <></>
+                }
+                { (user.motto) ?
+                  <div><i>"{user.motto}"</i></div>
+                  :
+                  <></>
+                }
+              </div>
+            </>
+          );
+        }
+      )}
+    </>
+  )
+}
 
 function MatchHistory(props) {
-  const history = useHistory();
-  const [matches, setMatches] = useState(null);
-  const [currentMatch, setCurrentMatch] = useState(null);
-  const [roundInfo, setRoundInfo] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
-
+  const [matches, setMatches] = useState(null)
+  const [currentMatch, setCurrentMatch] = useState(null)
+  const [roundInfo, setRoundInfo] = useState(null)
+  const [users, setUsers] = useState(null)
+  
   // create mapping of round number to round info
   if (roundInfo == null){
     let roundRef = firestore.collection("rounds").get()
@@ -26,31 +58,14 @@ function MatchHistory(props) {
       setRoundInfo(snapshot.docs.map(doc => doc.data()));
     });
   }
-  console.log(roundInfo);
-
-  // create mapping of UID to user objects
-  function addUID(doc) {
-    let d = doc.data();
-    d['uid'] = doc.id;
-    return d
-  }
-  if (userInfo == null){
-    let usersRef = firestore.collection("users").get();
-    usersRef.then(snapshot => {
-      let objs = snapshot.docs.map(addUID);
-      let uidObjs = {};
-      objs.forEach((d) => {uidObjs[d.uid] = d});
-      setUserInfo(uidObjs);
-    })
-
-  }
+  //console.log(roundInfo);
 
   // button corresponding to a single match
   function SingleMatchButton(props){
     let round = props.match.round;
     let roundStart = roundInfo[round] ? roundInfo[round].start.toDate().toDateString() : <></>;
     let roundEnd = roundInfo[round] ? roundInfo[round].end.toDate().toDateString() : <></>;
-    console.log(props.match.round)
+    //console.log(props.match.round)
     return (
       <p>
         <Button onClick={() => setCurrentMatch(props.match)} variant="outline-success" size="lg">
@@ -60,77 +75,41 @@ function MatchHistory(props) {
     )
   }
 
-  // page corresponding to a single match
-  function SingleMatchPage(props){
-    let match = props.match;
-    return (
-      <>
-      <p style={{textAlign: "left"}}><b>Group members: </b></p>
-      {match.user_ids.map(
-        (user_id) => {
-          let user = userInfo[user_id];
-          return (
-            <>
-              <div className="profile-display text-center">
-                <div><span className="name">{user.name}</span>{user.pronoun ? <span className="pronouns"> ({user.pronoun})</span> : <></>}</div>
-                { (user.department || user.year) ?
-                    <div>{user.department}, year {user.year}</div> :
-                  <></>
-                }
-                { (user.motto) ?
-                  <div><i>"{user.motto}"</i></div> :
-                  <></>
-                }
-              </div>
-            </>
-          );
-        }
-      )}
-      </>
-    )
-  }
 
   if (props.user) {
-    console.log('My UID is: ' + props.user.uid)
+    //console.log('My UID is: ' + props.user.uid)
     
-    if (matches == null) { // get all of the user's matches
-      let matchesRef = firestore.collection("matches_test");
+    if (!matches) { // get all of the user's matches
+      let matchesRef = firestore.collection("matches");
       
       let userMatches = matchesRef.where("user_ids", "array-contains", props.user.uid);
       userMatches.get().then(snapshot => {
         if (snapshot.empty) {
           console.log('No matches found');
         } else {
-          let theseMatches = snapshot.docs.map(doc => doc.data());
-          theseMatches.sort(function(a, b) {
+          let matchesData = snapshot.docs.map(doc => doc.data());
+          matchesData.sort(function(a, b) {
             return b.round - a.round;
           })
-          setMatches(theseMatches);
-          setCurrentMatch(theseMatches[0])
+          setMatches(matchesData);
+          setCurrentMatch(matchesData[0])
+
+          let matchUserIds = matchesData.map(matchData => matchData.user_ids)
+          let userIds = new Set([].concat(...matchUserIds))
+          //console.log(userIds)
+
+          let usersRef = firestore.collection("users")
+          usersRef.where("uid", "in", Array.from(userIds)).get().then(snapshot => {
+            let usersData = snapshot.docs.map(user => user.data());
+            let uidObjs = {}
+            usersData.forEach((userData) => {uidObjs[userData.uid] = userData})
+            //console.log(uidObjs);
+            //console.log(usersData);
+            setUsers(uidObjs);
+          })
         }
       });
-    } else {  // matches have been loaded
-      // let usersRef = firestore.collection("users");
-      // let users = [];
-      // matches.forEach(match => {
-      //   match.user_ids.forEach(uid => {
-      //     usersRef.doc(uid).get().then(userSnapshot => users.push(userSnapshot.data()));
-      //   });
-      // });
-      // console.log(users);
-    }
-
-    
-    // matchesRef.get().then((doc) => {
-    //   doc.forEach(match => {
-    //     let data = match.data()
-    //     if ((data.uids).includes(props.user.uid)){
-    //       let round = data.round;
-    //       let responses = data.responses;
-    //       console.log(data);
-    //     }
-    //   });
-    // });
+    } 
 
     return (
       <Container>
@@ -140,7 +119,7 @@ function MatchHistory(props) {
           <Col sm={6}>
             <h3>Past matches</h3>
             <p>(click for more information):</p>
-            {matches ? 
+            {(matches && users) ? 
               <>
                 <div className="d-grid gap-2">
                   {matches.map(
@@ -154,10 +133,10 @@ function MatchHistory(props) {
             }
           </Col>
           <Col sm={6}>
-            {currentMatch ? 
+            {(currentMatch && users) ? 
               <>
                 <h3><span style={{color:"green"}}>Your <b>Round {currentMatch.round}</b> Match:</span></h3>
-                <SingleMatchPage match={currentMatch}/>
+                <SingleMatchPage match={currentMatch} users={users}/>
               </>
               : <></>
             }
