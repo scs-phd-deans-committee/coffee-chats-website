@@ -28,7 +28,7 @@ function ExpectationQuestion(props) {
         }
   // Checking if the "Next" button can be set to valid
   function handleBtnClick(val) {
-    var next = document.getElementById("expectation-next");
+    let next = document.getElementById("expectation-next");
     if (val.length) {
       next.classList.add("active");
       next.disabled = false;

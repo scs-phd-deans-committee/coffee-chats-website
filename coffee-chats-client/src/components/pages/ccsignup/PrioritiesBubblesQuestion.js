@@ -28,11 +28,11 @@ function PrioritiesBubblesQuestion(props) {
   function handleBubbleClick(e) {
     const id = e.target.id;
     console.log(id);
-    var bubble = document.getElementById(id);
+    let bubble = document.getElementById(id);
     if (bubble === null) {console.log("couldn't find"); return;}
     const sizeStr = bubble.style.width;
     // width not yet set, so it is at the default size of 125px
-    var newSize = 0;
+    let newSize = 0;
     if (sizeStr == "") {
       newSize = baseSize + interval;
     } else {
@@ -46,9 +46,9 @@ function PrioritiesBubblesQuestion(props) {
     bubble.style.height = newSizeStr;
   }
   function resetSizes() {
-    for (var i=0; i<props.factors.length; i++) {
+    for (let i=0; i<props.factors.length; i++) {
       const factor = props.factors[i];
-      var bubble = document.getElementById(factor);
+      let bubble = document.getElementById(factor);
       if (bubble === null) {continue;}
       const baseSizeStr = baseSize.toString() + "px";
       bubble.style.maxWidth = baseSizeStr;

@@ -14,7 +14,7 @@ function PrioritiesQuestion(props) {
 
   function clickToNextSection() {
     // check if "anything works" was selected for all factors
-    var skip = true;
+    let skip = true;
     const anythingIdx = 2;
     for (let k in props.factorState) {
       if (props.factorState[k] !== anythingIdx) {
@@ -44,7 +44,7 @@ function PrioritiesQuestion(props) {
     props.factorState[factor] = parseInt(option);
     props.setFactorState(props.factorState);
 
-    var next = document.getElementById("priorities-next");
+    let next = document.getElementById("priorities-next");
     if (Object.keys(props.factorState).length === props.factors.length) {
       next.classList.add("active");
       next.disabled = false;

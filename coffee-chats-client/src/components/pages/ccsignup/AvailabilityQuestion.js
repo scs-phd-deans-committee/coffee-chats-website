@@ -43,7 +43,7 @@ function AvailabilityQuestion(props) {
 
   const handleChange = (newSchedule) => {
     setSchedule(newSchedule);
-    var next = document.getElementById("availability-next");
+    let next = document.getElementById("availability-next");
     if (newSchedule.length !== 0) {
       next.classList.add("active");
       setNextDisabled(false);
@@ -53,7 +53,7 @@ function AvailabilityQuestion(props) {
     }
 
     // update custom schedule with additions
-    for (var i=0; i<newSchedule.length; i++) {
+    for (let i=0; i<newSchedule.length; i++) {
       const time = newSchedule[i];
       if (!(time in customSchedule)) {
         customSchedule[time] = radioValue;

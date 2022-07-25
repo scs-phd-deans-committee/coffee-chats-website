@@ -89,7 +89,7 @@ function CCSignUp(props) {
 
   // Toggle checkbox icon when button is clicked or unclicked
   function toggleCheckbox (e) {
-    var box = document.getElementById(e.target.value).children[1];
+    let box = document.getElementById(e.target.value).children[1];
     if (box.classList.contains("unchecked")) {
       box.classList.remove("unchecked");
       box.classList.add("checked");
@@ -125,8 +125,8 @@ function CCSignUp(props) {
   // randomly generate 5 bubble positions, stays static through entire flow
   const [margins, setMargins] = useState([]);
   if (margins.length == 0) {
-    for (var i=0; i<5; i++) {
-      var margin = Math.floor(Math.random() * 100);
+    for (let i=0; i<5; i++) {
+      let margin = Math.floor(Math.random() * 100);
       // alternate heights
       if (i % 2 == 0) {
         margin += 100;

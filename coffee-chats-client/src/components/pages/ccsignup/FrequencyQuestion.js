@@ -23,7 +23,7 @@ function FrequencyQuestion(props) {
   // Checking if the "Next" button can be set to valid
   function handleBtnClick(val) {
     let isActive = (val === []) ? false : true;
-    var next = document.getElementById("frequency-next");
+    let next = document.getElementById("frequency-next");
     if (isActive) {
       next.classList.add("active");
       next.disabled = false;

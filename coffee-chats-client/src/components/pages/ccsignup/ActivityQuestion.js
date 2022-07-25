@@ -22,13 +22,13 @@ function ActivityQuestion(props) {
   
     // Filter activities displayed based on search input
     function filterActivities (e) {
-      var input = e.target.value.toLowerCase();
-      var allActivities = document.querySelectorAll("#indoor-activity, #outdoor-activity, #own-activity");
+      let input = e.target.value.toLowerCase();
+      let allActivities = document.querySelectorAll("#indoor-activity, #outdoor-activity, #own-activity");
       console.log(allActivities);
-      for (var j=0; j<allActivities.length; j++) {
-          var activities = allActivities[j].children;
-          for (var i=0; i<activities.length; i++) {
-              var activity = activities[i];
+      for (let j=0; j<allActivities.length; j++) {
+          let activities = allActivities[j].children;
+          for (let i=0; i<activities.length; i++) {
+              let activity = activities[i];
               if (input === '') {
                   activity.style.display = "block";
               } else if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
@@ -59,7 +59,7 @@ function ActivityQuestion(props) {
     //     }
     // Checking if the "Next" button can be set to valid
     function handleBtnClick(val) {
-      var next = document.getElementById("activity-next");
+      let next = document.getElementById("activity-next");
     
       // check if any activities from any category are selected
       const anySelected = document.getElementById("Any activities work!").children[1].classList.contains("checked");

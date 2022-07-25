@@ -18,7 +18,7 @@ function RemoteQuestion(props) {
     function handleBtnClick(val) {
         // let isActive = (val === []) ? false : true;
         let isActive = (props.val === null) ? false : true;
-        var next = document.getElementById("remote-next");
+        let next = document.getElementById("remote-next");
         if (isActive) {
         next.classList.add("active");
         next.disabled = false;
