@@ -11,7 +11,7 @@ import "../styles.css"
 import "react-dice-complete/dist/react-dice-complete.css";
 import submit_img from '../../../public/images/formsubmit.png';
 
-function SubmissionScreen(props) {
+function SignupScreen(props) {
     return (
         <>
         <Image src={submit_img} fluid className="submit-image"/>
@@ -24,4 +24,4 @@ function SubmissionScreen(props) {
     )
 }
 
-export default SubmissionScreen;
+export default SignupScreen;

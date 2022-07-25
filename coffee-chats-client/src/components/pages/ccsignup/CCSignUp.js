@@ -16,6 +16,7 @@ import college_img from '../../../public/images/college.png';
 import hobbies_img from '../../../public/images/hobbies.png';
 import year_img from '../../../public/images/year.png';
 import background_img from '../../../public/images/background.png';
+import { useForm, Controller, useController } from "react-hook-form";
 
 import RemoteQuestion from './RemoteQuestion';
 import ActivityQuestion from './ActivityQuestion';
@@ -27,7 +28,7 @@ import AvailabilityQuestion from './AvailabilityQuestion';
 import DiceRollQuestion from './DiceRollQuestion';
 import CommentsQuestion from './CommentsQuestion';
 import ReviewQuestion from './ReviewQuestion';
-import SubmissionScreen from './SubmissionScreen';
+import SignupScreen from './SignupScreen';
 
 
 function CCSignUp(props) {
@@ -35,7 +36,23 @@ function CCSignUp(props) {
   'diceroll', 'comments', 'review', 'submit'];
   const [questionNum, setQuestion] = useState(0);
   
-    
+  const [signup, setSignup] = useState({"isRemote": true, "availability":"Mornings"});
+  const updateSignup = (data) => {
+    console.log('form submitted!')
+    data = {...data, uid: props.user.uid, response_time: firebase.firestore.FieldValue.serverTimestamp()}
+    Object.keys(data).forEach(function(key) {
+      if(data[key] === null | data[key] === undefined) {
+          data[key] = '';
+      }
+    })
+
+    console.log(data)
+
+    firestore.collection('signups').add({
+        uid: props.user.uid,
+        ...data
+    });
+  }
 
   /* STEP PROGRESS BAR */ 
 
@@ -203,9 +220,9 @@ function CCSignUp(props) {
                 addState={addState} setAddState={setAddState}
                 questionNum={questionNum} setQuestion={setQuestion} setCurSection={setCurSection}
                 toggleCheckbox={toggleCheckbox} margins={margins} factorImgs={factorImgs} factorNames={factorNames}
-                factors={factors} factorState={factorState} />
+                factors={factors} factorState={factorState} signup={signup} updateSignup={updateSignup} />
               case 'submit':
-                return <SubmissionScreen ownActivitiesState={ownActivitiesState} setOwnActivitiesState={setOwnActivitiesState}
+                return <SignupScreen ownActivitiesState={ownActivitiesState} setOwnActivitiesState={setOwnActivitiesState}
                 addState={addState} setAddState={setAddState}
                 questionNum={questionNum} setQuestion={setQuestion} setCurSection={setCurSection}
                 toggleCheckbox={toggleCheckbox} />
@@ -221,7 +238,7 @@ function CCSignUp(props) {
     <Container fluid>
       <Row className="flex-column align-items-center">
         <ProgressBar/>
-        <QuestionArea questionNum={questionNum}/>
+        <QuestionArea questionNum={questionNum} signup={signup} updateSignup={updateSignup} />
       </Row>
     </Container>
   )

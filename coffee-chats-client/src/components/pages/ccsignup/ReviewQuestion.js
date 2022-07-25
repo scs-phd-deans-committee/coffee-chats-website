@@ -96,7 +96,7 @@ function ReviewQuestion(props) {
         <br />
         <div className="question-nav">
         <Button id="submit-back" variant="custom-nav" onClick={clickToPrevSection}>No, let's go back</Button>
-        <Button id="submit" variant="custom-nav" onClick={clickToNextSection}>
+        <Button id="submit" variant="custom-nav" onClick={() => {props.updateSignup(props.signup); clickToNextSection()}}>
             Yes, let's submit!
         </Button>
         </div>

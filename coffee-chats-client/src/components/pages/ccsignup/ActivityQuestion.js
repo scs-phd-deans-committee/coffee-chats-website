@@ -25,15 +25,15 @@ function ActivityQuestion(props) {
       let allActivities = document.querySelectorAll("#indoor-activity, #outdoor-activity, #own-activity");
       console.log(allActivities);
       for (let j=0; j<allActivities.length; j++) {
-          let activities = allActivities[j].children;
-          for (let i=0; i<activities.length; i++) {
-              let activity = activities[i];
-              if (input === '') {
-                  activity.style.display = "block";
-              } else if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
-                          activity.style.display = "none";
-              }
+        let activities = allActivities[j].children;
+        for (let i=0; i<activities.length; i++) {
+          let activity = activities[i];
+          if (input === '') {
+              activity.style.display = "block";
+          } else if (!activity?.firstChild?.value?.toLowerCase().includes(input)) {
+                      activity.style.display = "none";
           }
+        }
       }
     }
     
