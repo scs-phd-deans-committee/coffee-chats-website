@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col, Image, Button, Form, Modal, ModalDialog, ModalHeader, ModalTitle, ModalBody, 
+  ModalFooter, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import { auth, firestore } from "../../../firebaseClient";
 import { firebase } from '@firebase/app';
 import "firebase/auth";
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { Button, Form, Modal, ModalDialog, ModalHeader, ModalTitle, ModalBody, 
-  ModalFooter, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import StepProgressBar from "react-step-progress";
 // import the stylesheet

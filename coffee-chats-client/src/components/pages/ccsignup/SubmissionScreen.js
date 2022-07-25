@@ -1,10 +1,9 @@
 import React from 'react';
-import { Image } from 'react-bootstrap';
+import { Image, Button } from 'react-bootstrap';
 import { auth, firestore } from "../../../firebaseClient";
 import { firebase } from '@firebase/app';
 import "firebase/auth";
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 // import the stylesheet
 import "react-step-progress/dist/index.css";
