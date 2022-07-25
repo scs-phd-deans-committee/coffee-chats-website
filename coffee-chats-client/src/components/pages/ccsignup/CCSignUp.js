@@ -101,8 +101,6 @@ function CCSignUp(props) {
 
   const [remoteQVals, setRemoteQVals] = useState(null);
 
-  const [selectedActivities, setSelectedActivities] = useState([]);
-
   // Toggle checkbox icon when button is clicked or unclicked
   function toggleCheckbox (e) {
     let box = document.getElementById(e.target.value).children[1];
@@ -115,8 +113,6 @@ function CCSignUp(props) {
     }
   }
  
-
-
 
   const factors = ["academic", "college", "hobbies", "year", "background"];
   const factorNames = 

@@ -19,6 +19,8 @@ function ActivityQuestion(props) {
     const outdoorActivities = ["Get coffee", "Go to an art gallery", "Go to a farmer's market", "Go to a music concert", 
         "Go on a walk", "Hammock at Schenley Park", "Hike", "Picnic", "Play sports", "Tour Phipps Conservatory"];
   
+    const [selectedActivities, setSelectedActivities] = useState([]);
+
     // Filter activities displayed based on search input
     function filterActivities (e) {
       let input = e.target.value.toLowerCase();
