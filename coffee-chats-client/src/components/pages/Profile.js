@@ -44,7 +44,7 @@ function ProfileEditor(props) {
  
   return (
     <>
-      <form onSubmit={handleSubmit(updateUser)}>
+      <form onSubmit={handleSubmit(updateUser)} className="profileForm">
         <div className="title">Profile Editor</div>
 	    <hr/>
         Name <input {...register("name")} defaultValue={props.user.name} />
