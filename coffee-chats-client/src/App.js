@@ -24,7 +24,7 @@ import MatchDetail from './components/pages/MatchDetail';
 import MatchHistory from './components/pages/MatchHistory';
 import Preferences from './components/pages/Preferences';
 import Profile from './components/pages/Profile';
-import CCSignUp from './components/pages/CCSignUp';
+import CCSignUp from './components/pages/ccsignup/CCSignUp';
 import Home from './components/pages/Home';
 import CCNewHome from './components/pages/CCNewHome';
 // import Logout from './components/Logout';
