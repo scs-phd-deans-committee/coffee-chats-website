@@ -169,7 +169,7 @@ function NewProfile(props) {
     const [profileState, setProfileState] = useState({name: "", pronoun: "", 
                             college: "", department: "", role: "", startYear: ""});
     function validateProfileData() {
-        return false
+        return Object.values(profileState).every(element => element !== "");
     }
     const handleProfileState = getSpecificHandleChange(setProfileState);
 
@@ -178,14 +178,17 @@ function NewProfile(props) {
         <Row className="flex-column align-items-center">
         <ProfileProgressBar curSection={sectionNum}/>
         <Row className="question-area flex-column align-items-center"> {/* This is the main question area */}
-            <ProfileCore handleState={handleProfileState} clickToNextSection={clickToNextSection} 
-                validateData={validateData}  />
+            <ProfileCore handleState={handleProfileState} clickToNextSection={() => setSectionNum(sectionNum+1)} 
+                validateData={validateProfileData}  />
         </Row>
         {/* <QuestionArea questionNum={questionNum} handleInput={handleInput} /> */}
         {/* name: {profileState.name} \n
         pronoun: {profileState.pronoun} \n
         college: {profileState.college} \n */}
         {Object.entries(profileState).map(([key, value]) => <div>{key}: {value}</div>)}
+        Blah:
+        {validateProfileData().toString()}
+        BLah
         </Row>
     </Container>
     )
