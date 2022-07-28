@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Image, Button, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
-import { auth, firestore } from "../../../firebaseClient";
-import { firebase } from '@firebase/app';
-import "firebase/auth";
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 // import the stylesheet
 import "react-step-progress/dist/index.css";
 import "../styles.css";
