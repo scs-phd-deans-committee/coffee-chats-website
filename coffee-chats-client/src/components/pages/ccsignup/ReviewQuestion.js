@@ -10,6 +10,11 @@ import "../styles.css";
 import ScheduleSelector from "react-schedule-selector";
 import "react-dice-complete/dist/react-dice-complete.css";
 
+const topHeaders = ["On fire", "Yay", "Woot woot"];
+function selectRandom(anArray) {
+    return anArray[Math.floor(Math.random() * anArray.length)];
+}
+
 function ReviewQuestion(props) {
     function clickToNextSection() {
             props.setQuestion(props.questionNum + 1); 
@@ -23,7 +28,7 @@ function ReviewQuestion(props) {
     return (
         <>
         <div className="results-container">
-        <div className="question-text heading">On fire, Scotty!</div>
+        <div className="question-text heading">{selectRandom(topHeaders)}, {props.fixedProfileUserData.name}!</div>
         <div className="question-sub-text">
         Check through your preferences one last time before you submit!
         </div>

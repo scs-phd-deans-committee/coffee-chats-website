@@ -54,8 +54,10 @@ function CCSignUp(props) {
     });
   }
 
-  /* STEP PROGRESS BAR */ 
+  /* Dummy get current data */
+  const fixedProfileUserData = {"name": "Scotty2"}
 
+  /* STEP PROGRESS BAR */ 
   /* sync progress bar with question content */
   const [curSection, setCurSection] = useState(0);
   function clickToNextSection() {
@@ -216,7 +218,8 @@ function CCSignUp(props) {
                 addState={addState} setAddState={setAddState}
                 questionNum={questionNum} setQuestion={setQuestion} setCurSection={setCurSection}
                 toggleCheckbox={toggleCheckbox} margins={margins} factorImgs={factorImgs} factorNames={factorNames}
-                factors={factors} factorState={factorState} signup={signup} updateSignup={updateSignup} />
+                factors={factors} factorState={factorState} signup={signup} updateSignup={updateSignup} 
+                fixedProfileUserData={fixedProfileUserData}/>
               case 'submit':
                 return <SignupScreen ownActivitiesState={ownActivitiesState} setOwnActivitiesState={setOwnActivitiesState}
                 addState={addState} setAddState={setAddState}
