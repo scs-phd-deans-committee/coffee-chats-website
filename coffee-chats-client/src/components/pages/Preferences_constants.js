@@ -108,6 +108,7 @@ export const departmentOptions = [
 ]
 export const yearOptions = [
     { value: '1st year Master', label: '1st year Master' },
+    { value: '2nd year Master', label: '1st year Master' },
     { value: '2nd year PhD', label: '2nd year PhD' },
     { value: 'Alumni', label: 'Alumni'}
 ]
@@ -158,4 +159,16 @@ export const yearPrefOptions = [
 export const yesNoOptions = [
     {value: "yes", label: "Yes"},
     {value: "no", label: "No"}
+]
+
+
+//////// New stuff for new version
+
+/** Role options of Masters, PhD, Research Assistant, Alumni, Other*/ 
+export const roleOptions = [
+    { value: 'PhD', label: 'PhD'},
+    { value: 'Masters', label: 'Masters'},
+    { value: 'Research Assistant', label: 'Research Assistant'},
+    { value: 'Alumni', label: 'Alumni'},
+    { value: 'Other', label: 'Other'},
 ]

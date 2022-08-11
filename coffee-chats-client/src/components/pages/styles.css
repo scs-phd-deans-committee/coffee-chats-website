@@ -25,8 +25,25 @@
 /* for Step Progress Bar */
 
 /*make the width the same as the question area*/
-._53Ji7 {
-    width: 75em !important;
+/* ._53Ji7 {
+    width: 100vw; !important;
+    padding: 1rem 0vw;
+} */
+
+@media screen and (max-width: 640px) {
+    .StepProgressBarCustomWrapper {
+        width: 100vw !important;
+        padding: 1rem 0vw !important;
+        color: transparent;
+    }
+}
+
+@media screen and (min-width: 640px) {
+    .StepProgressBarCustomWrapper {
+        width: 100vw !important;
+        padding: 1rem 0vw !important;
+        /* color: black; */
+    }
 }
 
 /* hide the next/previous buttons from react-step-progress */

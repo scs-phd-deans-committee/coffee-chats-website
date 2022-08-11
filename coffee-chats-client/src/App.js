@@ -27,6 +27,7 @@ import Profile from './components/pages/Profile';
 import CCSignUp from './components/pages/ccsignup/CCSignUp';
 import Home from './components/pages/Home';
 import CCNewHome from './components/pages/CCNewHome';
+import NewProfile from './components/pages/NewProfile';
 // import Logout from './components/Logout';
 
 function App(props) {
@@ -80,6 +81,9 @@ function App(props) {
         </Route>
         <Route path="/ccnewhome">
           <CCNewHome user={user} setUser={setUser} />
+        </Route>
+        <Route path="/newprofile">
+          <NewProfile user={user} setUser={setUser} />
         </Route>
         <Route path="/">
           <Home user={user} setUser={setUser} />
