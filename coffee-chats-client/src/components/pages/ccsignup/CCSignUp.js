@@ -69,6 +69,7 @@ function CCSignUp(props) {
           
       return(
       <StepProgressBar
+        wrapperClass='StepProgressBarCustomWrapper'
         startingStep={curSection}
         steps={[
            {

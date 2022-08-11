@@ -131,7 +131,7 @@ function ProfileCore(props) {
         <FancySelect2 options={collegeOptions} isMulti={false} defaultValue={null}
                 handleChange={val => handleState("college", val)}/>
 
-        <div className="question-text">Department/Program</div>
+        <div className="question-text">Departments/Programs</div>
         <FancySelect2 options={departmentOptions} isMulti={true} defaultValue={null}
                 handleChange={val => handleState("department", val)}/>
 
